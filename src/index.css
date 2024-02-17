@@ -23,7 +23,7 @@ li a:hover::after {
 }
 
 .bg-square {
-  background-image: url("/bg-square.svg");
+  background-image: url("/header/bg-square.svg");
   background-position: 10px 10px;
   position: absolute;
   top: 0;

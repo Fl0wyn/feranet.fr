@@ -1,13 +1,20 @@
 import { Link as ScrollLink } from "react-scroll";
 
-const lists = [
-  { name: "Home", link: "home" },
-  { name: "Skills", link: "skills" },
+import { t } from "./locales";
+
+const links = [
+  { name: t("home"), link: "home" },
+  { name: t("skills"), link: "skills" },
   // { name: "Projects", link: "projects" },
-  { name: "Contact", link: "contact" },
-  { name: "Wiki", link: "https://wiki.feranet.fr/", external: true },
-  { name: "GitHub", link: "https://github.com/Fl0wyn/", external: true },
+  { name: t("contact"), link: "contact" },
 ];
+
+const changeLanguage = () => {
+  const storedLanguage = localStorage.getItem("language");
+  const language = storedLanguage === "fr" ? "en" : "fr";
+  localStorage.setItem("language", language);
+  window.location.reload();
+};
 
 export default function Nav() {
   return (
@@ -18,28 +25,30 @@ export default function Nav() {
         </div>
 
         <ul className="flex items-center gap-12">
-          {lists.map((list) => (
+          {links.map((list) => (
             <li key={list.name} className="hover:-rotate-3">
-              {list.external ? (
-                <a
-                  className="hover:text-primary relative pb-3"
-                  target="_blank"
-                  href={list.link}
-                >
-                  {list.name}
-                </a>
-              ) : (
-                <ScrollLink
-                  className="hover:text-primary relative pb-3 md:inline hidden cursor-pointer"
-                  to={list.link}
-                  smooth={true}
-                  duration={500}
-                >
-                  {list.name}
-                </ScrollLink>
-              )}
+              <ScrollLink
+                className="hover:text-primary pb-3 relative md:inline hidden cursor-pointer"
+                to={list.link}
+                smooth={true}
+                duration={500}
+              >
+                {list.name}
+              </ScrollLink>
             </li>
           ))}
+          <li className="hover:-rotate-3">
+            <a
+              role="button"
+              onClick={changeLanguage}
+              className="hover:fill-primary relative pb-3 md:inline hidden cursor-pointer"
+            >
+              <img
+                src="/header/translate.svg"
+                className="w-5 h-5 inline-block mr-2"
+              />
+            </a>
+          </li>
         </ul>
       </div>
     </nav>

@@ -1,9 +1,11 @@
 import Section from "./components/Section";
 import { Terminal } from "./components/Terminal";
 
+import { t } from "./locales";
+
 const skills = [
   {
-    title: "Web Development",
+    title: t("webDevelopment"),
     lists: [
       { name: "React", icon: "/skills/react.svg" },
       { name: "Vue", icon: "/skills/vue.svg" },
@@ -14,7 +16,7 @@ const skills = [
     ],
   },
   {
-    title: "System Administration",
+    title: t("systemAdministration"),
     lists: [
       { name: "Linux", icon: "/skills/linux-tux.svg" },
       { name: "Windows", icon: "/skills/microsoft-windows-icon.svg" },
@@ -25,7 +27,7 @@ const skills = [
     ],
   },
   {
-    title: "Design & others",
+    title: t("designOthers"),
     lists: [
       { name: "Photoshop", icon: "/skills/adobe-photoshop.svg" },
       { name: "Illustrator", icon: "/skills/adobe-illustrator.svg" },
@@ -39,7 +41,7 @@ export default function Skills() {
   return (
     <>
       <Terminal />
-      <Section id="skills" title="Skills" color="bg-slate-950">
+      <Section id="skills" title={t("skills")} color="bg-slate-950">
         {skills.map((skill) => (
           <div key={skill.title}>
             <h3 className="text-2xl text-slate-200 text-center font-bold mt-14 sm:mt-28">

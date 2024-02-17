@@ -1,4 +1,5 @@
 import Section from "./components/Section";
+import { t } from "./locales";
 
 const contacts = [
   {
@@ -25,7 +26,7 @@ const contacts = [
 
 export default function Contact() {
   return (
-    <Section id="contact" title="Contact" color="bg-slate-950">
+    <Section id="contact" title={t("contact")} color="bg-slate-950">
       <div className="flex justify-end mt-28">
         <div className="rounded-none md:rounded-s-full md:rounded-e-lg bg-slate-800 w-full md:w-2/3">
           <div className="flex items-center">
