@@ -1,5 +1,3 @@
-import { t } from "./locales";
-
 const credits = [
   {
     title: "Vite",
@@ -38,7 +36,7 @@ export default function Footer() {
         <div className="mx-auto border-primary border-t-2 w-24"></div>
       </footer>
       <div className="text-center border-t-2 border-slate-600 p-2">
-        <span className="text-slate-200">{t("designBuildBy")} 😉</span>
+        <span className="text-slate-200">Designed and built by Florian 😉</span>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:flex justify-center gap-3 mt-2">
           {credits.map((credit) => (
             <a

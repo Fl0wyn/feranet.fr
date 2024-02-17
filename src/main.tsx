@@ -4,7 +4,7 @@ import Contact from "./Contact";
 import Footer from "./Footer";
 import Header from "./Header";
 import Nav from "./Nav";
-// import Projects from "./Projects";
+import Projects from "./Projects";
 import Skills from "./Skills";
 import "./index.css";
 
@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Nav />
     <Header />
     <Skills />
-    {/* <Projects /> */}
+    <Projects />
     <Contact />
     <Footer />
   </React.StrictMode>

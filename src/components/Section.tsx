@@ -15,12 +15,10 @@ function Section({
   return (
     <section className={`mx-auto py-14 md:py-32 ${color}`} id={id}>
       <h2 className="text-center font-semibold text-4xl md:text-5xl">
-        <span className="underline underline-offset-8 text-primary hover:text-white hover:no-underline peer">
+        <span className="underline underline-offset-8 text-primary ">
           {titleStart}
         </span>
-        <span className="peer-hover:text-primary peer-hover:underline underline-offset-8">
-          {titleEnd}
-        </span>
+        {titleEnd}
       </h2>
       {children}
     </section>

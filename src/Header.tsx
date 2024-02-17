@@ -1,12 +1,6 @@
-import { t } from "./locales";
-
 const links = [
-  { name: "Wiki", link: "https://wiki.feranet.fr/", icon: "/header/book.svg" },
-  {
-    name: "GitHub",
-    link: "https://github.com/Fl0wyn/",
-    icon: "/header/github.svg",
-  },
+  { name: "Wiki", link: "https://wiki.feranet.fr/", icon: "/book.svg" },
+  { name: "GitHub", link: "https://github.com/Fl0wyn/", icon: "/github.svg" },
 ];
 
 export default function Header() {
@@ -16,13 +10,13 @@ export default function Header() {
       <div className="container mx-auto py-64 flex justify-between items-center">
         <div>
           <h1 className="font-bold text-5xl md:text-7xl mb-5">
-            {t("hi")} <span className="stroke">Florian</span>,
+            Hi, I'm <span className="stroke">Florian</span>,
           </h1>
           <h1 className="font-bold text-4xl md:text-6xl">
-            <span className="text-white bg-blue-800">{t("webDeveloper")}</span>{" "}
-            & SysAdmin
+            <span className="text-white bg-blue-800">Web Developer</span> &
+            SysAdmin
           </h1>
-          <div className="flex gap-3 mt-16 font-semibold text-lg">
+          <div className="flex gap-3 mt-14 font-semibold text-lg">
             {links.map((link) => (
               <a
                 key={link.name}
