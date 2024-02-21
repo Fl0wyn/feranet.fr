@@ -1,16 +1,19 @@
 import Section from "./components/Section";
 
+import MonDriveIcon from "./assets/img/projects/MonDrive.svg";
+import MonITIcon from "./assets/img/projects/MonIT.svg";
+
 const projects = [
   {
     title: "MonIT",
-    icon: "/projects/MonIT.svg",
+    icon: MonITIcon,
     description: "Generate an information report for Windows servers",
     link: "https://github.com/Fl0wyn/MonIT",
     language: ["Vue", "PowerShell"],
   },
   {
     title: "MonDrive",
-    icon: "/projects/MonDrive.svg",
+    icon: MonDriveIcon,
     description: "View disk status on Windows & Linux servers",
     link: "https://github.com/Fl0wyn/MonDrive",
     language: ["Vue", "PowerShell"],
@@ -29,13 +32,17 @@ export default function Projects() {
             className="border border-slate-800 shadow-xl hover:border-slate-600 rounded-lg p-4 w-full md:w-96 flex flex-col justify-between mt-2"
           >
             <div className="flex items-center gap-4">
-              <img className="h-10 w-10" src={project.icon} />
+              <img
+                className="h-10 w-10"
+                src={project.icon}
+                alt={`${project.title} icon`}
+              />
               <h3 className="text-xl text-slate-200 font-semibold">
                 {project.title}
               </h3>
             </div>
-            <p className="text-slate-300 mt-4">{project.description}</p>
-            <div className="flex justify-end mt-4">
+            <p className="text-slate-300 h-full mt-4">{project.description}</p>
+            <div className="flex justify-end">
               {project.language.map((lang) => (
                 <span
                   key={lang}

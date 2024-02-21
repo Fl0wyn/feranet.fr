@@ -37,19 +37,18 @@ export default function Footer() {
       </footer>
       <div className="text-center border-t-2 border-slate-600 p-2">
         <span className="text-slate-200">Designed and built by Florian 😉</span>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:flex justify-center gap-3 mt-2">
+        <ul className="grid grid-cols-2 sm:grid-cols-3 md:flex justify-center gap-3 mt-2">
           {credits.map((credit) => (
-            <a
+            <li
               key={credit.title}
-              href={credit.link}
-              target="_blank"
-              rel="noreferrer"
               className="text-slate-400 hover:text-primary"
             >
-              {credit.title}
-            </a>
+              <a href={credit.link} target="_blank" rel="noreferrer">
+                {credit.title}
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </>
   );

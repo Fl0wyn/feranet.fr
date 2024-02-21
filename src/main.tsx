@@ -6,7 +6,7 @@ import Header from "./Header";
 import Nav from "./Nav";
 import Projects from "./Projects";
 import Skills from "./Skills";
-import "./index.css";
+import "./assets/index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

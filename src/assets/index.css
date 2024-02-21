@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-li a::after {
+.nav-link a::after {
   content: "";
   position: absolute;
   height: 2px;
@@ -13,7 +13,7 @@ li a::after {
   transition: all 0.5s ease;
 }
 
-li a:hover::after {
+.nav-link a:hover::after {
   width: 75%;
 }
 
@@ -23,7 +23,7 @@ li a:hover::after {
 }
 
 .bg-square {
-  background-image: url("/bg-square.svg");
+  background-image: url("./img/bg-square.svg");
   background-position: 10px 10px;
   position: absolute;
   top: 0;

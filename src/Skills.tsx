@@ -1,36 +1,55 @@
 import Section from "./components/Section";
 import { Terminal } from "./components/Terminal";
 
+import bootstrapIcon from "./assets/img/skills/bootstrap.svg";
+import mongodbIcon from "./assets/img/skills/mongodb-icon.svg";
+import nodejsIcon from "./assets/img/skills/nodejs-icon.svg";
+import reactIcon from "./assets/img/skills/react.svg";
+import tailwindcssIcon from "./assets/img/skills/tailwindcss-icon.svg";
+import vueIcon from "./assets/img/skills/vue.svg";
+
+import apacheIcon from "./assets/img/skills/apache.svg";
+import dockerIcon from "./assets/img/skills/docker-icon.svg";
+import linuxIcon from "./assets/img/skills/linux-tux.svg";
+import windowsIcon from "./assets/img/skills/microsoft-windows-icon.svg";
+import nginxIcon from "./assets/img/skills/nginx.svg";
+import vmwareIcon from "./assets/img/skills/vmware.svg";
+
+import illustratorIcon from "./assets/img/skills/adobe-illustrator.svg";
+import photoshopIcon from "./assets/img/skills/adobe-photoshop.svg";
+import gitIcon from "./assets/img/skills/git-icon.svg";
+import veeamIcon from "./assets/img/skills/veeam.svg";
+
 const skills = [
   {
     title: "Web Development",
     lists: [
-      { name: "React", icon: "/skills/react.svg" },
-      { name: "Vue", icon: "/skills/vue.svg" },
-      { name: "Tailwind", icon: "/skills/tailwindcss-icon.svg" },
-      { name: "Bootstrap", icon: "/skills/bootstrap.svg" },
-      { name: "Node", icon: "/skills/nodejs-icon.svg" },
-      { name: "MongoDB", icon: "/skills/mongodb-icon.svg" },
+      { name: "React", icon: reactIcon },
+      { name: "Vue", icon: vueIcon },
+      { name: "Tailwind", icon: tailwindcssIcon },
+      { name: "Bootstrap", icon: bootstrapIcon },
+      { name: "Node", icon: nodejsIcon },
+      { name: "MongoDB", icon: mongodbIcon },
     ],
   },
   {
     title: "System Administration",
     lists: [
-      { name: "Linux", icon: "/skills/linux-tux.svg" },
-      { name: "Windows", icon: "/skills/microsoft-windows-icon.svg" },
-      { name: "Apache", icon: "/skills/apache.svg" },
-      { name: "Nginx", icon: "/skills/nginx.svg" },
-      { name: "Docker", icon: "/skills/docker-icon.svg" },
-      { name: "VMware", icon: "/skills/vmware.svg" },
+      { name: "Linux", icon: linuxIcon },
+      { name: "Windows", icon: windowsIcon },
+      { name: "Apache", icon: apacheIcon },
+      { name: "Nginx", icon: nginxIcon },
+      { name: "Docker", icon: dockerIcon },
+      { name: "VMware", icon: vmwareIcon },
     ],
   },
   {
     title: "Design & others",
     lists: [
-      { name: "Photoshop", icon: "/skills/adobe-photoshop.svg" },
-      { name: "Illustrator", icon: "/skills/adobe-illustrator.svg" },
-      { name: "Veeam", icon: "/skills/veeam.svg" },
-      { name: "Git", icon: "/skills/git-icon.svg" },
+      { name: "Photoshop", icon: photoshopIcon },
+      { name: "Illustrator", icon: illustratorIcon },
+      { name: "Veeam", icon: veeamIcon },
+      { name: "Git", icon: gitIcon },
     ],
   },
 ];
@@ -49,7 +68,11 @@ export default function Skills() {
               {skill.lists.map((list) => (
                 <div key={list.name}>
                   <div className="flex items-center px-0 w-full sm:px-4 sm:w-36">
-                    <img className="h-7 w-7 me-3" src={list.icon} />
+                    <img
+                      className="h-7 w-7 me-3"
+                      src={list.icon}
+                      alt={`${list.name} icon`}
+                    />
                     <h4 className="text-lg">{list.name}</h4>
                   </div>
                 </div>

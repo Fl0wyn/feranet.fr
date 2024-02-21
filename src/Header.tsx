@@ -1,6 +1,17 @@
+import book from "./assets/img/book.svg";
+import github from "./assets/img/github.svg";
+
 const links = [
-  { name: "Wiki", link: "https://wiki.feranet.fr/", icon: "/book.svg" },
-  { name: "GitHub", link: "https://github.com/Fl0wyn/", icon: "/github.svg" },
+  {
+    name: "GitHub",
+    link: "https://github.com/Fl0wyn/",
+    icon: github,
+  },
+  {
+    name: "Wiki",
+    link: "https://wiki.feranet.fr/",
+    icon: book,
+  },
 ];
 
 export default function Header() {
@@ -25,7 +36,11 @@ export default function Header() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <img src={link.icon} className="w-5 h-5 inline-block mr-2" />
+                <img
+                  src={link.icon}
+                  alt={`${link.name} icon`}
+                  className="w-5 h-5 inline-block mr-2"
+                />
                 {link.name}
               </a>
             ))}
