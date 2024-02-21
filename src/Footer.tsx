@@ -1,3 +1,5 @@
+import packagejson from "../package.json";
+
 const credits = [
   {
     title: "Vite",
@@ -23,6 +25,8 @@ const credits = [
 
 const currentYear = new Date().getFullYear();
 
+const version = packagejson.version;
+
 export default function Footer() {
   return (
     <>
@@ -36,7 +40,9 @@ export default function Footer() {
         <div className="mx-auto border-primary border-t-2 w-24"></div>
       </footer>
       <div className="text-center border-t-2 border-slate-600 p-2">
-        <span className="text-slate-200">Designed and built by Florian 😉</span>
+        <span className="text-slate-200">
+          Designed and built by Florian <small>({version})</small>
+        </span>
         <ul className="grid grid-cols-2 sm:grid-cols-3 md:flex justify-center gap-3 mt-2">
           {credits.map((credit) => (
             <li
