@@ -57,7 +57,7 @@ export default function Contact() {
                       src={contact.icon}
                       alt={`${contact.title} icon`}
                     />
-                    <h4 className="text-lg w-0 lg:w-20">{contact.title}</h4>
+                    <span className="text-lg w-0 lg:w-20">{contact.title}</span>
                     <i className="hidden lg:inline text-slate-400">
                       {contact.link}
                     </i>

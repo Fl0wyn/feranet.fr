@@ -25,6 +25,7 @@ export default function Nav() {
                 to={list.link}
                 smooth={true}
                 duration={500}
+                href={`#${list.link}`}
               >
                 {list.name}
               </ScrollLink>
