@@ -1,5 +1,4 @@
-/* https://ui.aceternity.com/components/meteors */
-import { cn } from "../../utils/cn";
+import { cn } from "@/lib/utils";
 
 export const Meteors = ({
   number,

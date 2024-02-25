@@ -1,8 +1,7 @@
 "use client";
-/* https://ui.aceternity.com/components/background-boxes */
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import React from "react";
-import { cn } from "../../utils/cn";
 
 export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
   const rows = new Array(150).fill(1);

@@ -1,4 +1,4 @@
-export function Section({
+export function SiteSection({
   children,
   id,
   title,

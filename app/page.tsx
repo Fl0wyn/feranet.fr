@@ -1,15 +1,13 @@
-import Contact from "./contact";
-import Footer from "./footer";
-import Header from "./header";
-import Nav from "./nav";
-import Projects from "./projects";
-import Skills from "./skills";
+import Contact from "./pages/contact";
+import Footer from "./pages/footer";
+import Hero from "./pages/hero";
+import Projects from "./pages/projects";
+import Skills from "./pages/skills";
 
 export default function Home() {
   return (
     <>
-      <Nav />
-      <Header />
+      <Hero />
       <Skills />
       <Projects />
       <Contact />

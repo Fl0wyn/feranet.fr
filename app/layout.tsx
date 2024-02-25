@@ -1,8 +1,9 @@
+import { SiteHeader } from "@/components/site-header";
+import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,12 +25,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`max-h-screen bg-slate-900 text-white ${inter.className}`}
+        className={`min-h-screen bg-background font-sans antialiased bg-slate-900 text-white ${inter.className}`}
         id="home"
       >
-        {children}
+        <div className="relative flex min-h-screen flex-col">
+          <SiteHeader />
+          <div className="flex-1">{children}</div>
+        </div>
         <Analytics />
         <SpeedInsights />
       </body>
