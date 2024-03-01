@@ -10,16 +10,16 @@ const items = siteConfig.projects;
 export default function Projects() {
   return (
     <SiteSection id="projects" title="Projects" bg="grid">
-      <ul className="container mx-auto block md:flex justify-center gap-4 mt-24">
+      <ul className="container mx-auto block xl:flex justify-center gap-4 mt-24">
         {items.map((item) => (
           <li
             key={item.title}
-            className="border border-slate-800 hover:border-slate-600 bg-slate-950 rounded-lg m-4 md:m-0"
+            className="border border-slate-800 hover:border-slate-600 bg-slate-950 rounded-lg m-4 xl:m-0"
           >
             <Link
               href={item.href}
               target="_blank"
-              className="relative px-4 py-6 h-full md:w-96 overflow-hidden flex flex-col justify-between"
+              className="relative px-4 py-6 h-full xl:w-96 overflow-hidden flex flex-col justify-between"
             >
               <div className="flex items-center gap-4">
                 <Image

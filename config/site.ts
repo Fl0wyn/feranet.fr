@@ -59,6 +59,13 @@ export const siteConfig = {
   ],
   projects: [
     {
+      title: "Tools",
+      icon: "/img/projects/tools-feranet.png",
+      description: "A collection of tools for sysadmins and developers",
+      href: "https://github.com/Fl0wyn/tools.feranet.fr",
+      language: ["React"],
+    },
+    {
       title: "MonIT",
       icon: "/img/projects/MonIT.svg",
       description: "Generate an information report for Windows servers",
