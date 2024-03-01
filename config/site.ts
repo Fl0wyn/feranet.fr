@@ -14,6 +14,11 @@ export const siteConfig = {
       icon: "/img/github.svg",
     },
     {
+      title: "Tools",
+      href: "https://tools.feranet.fr/",
+      icon: "/img/tools.svg",
+    },
+    {
       title: "Wiki",
       href: "https://wiki.feranet.fr/",
       icon: "/img/book.svg",
