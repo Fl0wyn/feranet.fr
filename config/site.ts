@@ -83,7 +83,7 @@ export const siteConfig = {
   contacts: [
     {
       title: "Email",
-      href: "mailto:contact@fernanet.fr",
+      href: "mailto:contact@feranet.fr",
       icon: "/img/contact/mail.svg",
     },
     {
