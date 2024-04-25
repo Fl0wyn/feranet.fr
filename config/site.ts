@@ -61,7 +61,7 @@ export const siteConfig = {
     {
       title: "Tools",
       icon: "/img/projects/tools-feranet.png",
-      description: "A collection of tools for sysadmins and developers",
+      description: "A collection of tools for developers and creators",
       href: "https://github.com/Fl0wyn/tools.feranet.fr",
       language: ["React"],
     },
@@ -91,16 +91,16 @@ export const siteConfig = {
       href: "https://linkedin.com/in/florian-feranet",
       icon: "/img/contact/linkedin.svg",
     },
-    {
-      title: "Malt",
-      href: "https://www.malt.fr/?",
-      icon: "/img/contact/malt.svg",
-    },
-    {
-      title: "Fiverr",
-      href: "https://fiverr.com/?",
-      icon: "/img/contact/fiverr.svg",
-    },
+    // {
+    //   title: "Malt",
+    //   href: "https://www.malt.fr/?",
+    //   icon: "/img/contact/malt.svg",
+    // },
+    // {
+    //   title: "Fiverr",
+    //   href: "https://fiverr.com/?",
+    //   icon: "/img/contact/fiverr.svg",
+    // },
   ],
   credits: [
     {
