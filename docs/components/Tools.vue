@@ -4,7 +4,15 @@ import { data } from "../data";
 
 <template>
   <div v-for="item in data" :key="item.title" class="item">
-    <h2>{{ item.title }}</h2>
+    <h2 :id="item.title" tabindex="-1">
+      {{ item.title }}
+      <a
+        class="header-anchor"
+        :href="'#' + item.title"
+        :aria-label="'Permalink to &quot;' + item.title + '&quot;'"
+        >​</a
+      >
+    </h2>
     <div class="cards">
       <a
         v-for="app in item.items"
