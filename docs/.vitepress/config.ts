@@ -18,6 +18,12 @@ export default defineConfig({
         href: "https://feranet.fr/favicon.ico",
       },
     ],
+    ["script", { src: "/_vercel/insights/script.js", defer: "true" }],
+    [
+      "script",
+      {},
+      `window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };`,
+    ],
   ],
 
   themeConfig: {
@@ -88,7 +94,8 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: "https://github.com/Fl0wyn/wiki.feranet.fr/edit/master/docs/:path",
+      pattern:
+        "https://github.com/Fl0wyn/wiki.feranet.fr/edit/master/docs/:path",
       text: "Edit this page on GitHub",
     },
 
