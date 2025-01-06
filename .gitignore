@@ -2,7 +2,6 @@
 node_modules
 dist
 cache
-.tmp
 
 # local env files
 .env.local

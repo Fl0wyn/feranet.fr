@@ -15,7 +15,7 @@ export default defineConfig({
       "link",
       {
         rel: "icon",
-        href: "https://feranet.fr/favicon.ico",
+        href: "/logo.svg",
       },
     ],
     ["script", { src: "/_vercel/insights/script.js", defer: "true" }],
