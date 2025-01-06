@@ -99,7 +99,7 @@ export default defineConfig({
 
     editLink: {
       pattern:
-        "https://github.com/Fl0wyn/wiki.feranet.fr/edit/master/docs/:path",
+        "https://github.com/Fl0wyn/feranet.fr/edit/master/docs/:path",
       text: "Edit this page on GitHub",
     },
 
