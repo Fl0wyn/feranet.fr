@@ -22,36 +22,26 @@ hero:
 features:
   - icon: 🐧
     title: Linux
-    details: commands, scripts, and tips
   - icon: 🪟
     title: Windows
-    details: scripts, tools, and tweaks
   - icon: 📝
     title: Snippets
-    details: code snippets and libraries
   - icon: 📚
     title: Libraries
-    details: Libraries and frameworks JS
   - icon: 🖼️
     title: AI Design
-    details:
   - icon: 💻
     title: AI Code
-    details:
   - icon: 🤖
     title: AI
   - icon: 🎨
     title: Design & Icon
-    details:
   - icon: 🛠
     title: Utility & API
-    details:
   - icon: 📱
     title: UI Library
-    details:
   - icon: 🎮
     title: Game
-    details:
 ---
 
 ## Setup
