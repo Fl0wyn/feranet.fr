@@ -35,6 +35,7 @@ export const data = [
       { app: "DeepAI", img: "DeepAI.ico", url: "https://deepai.org/" },
       { app: "Ideogram", img: "Ideogram.svg", url: "https://ideogram.ai/" },
       { app: "Leonardo", img: "Leonardo.ico", url: "https://leonardo.ai/" },
+      { app: "klingai", img: "klingai.ico", url: "https://klingai.com/" },
       { app: "Seaart", img: "Seaart.ico", url: "https://www.seaart.ai/" },
       { app: "Midjourney", img: "Midjourney.png", url: "https://www.midjourney.com/" },
       { app: "Clipdrop", img: "Clipdrop.ico", url: "https://clipdrop.co/" },
