@@ -20,10 +20,12 @@ hero:
       text: Tools
       link: /tools
 features:
-  - icon: 🐧
+  - icon: 📖
     title: Wiki
-  - icon: 🐧
+    details: Explore a collection of practical tips and tricks for developers and creators.
+  - icon: ⚙️
     title: Tools
+    details: Access a variety of tools and resources to enhance your workflow.
 ---
 
 ## Setup

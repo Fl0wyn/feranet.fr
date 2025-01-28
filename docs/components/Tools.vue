@@ -24,7 +24,7 @@ const filteredData = computed(() => {
     <input
       v-model="searchQuery"
       type="search"
-      placeholder="Search"
+      placeholder="Filter tools..."
       style="width: 100%"
     />
   </div>
