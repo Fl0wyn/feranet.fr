@@ -12,6 +12,7 @@ import { data } from "../data";
         :aria-label="'Permalink to &quot;' + item.title + '&quot;'"
         >​</a
       >
+      <Badge type="tip" :text="item.items.length" style="margin-left: 0.2rem" />
     </h2>
     <div class="cards">
       <a
@@ -21,8 +22,11 @@ import { data } from "../data";
         target="_blank"
         class="app"
       >
-        <span>{{ app.app }}</span>
-        <img :src="`/assets/${app.img}`" :alt="app.app" width="24" />
+        <div class="app-header">
+          <span>{{ app.app }}</span>
+          <img :src="`/assets/${app.img}`" :alt="app.app" width="24" />
+        </div>
+        <span class="detail">{{ app.detail }}</span>
       </a>
     </div>
   </div>
@@ -47,10 +51,15 @@ import { data } from "../data";
   border-radius: 8px;
   transition: transform 0.2s;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   text-decoration: none;
   color: inherit;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .app:hover {
@@ -59,10 +68,16 @@ import { data } from "../data";
 }
 
 .app img {
-  margin-left: 8px;
   background-color: var(--vp-c-bg-alt);
   padding: 2px;
   border-radius: 4px;
+}
+
+.detail {
+  margin-top: 12px;
+  font-size: 0.875rem;
+  text-align: left;
+  color: var(--vp-c-text-2);
 }
 
 @media (max-width: 768px) {
