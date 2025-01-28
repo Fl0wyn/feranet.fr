@@ -103,7 +103,7 @@ const filteredData = computed(() => {
 }
 
 .app img {
-  background-color: var(--vp-c-bg-alt);
+  background-color: var(--vp-c-brand-soft);
   padding: 2px;
   border-radius: 4px;
 }
