@@ -101,11 +101,14 @@ export const data = [
       { app: "Ipify API", img: "IpifyAPI.ico", url: "https://www.ipify.org/" },
       { app: "Openweathermap", img: "Openweathermap.ico", url: "https://openweathermap.org/" },
       { app: "Ntfy", img: "Ntfy.ico", url: "https://ntfy.sh/" },
+      { app: "Tauri", img: "tauri.png", url: "https://tauri.app" },
+      { app: "Supabase", img: "supabase.png", url: "https://supabase.com/" },
     ]
   },
   {
     title: "UI Library", items: [
       { app: "Shadcn UI", img: "ShadcnUI.ico", url: "https://ui.shadcn.com/" },
+      { app: "Shadcn Vue", img: "shadcn-vue.ico", url: "https://www.shadcn-vue.com/" },
       { app: "Aceternity UI", img: "AceternityUI.ico", url: "https://ui.aceternity.com/" },
       { app: "Tailwindcss", img: "Tailwindcss.ico", url: "https://tailwindcss.com/" },
       { app: "Bootstrap", img: "Bootstrap.ico", url: "https://getbootstrap.com/" },
