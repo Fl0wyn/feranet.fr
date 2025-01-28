@@ -21,27 +21,9 @@ hero:
       link: /tools
 features:
   - icon: 🐧
-    title: Linux
-  - icon: 🪟
-    title: Windows
-  - icon: 📝
-    title: Snippets
-  - icon: 📚
-    title: Libraries
-  - icon: 🖼️
-    title: AI Design
-  - icon: 💻
-    title: AI Code
-  - icon: 🤖
-    title: AI
-  - icon: 🎨
-    title: Design & Icon
-  - icon: 🛠
-    title: Utility & API
-  - icon: 📱
-    title: UI Library
-  - icon: 🎮
-    title: Game
+    title: Wiki
+  - icon: 🐧
+    title: Tools
 ---
 
 ## Setup

@@ -1,9 +1,35 @@
 <script setup>
+import { computed, ref } from "vue";
 import { data } from "../data";
+
+const searchQuery = ref("");
+
+const filteredData = computed(() => {
+  if (!searchQuery.value) return data;
+  return data
+    .map((category) => ({
+      ...category,
+      items: category.items.filter(
+        (app) =>
+          app.app.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+          app.detail.toLowerCase().includes(searchQuery.value.toLowerCase())
+      ),
+    }))
+    .filter((category) => category.items.length > 0);
+});
 </script>
 
 <template>
-  <div v-for="item in data" :key="item.title" class="item">
+  <div class="DocSearch DocSearch-Button" style="margin-top: 0.2rem">
+    <input
+      v-model="searchQuery"
+      type="search"
+      placeholder="Search"
+      style="width: 100%"
+    />
+  </div>
+
+  <div v-for="item in filteredData" :key="item.title" class="item">
     <h2 :id="item.title" tabindex="-1">
       {{ item.title }}
       <a
@@ -33,6 +59,15 @@ import { data } from "../data";
 </template>
 
 <style scoped>
+.search-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
 .item {
   margin-bottom: 32px;
 }
