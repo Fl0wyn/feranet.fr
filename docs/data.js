@@ -24,6 +24,7 @@ export const data = [
       { app: "Pixabay", img: "Pixabay.png", url: "https://pixabay.com/" },
       { app: "Freepik", img: "Freepik.png", url: "https://www.freepik.com/" },
       { app: "Blush", img: "Blush.png", url: "https://blush.design/" },
+      { app: "Oklch", img: "oklch.svg", url: "https://oklch.com/" },
     ]
   },
   {
