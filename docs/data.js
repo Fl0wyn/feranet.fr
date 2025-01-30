@@ -71,6 +71,7 @@ export const data = [
   {
     title: "AI", items: [
       { app: "ChatGPT", img: "ChatGPT.png", url: "https://chat.openai.com/", detail: "AI-based conversational assistant." },
+      { app: "Deepseek", img: "deepseek.png", url: "https://chat.deepseek.com/", detail: "AI-based conversational assistant." },
       { app: "Gemini", img: "Gemini.svg", url: "https://gemini.google.com/", detail: "Google's AI assistant." },
       { app: "Perplexity", img: "Perplexity.ico", url: "https://www.perplexity.ai/", detail: "AI-based search engine." },
       { app: "Mistral", img: "Mistral.ico", url: "https://mistral.ai/", detail: "Advanced language models." },
