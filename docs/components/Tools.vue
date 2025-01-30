@@ -5,7 +5,12 @@ import { data } from "../data";
 const searchQuery = ref("");
 
 const filteredData = computed(() => {
-  if (!searchQuery.value) return data;
+  if (!searchQuery.value) {
+    return data.map((category) => ({
+      ...category,
+      items: category.items.sort((a, b) => a.app.localeCompare(b.app)),
+    }));
+  }
   return data
     .map((category) => ({
       ...category,
@@ -20,7 +25,7 @@ const filteredData = computed(() => {
 </script>
 
 <template>
-  <div class="DocSearch DocSearch-Button" style="margin-top: 0.2rem">
+  <div class="DocSearch DocSearch-Button" style="margin-top: 0.4rem">
     <input
       v-model="searchQuery"
       type="search"
