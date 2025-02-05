@@ -62,6 +62,7 @@ export const data = [
       { app: "Lovable", img: "Lovable.ico", url: "https://lovable.dev/", detail: "AI-based coding assistant" },
       { app: "Tabnine", img: "Tabnine.ico", url: "https://www.tabnine.com/", detail: "AI-based code completion" },
       { app: "V0", img: "V0.png", url: "https://v0.dev/", detail: "AI-based development assistant" },
+      { app: "Continue", img: "continue.png", url: "https://www.continue.dev/", detail: "The leading open-source AI code assistant." },
     ]
   },
   {
@@ -78,6 +79,7 @@ export const data = [
       { app: "Ollama", img: "Ollama.ico", url: "https://ollama.com/", detail: "Get up and running with large language models" },
       { app: "Perplexity", img: "Perplexity.ico", url: "https://www.perplexity.ai/", detail: "AI-based search engine" },
       { app: "LM Studio", img: "lmstudio.ico", url: "https://lmstudio.ai/", detail: "Discover, download, and run local LLMs" },
+      { app: "Jan", img: "jan.ico", url: "https://jan.ai/", detail: "Open source ChatGPT-alternative" },
     ]
   },
   {
