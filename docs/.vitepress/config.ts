@@ -65,6 +65,17 @@ export default defineConfig({
             { text: "PM2", link: "/linux/pm2" },
           ],
         },
+        // WIP
+        {
+          text: "Work in progress",
+          collapsed: false,
+          items: [
+            { text: "Ansible 🚧", link: "/wip/Ansible" },
+            { text: "Git 🚧", link: "/wip/git" },
+            { text: "Kubernetes 🚧", link: "/wip/kubernetes" },
+            { text: "SQL 🚧", link: "/wip/sql" },
+          ],
+        },
         {
           text: "Windows",
           collapsed: false,
