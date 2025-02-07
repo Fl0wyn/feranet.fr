@@ -63,16 +63,10 @@ export default defineConfig({
             { text: "Text manipulation", link: "/linux/textManipulation" },
             { text: "Vim", link: "/linux/vim" },
             { text: "PM2", link: "/linux/pm2" },
-          ],
-        },
-        // WIP
-        {
-          text: "Work in progress",
-          collapsed: false,
-          items: [
-            { text: "Ansible 🚧", link: "/wip/Ansible" },
-            { text: "Git 🚧", link: "/wip/git" },
+            // A déplacer dans le dossier Linux
+            { text: "Ansible 🚧", link: "/wip/ansible" },
             { text: "Kubernetes 🚧", link: "/wip/kubernetes" },
+            { text: "Git 🚧", link: "/wip/git" },
             { text: "SQL 🚧", link: "/wip/sql" },
           ],
         },
