@@ -63,9 +63,9 @@ export default defineConfig({
             { text: "Text manipulation", link: "/linux/textManipulation" },
             { text: "Vim", link: "/linux/vim" },
             { text: "PM2", link: "/linux/pm2" },
+            { text: "Network", link: "/linux/network" },
             // A déplacer dans le dossier Linux
             { text: "Ansible 🚧", link: "/wip/ansible" },
-            { text: "Configuration 🚧", link: "/wip/configuration" },
             { text: "Kubernetes 🚧", link: "/wip/kubernetes" },
             { text: "Git 🚧", link: "/wip/git" },
             { text: "SQL 🚧", link: "/wip/sql" },
