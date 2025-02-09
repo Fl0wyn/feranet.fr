@@ -33,7 +33,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: "Home", link: "/" },
-      { text: "Wiki", link: "/linux/archives" },
+      { text: "Wiki", link: "/linux/textManipulation" },
       { text: "Tools", link: "/tools" },
     ],
 
@@ -48,6 +48,7 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: "Ansible 🚧", link: "/linux/ansible" },
+            { text: "Apache2 & Nginx", link: "/linux/apache2-nginx" },
             { text: "Archives", link: "/linux/archives" },
             { text: "Chroot SFTP", link: "/linux/chrootSFTP" },
             { text: "Conditions", link: "/linux/conditions" },
@@ -90,7 +91,6 @@ export default defineConfig({
           text: "Snippets",
           collapsed: false,
           items: [
-            { text: "Apache2 & Nginx", link: "/snippets/apache2-nginx" },
             { text: "Bash", link: "/snippets/bash" },
             {
               text: "TypeScript - Config",

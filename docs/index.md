@@ -15,7 +15,7 @@ hero:
       link: https://github.com/Fl0wyn
     - theme: brand
       text: Wiki
-      link: /linux/archives
+      link: /linux/textManipulation
     - theme: brand
       text: Tools
       link: /tools
