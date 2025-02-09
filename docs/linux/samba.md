@@ -2,12 +2,16 @@
 
 ## Server
 
+### Installation
+
 ```bash
 sudo apt install samba
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.back
 ```
 
-`/etc/samba/smb.conf`
+### Configuration
+
+Edit `/etc/samba/smb.conf`:
 
 ```bash
 [share]
@@ -16,6 +20,8 @@ sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.back
    read only = no
 ```
 
+### Set User Password
+
 ```bash
 sudo smbpasswd -a user
 sudo service smbd restart
@@ -23,25 +29,25 @@ sudo service smbd restart
 
 ## Client
 
-Installation
+### Installation
 
 ```bash
 sudo apt install smbclient cifs-utils
 mkdir /home/share
 ```
 
-Add authentication information
+### Add Authentication Information
 
-`/etc/samba/user`
+Create `/etc/samba/user`:
 
 ```bash
 username=<user>
 password=<password>
 ```
 
-Mount the directory automatically on boot
+### Mount Directory Automatically on Boot
 
-`/etc/fstab`
+Edit `/etc/fstab`:
 
 ```bash
 //SRV-WINDOWS/prod/share /home/share cifs  credentials=/etc/samba/user,noexec  0 0

@@ -1,6 +1,7 @@
 export const data = [
   {
-    title: "Design & Icon", items: [
+    title: "Design & Icon",
+    items: [
       { app: "Base64 Image", img: "Base64Image.ico", url: "https://www.base64-image.de/", detail: "Image to Base64 converter" },
       { app: "Blush", img: "Blush.png", url: "https://blush.design/", detail: "Customizable illustrations" },
       { app: "Canva", img: "Canva.ico", url: "https://www.canva.com/", detail: "Online graphic design tool" },
@@ -27,7 +28,8 @@ export const data = [
     ]
   },
   {
-    title: "AI Design", items: [
+    title: "AI Design",
+    items: [
       { app: "Audiobox", img: "Audiobox.ico", url: "https://audiobox.metademolab.com/", detail: "AI-based audio creation tool" },
       { app: "Capcut", img: "Capcut.ico", url: "https://www.capcut.com/", detail: "Video editing tool" },
       { app: "Clipdrop", img: "Clipdrop.ico", url: "https://clipdrop.co/", detail: "AI-based photo editing tools" },
@@ -56,7 +58,8 @@ export const data = [
     ]
   },
   {
-    title: "AI Code", items: [
+    title: "AI Code",
+    items: [
       { app: "Bolt", img: "Bolt.svg", url: "https://bolt.new/", detail: "AI-based code generator" },
       { app: "Github Copilot", img: "Github.ico", url: "https://copilot.github.com/", detail: "AI-based coding assistant" },
       { app: "Lovable", img: "Lovable.ico", url: "https://lovable.dev/", detail: "AI-based coding assistant" },
@@ -66,7 +69,8 @@ export const data = [
     ]
   },
   {
-    title: "AI", items: [
+    title: "AI",
+    items: [
       { app: "Bing Copilot", img: "BingCopilot.ico", url: "https://www.bing.com/chat", detail: "AI assistant integrated with Bing" },
       { app: "ChatGPT", img: "ChatGPT.png", url: "https://chat.openai.com/", detail: "AI-based conversational assistant" },
       { app: "Claude", img: "Claude.ico", url: "https://claude.ai/", detail: "Anthropic's AI assistant" },
@@ -83,7 +87,8 @@ export const data = [
     ]
   },
   {
-    title: "Utility & API", items: [
+    title: "Utility & API",
+    items: [
       { app: "Alternativeto", img: "Alternativeto.ico", url: "https://alternativeto.net/", detail: "Find alternatives to popular software" },
       { app: "DBdiagram", img: "DBdiagram.ico", url: "https://dbdiagram.io/home", detail: "Create database diagrams" },
       { app: "Excalidraw", img: "Excalidraw.ico", url: "https://excalidraw.com/", detail: "Online collaborative drawing tool" },
@@ -106,7 +111,8 @@ export const data = [
     ]
   },
   {
-    title: "UI Library", items: [
+    title: "UI Library",
+    items: [
       { app: "Aceternity UI", img: "AceternityUI.ico", url: "https://ui.aceternity.com/", detail: "UI component library for React" },
       { app: "Bootstrap", img: "Bootstrap.ico", url: "https://getbootstrap.com/", detail: "Popular CSS framework" },
       { app: "Shadcn UI", img: "ShadcnUI.ico", url: "https://ui.shadcn.com/", detail: "UI component library for React" },
@@ -119,7 +125,8 @@ export const data = [
     ]
   },
   {
-    title: "Game", items: [
+    title: "Game",
+    items: [
       { app: "CSS Diner", img: "CSSDiner.ico", url: "https://flukeout.github.io/", detail: "Learn CSS selectors by playing" },
       { app: "Flexbox Defense", img: "FlexboxDefense.ico", url: "http://www.flexboxdefense.com/", detail: "Defend your base using Flexbox" },
       { app: "Flexbox Froggy", img: "FlexboxFroggy.ico", url: "https://flexboxfroggy.com", detail: "Learn Flexbox by playing" },

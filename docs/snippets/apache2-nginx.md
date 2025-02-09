@@ -1,6 +1,8 @@
 # Apache2 & Nginx
 
-## Nginx
+## Nginx Configuration
+
+### Default Server
 
 ```nginx
 server {
@@ -10,28 +12,38 @@ server {
   add_header Access-Control-Allow-Origin "*";
   add_header Access-Control-Allow-Methods "GET";
   location / {
-      try_files $uri $uri/ /index.html ;
+      try_files $uri $uri/ /index.html;
   }
 }
+```
 
+### Secondary Server
+
+```nginx
 server {
   listen 8080;
   index index.html;
   root /var/www/site2;
   location / {
-      try_files $uri $uri/ /index.html ;
+      try_files $uri $uri/ /index.html;
   }
 }
 ```
 
-## Apache2 (SSL + Proxy)
+## Apache2 Configuration (SSL + Proxy)
+
+### Redirect HTTP to HTTPS
 
 ```apache
 <VirtualHost *:80>
   ServerName www.example.com
   Redirect permanent / https://www.example.com/
 </VirtualHost>
+```
 
+### HTTPS with Proxy and SSL
+
+```apache
 <VirtualHost *:443>
   ServerName www.example.com
   ServerAdmin webmaster@localhost
@@ -61,9 +73,6 @@ server {
   # HSTS
   Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains; preload"
 
-  # OCSP Stapling
-  Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains; preload"
-
   # HTTP2
   Protocols h2 http/1.1
 
@@ -75,11 +84,10 @@ server {
       Header set Cache-Control "max-age=3600, private"
   </FilesMatch>
 
-  # Headers for security
+  # Security Headers
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set X-XSS-Protection "1; mode=block"
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "no-referrer-when-downgrade"
   Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; form-action 'self'; base-uri 'self';"
 </VirtualHost>
-```

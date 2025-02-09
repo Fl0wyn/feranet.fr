@@ -1,20 +1,23 @@
-# Meraki auto reboot
+# Meraki Auto Reboot
 
-https://developer.cisco.com/meraki/api-v1/#!reboot-device
+[Meraki API Documentation](https://developer.cisco.com/meraki/api-v1/#!reboot-device)
 
-Activate the API key and retrieve the serial number
+## Retrieve API Key and Serial Number
 
-**Sérial number** : Organization > License Info > Devices
+- **Serial Number**: Organization > License Info > Devices
+- **API Key**: Organization > Settings > Dashboard API access
 
-**API KEY** : Organization > Settings > Dashboard API access
+## Crontab
 
-Crontab
+Schedule the reboot script to run at 7 AM daily:
 
 ```bash
 0 7 * * * /usr/bin/bash /root/schedule_reboot_meraki.sh
 ```
 
-Script
+## Script
+
+Create the script `/root/schedule_reboot_meraki.sh`:
 
 ```bash
 #!/bin/bash

@@ -1,12 +1,14 @@
-# JavaScript - Config
+# TypeScript - Config
 
-## Date and time
+## Date and Time
 
-```js
+### Long Format Date
+
+```typescript
 /**
- *  Display the date in long format
+ * Display the date in long format
  */
-function dateNumeric() {
+function dateNumeric(): string {
   const today = new Date();
   return today.toLocaleDateString("fr-FR", {
     weekday: "long",
@@ -15,20 +17,24 @@ function dateNumeric() {
     year: "numeric",
   });
 } // output: dimanche 8 janvier 2023
+```
 
+### Short Format Date
+
+```typescript
 /**
- *  Display the date in short format
+ * Display the date in short format
  */
-function dateLong() {
+function dateLong(): string {
   const today = new Date();
   return today.toLocaleDateString("fr-FR");
 } // output: 08/01/2023
 ```
 
-## Size converter
+## Size Converter
 
-```js
-function convertSize(size, fixed) {
+```typescript
+function convertSize(size: number, fixed: number): string {
   const units = ["Ko", "Mo", "Go", "To", "Po"];
   const unitIndex = Math.floor(Math.log(size) / Math.log(1024));
   return `${(size / Math.pow(1024, unitIndex)).toFixed(fixed)} ${
@@ -37,14 +43,20 @@ function convertSize(size, fixed) {
 }
 ```
 
-## Bandwidth converter
+## Bandwidth Converter
 
-```js
-function convertBandwidth(bandwidth, fixed) {
+### Convert to Mbps
+
+```typescript
+function convertBandwidth(bandwidth: number, fixed: number): string {
   return `${parseFloat((bandwidth / 125000).toFixed(fixed))} Mbps`;
 }
+```
 
-function convertBandwidth(bandwidth, fixed) {
+### Convert with Units
+
+```typescript
+function convertBandwidthWithUnits(bandwidth: number, fixed: number): string {
   const units = ["bps", "Kbps", "Mbps", "Gbps", "Tbps"];
   const unitIndex = Math.floor(Math.log(bandwidth) / Math.log(1000));
   return `${(bandwidth / Math.pow(1000, unitIndex)).toFixed(fixed)} ${
@@ -53,19 +65,19 @@ function convertBandwidth(bandwidth, fixed) {
 }
 ```
 
-## Capitalize on the first letter
+## Capitalize the First Letter
 
-```js
-function capitalise(str) {
+```typescript
+function capitalise(str: string): string {
   return str[0].toUpperCase() + str.slice(1);
 }
 ```
 
-## Generate uuid
+## Generate UUID
 
-```js
-const uuid = (number = 32) => {
-  const gen = (x, number) =>
+```typescript
+const uuid = (number: number = 32): string => {
+  const gen = (x: string, number: number): string =>
     Array.from(
       { length: number ? number : 1 },
       () => x[Math.floor(Math.random() * x.length)]
@@ -77,30 +89,31 @@ const uuid = (number = 32) => {
 };
 ```
 
-## Generate a random number or string
+## Generate a Random Number or String
 
-```js
+```typescript
 const randomGen = {
   NC: "0123456789",
   LC: "abcdefghijklmnopqrstuvwxyz",
   UC: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 
-  _generate: (c, n) =>
-    Array.from(
+  _generate(c: string, n: number): string {
+    return Array.from(
       { length: n ? n : 1 },
       () => c[Math.floor(Math.random() * c.length)]
-    ).join(""),
+    ).join("");
+  },
 
-  number(n) {
+  number(n: number): string {
     return this._generate(this.NC, n);
   },
-  lowercase(n) {
+  lowercase(n: number): string {
     return this._generate(this.LC, n);
   },
-  uppercase(n) {
+  uppercase(n: number): string {
     return this._generate(this.UC, n);
   },
-  all(n) {
+  all(n: number): string {
     return this._generate(this.NC + this.UC + this.LC, n);
   },
 };

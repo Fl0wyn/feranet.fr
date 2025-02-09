@@ -1,8 +1,8 @@
 # Vim
 
-## Moving around in the text
+## Moving Around in the Text
 
-| code | description                    |
+| Code | Description                    |
 | ---- | ------------------------------ |
 | `0`  | Move to the beginning of line  |
 | `$`  | Move to the end of line        |
@@ -11,9 +11,9 @@
 | `G`  | Move to the end of file        |
 | `gg` | Move to the beginning of file  |
 
-## Delete text
+## Delete Text
 
-| code  | description                                     |
+| Code  | Description                                     |
 | ----- | ----------------------------------------------- |
 | `dw`  | Delete a word                                   |
 | `d2w` | Delete 2 words                                  |
@@ -23,9 +23,9 @@
 | `d0`  | Delete from cursor to the beginning of the line |
 | `d$`  | Delete from cursor to the end of the line       |
 
-## Copy and paste text
+## Copy and Paste Text
 
-| code  | description                  |
+| Code  | Description                  |
 | ----- | ---------------------------- |
 | `yw`  | Copy a word                  |
 | `y2w` | Copy 2 words                 |
@@ -34,21 +34,21 @@
 | `p`   | Paste a line or word         |
 | `6p`  | Paste 6 times a line or word |
 
-## Undoing changes
+## Undoing Changes
 
-| code         | description                |
+| Code         | Description                |
 | ------------ | -------------------------- |
 | `u`          | Undo previous actions      |
 | `U`          | Undo all changes on a line |
 | `CTRL` + `R` | Redo the undo              |
 
-## Save, exit, search, etc.
+## Save, Exit, Search, etc.
 
-| code             | description                   |
+| Code             | Description                   |
 | ---------------- | ----------------------------- |
 | `/`              | Search for a word             |
 | `:w`             | Save                          |
-| `:q`             | Quit or :q! to force close    |
+| `:q`             | Quit or `:q!` to force close  |
 | `:wq`            | Save and quit                 |
 | `vim -x fichier` | Create a file with a password |
 | `:X`             | Change the password           |

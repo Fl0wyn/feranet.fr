@@ -1,6 +1,6 @@
 # Bash
 
-## List of packages to install
+## List of Packages to Install
 
 ```bash
 LIST_OF_PACKAGES_TO_INSTALL=(
@@ -12,24 +12,20 @@ apt install ${LIST_OF_PACKAGES_TO_INSTALL[@]}
 dnf install ${LIST_OF_PACKAGES_TO_INSTALL[@]}
 ```
 
-## Date format
+## Date Format
 
 ```bash
 DATE=$(date +%d-%m-%Y)
-
 echo $DATE
 ```
 
-## Message format
+## Message Format
 
 ```bash
-SUCCESS=$(echo -e "[\e[42m\e[1m SUCCESS \e[0m"])
-ERROR=$(echo -e "[\e[41m\e[1m ERROR \e[0m"])
-WARNING=$(echo -e "[\e[43m\e[1m WARNING \e[0m"])
+SUCCESS=$(echo -e "[\e[42m\e[1m SUCCESS \e[0m]")
+ERROR=$(echo -e "[\e[41m\e[1m ERROR \e[0m]")
+WARNING=$(echo -e "[\e[43m\e[1m WARNING \e[0m]")
 INFORMATION=$(echo -e "\e[36m\e[1m->\e[0m")
-
-# ✔
-# ✘
 
 echo $SUCCESS
 echo $ERROR
@@ -37,7 +33,7 @@ echo $WARNING
 echo $INFORMATION
 ```
 
-## Verification of Internet access
+## Verification of Internet Access
 
 ```bash
 ping -q -c 2 cloudflare.com >/dev/null 2>&1
@@ -49,7 +45,7 @@ else
 fi
 ```
 
-## Multi SSH connection
+## Multi SSH Connection
 
 ```bash
 LIST=$(
@@ -60,7 +56,6 @@ EOF
 )
 
 for i in $LIST; do
-
   iping=$(echo "$i" | cut -d@ -f2)
   ping -c1 $iping &>/dev/null
 
@@ -70,11 +65,10 @@ for i in $LIST; do
     scp -P $issh:/home/$iuser/
     ssh -p $issh 'touch file_test'
   fi
-
 done
 ```
 
-## .bashrc file
+## .bashrc File
 
 ```bash
 export LS_OPTIONS='--color=auto'

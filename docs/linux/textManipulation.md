@@ -1,8 +1,8 @@
-# Text manipulation
+# Text Manipulation
 
 ## sed
 
-| code                                    | description                                           |
+| Code                                    | Description                                           |
 | --------------------------------------- | ----------------------------------------------------- |
 | `sed '1d'`                              | Delete the first line                                 |
 | `sed '$d'`                              | Delete the last line                                  |
@@ -25,11 +25,11 @@
 | `sed '/^word1.*/a word2' file.txt`      | Add 'word2' after 'word1'                             |
 | `sed '$ s/.$//'`                        | Delete the last character of the last line            |
 | `sed '1s/^.//'`                         | Delete the first character of the first line          |
-| `sed 's/\.word3$//g' `                  | Delete the word word3 from the last lines             |
+| `sed 's/\.word3$//g' `                  | Delete the word 'word3' from the last lines           |
 
 ## cut
 
-| code                            | description                                                       |
+| Code                            | Description                                                       |
 | ------------------------------- | ----------------------------------------------------------------- |
 | `cut -c2`                       | Display the 2nd character                                         |
 | `cut -c1-10`                    | Display from the 1st to the 10th character                        |
@@ -41,7 +41,7 @@
 
 ## tr
 
-| code             | description                            |
+| Code             | Description                            |
 | ---------------- | -------------------------------------- |
 | `tr -d 'wd'`     | Delete the characters 'w' and 'd'      |
 | `tr -s 'a' 'b'`  | Convert the character 'a' to 'b'       |
@@ -49,7 +49,7 @@
 
 ## awk
 
-| code                                        | description                                          |
+| Code                                        | Description                                          |
 | ------------------------------------------- | ---------------------------------------------------- |
 | `awk '{print $2}'`                          | Print the 2nd field                                  |
 | `awk '{print $1,$4}'`                       | Print the 1st and 4th field                          |
@@ -62,7 +62,7 @@
 
 ## head & tail
 
-| code      | description                                                 |
+| Code      | Description                                                 |
 | --------- | ----------------------------------------------------------- |
 | `head -3` | Display the first 3 lines                                   |
 | `tail -4` | Display the last 4 lines                                    |
@@ -70,7 +70,7 @@
 
 ## grep
 
-| code                     | description                                               |
+| Code                     | Description                                               |
 | ------------------------ | --------------------------------------------------------- |
 | `grep -i word`           | Display the line containing the string 'word' in any case |
 | `grep -A 2 word`         | Display 2 lines below the string 'word'                   |
@@ -85,7 +85,7 @@
 
 ## sort
 
-| code              | description                                    |
+| Code              | Description                                    |
 | ----------------- | ---------------------------------------------- |
 | `sort`            | Sort alphabetically                            |
 | `sort -r`         | Sort in reverse order                          |
@@ -95,7 +95,7 @@
 
 ## wc
 
-| code    | description                              |
+| Code    | Description                              |
 | ------- | ---------------------------------------- |
 | `wc -l` | Count the number of lines in a file      |
 | `wc -w` | Count the number of words in a file      |
@@ -103,7 +103,7 @@
 
 ## uniq
 
-| code      | description                         |
+| Code      | Description                         |
 | --------- | ----------------------------------- |
 | `uniq`    | Delete duplicate lines              |
 | `uniq -d` | Display only duplicate lines        |
@@ -112,7 +112,7 @@
 
 ## du
 
-| code               | description                          |
+| Code               | Description                          |
 | ------------------ | ------------------------------------ |
 | `du -h`            | Display size in readable form        |
 | `du -c`            | Show size with total                 |

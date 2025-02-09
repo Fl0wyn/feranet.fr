@@ -1,18 +1,18 @@
 # Debian GPG Key
 
-List of keys : https://ftp-master.debian.org/keys.html
+[List of keys](https://ftp-master.debian.org/keys.html)
 
 ::: info
-In this example, we will use the key 0D6C9793, the key 0D6C9793 is the last 8 digits of the fingerprint.
+In this example, we will use the key `0D6C9793`. The key `0D6C9793` is the last 8 digits of the fingerprint.
 :::
 
-Donwload key
+## Download Key
 
 ```bash
 gpg --keyserver pgpkeys.mit.edu --recv-key 0D6C9793
 ```
 
-Add key
+## Add Key
 
 ```bash
 gpg -a --export 0D6C9793 | sudo apt-key add -

@@ -1,6 +1,6 @@
 # SSH
 
-## Connect to a remote machine
+## Connect to a Remote Machine
 
 ```bash
 # On port 22
@@ -10,11 +10,11 @@ ssh root@1.2.3.4
 ssh -p 5678 root@1.2.3.4
 ```
 
-## Login without password
+## Login Without Password
+
+### Generate a Key
 
 ```bash
-# Generating a key
-
 # -o : Save the key in the new openssh format
 # -a : Number of key derivation function rounds
 # -t : Specify the type of key being created
@@ -22,12 +22,15 @@ ssh -p 5678 root@1.2.3.4
 # -C : Add a comment to the key
 
 ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519 -C "email@example.com"
+```
 
-# Sending the key to the remote machine
+### Send the Key to the Remote Machine
+
+```bash
 ssh-copy-id -i .ssh/id_ed25519.pub root@1.2.3.4
 ```
 
-## Send a file from the client to the server
+## Send a File from the Client to the Server
 
 ```bash
 scp file.sh root@1.2.3.4:/home/eve
@@ -39,7 +42,7 @@ scp -P 5678 file.sh root@1.2.3.4:/home/eve
 scp -r folder root@1.2.3.4:/home/eve
 ```
 
-## Send a file from the server to the client
+## Send a File from the Server to the Client
 
 ```bash
 scp root@1.2.3.4:file.sh /home/eve
@@ -51,7 +54,7 @@ scp -P 5678 root@1.2.3.4:file.sh /home/eve
 scp -r root@1.2.3.4:folder /home/eve
 ```
 
-## Execute a command
+## Execute a Command
 
 ```bash
 ssh root@1.2.3.4 'df -h'
@@ -60,7 +63,7 @@ ssh root@1.2.3.4 'df -h'
 ssh -P 5678 root@1.2.3.4 'df -h'
 ```
 
-## Run a script
+## Run a Script
 
 ```bash
 ssh root@1.2.3.4 './scripts.sh'
@@ -69,7 +72,7 @@ ssh root@1.2.3.4 './scripts.sh'
 ssh -P 5678 root@1.2.3.4 './scripts.sh'
 ```
 
-## Execute a function inside a script
+## Execute a Function Inside a Script
 
 ```bash
 ssh root@1.2.3.4 "$(declare -f fonction_creation); fonction_creation" > /dev/null 2>&1
@@ -78,16 +81,16 @@ ssh root@1.2.3.4 "$(declare -f fonction_creation); fonction_creation" > /dev/nul
 ssh -P 5678 root@1.2.3.4 "$(declare -f fonction_creation); fonction_creation" > /dev/null 2>&1
 ```
 
-## SSH tunnel
+## SSH Tunnel
 
 ```bash
 ssh root@1.2.3.4 -L 2500:127.0.0.1:3000 -N -v
 
 # On port 5678
-ssh -P 5678  root@1.2.3.4 -L 2500:127.0.0.1:3000 -N -v
+ssh -P 5678 root@1.2.3.4 -L 2500:127.0.0.1:3000 -N -v
 ```
 
-## Other useful commands
+## Other Useful Commands
 
 ```bash
 # Test your configuration and debug
@@ -109,9 +112,9 @@ ssh -Q kex
 ssh -Q key
 ```
 
-## Securing the configuration
+## Securing the Configuration
 
-Modify permissions to avoid errors
+### Modify Permissions to Avoid Errors
 
 ```bash
 chmod 0700 ~/.ssh
@@ -119,13 +122,15 @@ chmod 0600 ~/.ssh/id_ed25519
 chmod 0644 ~/.ssh/authorized_keys
 ```
 
-Make a copy of the configuration file `/etc/ssh/sshd_config`
+### Backup Configuration File
 
 ```bash
 sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
 ```
 
-Edit the configuration file `/etc/ssh/sshd_config`
+### Edit Configuration File
+
+Edit `/etc/ssh/sshd_config`:
 
 ```bash
 # Interface & Port
@@ -197,37 +202,53 @@ AcceptEnv LANG LC_*
 Subsystem   sftp   /usr/libexec/openssh/sftp-server
 ```
 
+### Regenerate Server ED25519 Key
+
 ```bash
-# Regeneration of server ED25519 key
 sudo rm -f /etc/ssh/ssh_host_*
 sudo ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ""
-
-# Removing weak Diffie-Hellman moduli
-sudo awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe
-sudo mv -f /etc/ssh/moduli.safe /etc/ssh/moduli
-
-# Disabling DSA/ECDSA & RSA keys
-sudo sed -i 's/^HostKey \/etc\/ssh\/ssh_host_\(dsa\|ecdsa\|rsa\)_key$/\#HostKey \/etc\/ssh\/ssh_host_\1_key/g' /etc/ssh/sshd_config
-
-# Restricting ciphers, key exchange, and authentication methods
-# Injecting our ciphers, key and authentication methods
-echo -e "\nKexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512\nCiphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr\nMACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com" >> /etc/ssh/sshd_config
-
-# Denying SSH connections to everyone except our IP addresses
-echo "sshd: ALL" >> /etc/hosts.deny
-echo "sshd: 1.2.3.4, 5.6.7.8" >> /etc/hosts.allow
-
-# Restarting the sshd service
-sudo systemctl restart sshd.service
-
-# Testing the server
-# ssh-audit website: https://www.ssh-audit.com/
-# ssh-audit python tool: https://github.com/jtesta/ssh-audit
 ```
 
-## Host configuration
+### Remove Weak Diffie-Hellman Moduli
 
-Create and modify the `.ssh/config` file in the root of the user's folder
+```bash
+sudo awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe
+sudo mv -f /etc/ssh/moduli.safe /etc/ssh/moduli
+```
+
+### Disable DSA/ECDSA & RSA Keys
+
+```bash
+sudo sed -i 's/^HostKey \/etc\/ssh\/ssh_host_\(dsa\|ecdsa\|rsa\)_key$/\#HostKey \/etc\/ssh\/ssh_host_\1_key/g' /etc/ssh/sshd_config
+```
+
+### Restrict Ciphers, Key Exchange, and Authentication Methods
+
+```bash
+echo -e "\nKexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512\nCiphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr\nMACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com" >> /etc/ssh/sshd_config
+```
+
+### Deny SSH Connections to Everyone Except Specific IP Addresses
+
+```bash
+echo "sshd: ALL" >> /etc/hosts.deny
+echo "sshd: 1.2.3.4, 5.6.7.8" >> /etc/hosts.allow
+```
+
+### Restart SSH Service
+
+```bash
+sudo systemctl restart sshd.service
+```
+
+### Test the Server
+
+- [ssh-audit website](https://www.ssh-audit.com/)
+- [ssh-audit python tool](https://github.com/jtesta/ssh-audit)
+
+## Host Configuration
+
+### Create and Modify the `.ssh/config` File
 
 ```bash
 Host john
@@ -241,11 +262,11 @@ Host eve
     IdentityFile ~/.ssh/id_ed25519
 ```
 
-Connect to ssh using the `.ssh/config` file
+### Connect to SSH Using the `.ssh/config` File
 
 ```bash
 ssh john
 ssh eve
 ```
 
-> Add the commands to be executed on a new SSH connection in the `/etc/ssh/sshrc` file
+> Add the commands to be executed on a new SSH connection in the `/etc/ssh/sshrc` file.

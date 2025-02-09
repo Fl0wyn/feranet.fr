@@ -1,4 +1,4 @@
-# Libraries JS
+# JavaScript Libraries
 
 | Function         | Name                                                 |
 | ---------------- | ---------------------------------------------------- |
@@ -6,7 +6,7 @@
 | Text editor      | [Editor.js](https://editorjs.io/)                    |
 | Text editor      | [TinyMCE](https://www.tiny.cloud/)                   |
 | Interactive maps | [Leaflet](https://leafletjs.com/)                    |
-| Upload and Crop  | [filepond](https://pqina.nl/filepond/)               |
+| Upload and Crop  | [FilePond](https://pqina.nl/filepond/)               |
 | Slider           | [Swiper](https://swiperjs.com/)                      |
 | Sortable         | [Muuri](https://muuri.dev/)                          |
 | Sortable         | [Sortable](https://sortablejs.github.io/Sortable/)   |

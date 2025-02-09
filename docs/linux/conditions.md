@@ -5,7 +5,7 @@
 ```bash
 if [ test_1 ] ; then
   echo "test 1"
-elif [ test_2 ]
+elif [ test_2 ] ; then
   echo "test 2"
 else
   echo "test 3"
@@ -38,36 +38,36 @@ case VARIABLE in
 esac
 ```
 
-## • Character strings
+## Character Strings
 
-| code                   | description |
+| Code                   | Description |
 | ---------------------- | ----------- |
 | `$string1 = $string2`  | Identical   |
 | `$string1 != $string2` | Different   |
 | `-z $string`           | Empty       |
 | `-n $string`           | Not empty   |
 
-## • Numbers
+## Numbers
 
-| code              | description      |
+| Code              | Description      |
 | ----------------- | ---------------- |
 | `$num1 -eq $num2` | Equal            |
-| `$num1 -ne $num2` | No equal         |
+| `$num1 -ne $num2` | Not equal        |
 | `$num1 -lt $num2` | Lower than       |
 | `$num1 -le $num2` | Lower or equal   |
 | `$num1 -gt $num2` | Greater than     |
 | `$num1 -ge $num2` | Greater or equal |
 
-## • Files
+## Files
 
-| code                | description |
+| Code                | Description |
 | ------------------- | ----------- |
 | `-e $my_file`       | Exists      |
 | `-d $my_file`       | Folder      |
 | `-f $my_file`       | File        |
 | `-L $my_file`       | Symlink     |
 | `-r $my_file`       | Readable    |
-| `-w $my_file`       | Editable    |
+| `-w $my_file`       | Writable    |
 | `-x $my_file`       | Executable  |
 | `$file1 -nt $file2` | Newer than  |
-| `$file1 -ou $file2` | Older than  |
+| `$file1 -ot $file2` | Older than  |

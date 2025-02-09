@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: Hi, I'm Florian,
-  text: Web Developer, SysAdmin and graphic designer
-  tagline: Feranet is a collection of useful tips, tricks and tools for developers and creators
+  text: Web Developer, SysAdmin and Graphic Designer
+  tagline: Feranet is a collection of useful tips, tricks, and tools for developers and creators
   image:
     src: https://avatars.githubusercontent.com/u/50771957?s=400&u=587e04864f43ea638bcce565d782ddc3eb356a16&v=4
     alt: Feranet logo
@@ -22,15 +22,15 @@ hero:
 features:
   - icon: 📖
     title: Wiki
-    details: Explore a collection of practical tips and tricks for developers and creators.
+    details: Explore practical tips and tricks for developers and creators.
   - icon: ⚙️
     title: Tools
-    details: Access a variety of tools and resources to enhance your workflow.
+    details: Access various tools and resources to enhance your workflow.
 ---
 
 ## Setup
 
-You can run this project locally by following these steps
+Run this project locally by following these steps:
 
 ```sh
 git clone https://github.com/Fl0wyn/feranet.fr.git

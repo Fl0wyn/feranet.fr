@@ -1,9 +1,9 @@
-# JavaScript - Method
+# TypeScript - Method
 
-## Array method
+## Array Methods
 
-```js
-const arr = [1, 2, 3, 4];
+```typescript
+const arr: number[] = [1, 2, 3, 4];
 arr.at(1); // 2
 arr.push(5); // [1, 2, 3, 4, 5]
 arr.pop(); // 4
@@ -11,7 +11,7 @@ arr.fill(1); // [1, 1, 1, 1]
 arr.join("-"); // 1-2-3-4
 arr.shift(); // 1
 arr.reverse(); // [4, 3, 2, 1]
-arr.unshift(0); // 5
+arr.unshift(0); // [0, 1, 2, 3, 4]
 arr.includes(2); // true
 arr.map((a) => a * 2); // [2, 4, 6, 8]
 arr.filter((a) => a > 2); // [3, 4]
@@ -30,13 +30,13 @@ arr.splice(1, 2); // [2, 3]
 arr.toString(); // 1,2,3,4
 ```
 
-## String method
+## String Methods
 
-```js
-const str = "Hello world";
+```typescript
+const str: string = "Hello world";
 str.charAt(0); // H
 str.charCodeAt(0); // 72
-str.concat("!"); // Hello world !
+str.concat("!"); // Hello world!
 str.endsWith("world"); // true
 str.includes("world"); // true
 str.indexOf("world"); // 6
@@ -59,10 +59,10 @@ str.toUpperCase(); // HELLO WORLD
 str.trim(); // Hello world
 ```
 
-## Object method
+## Object Methods
 
-```js
-const obj = { a: 1, b: 2, c: 3 };
+```typescript
+const obj: { [key: string]: number } = { a: 1, b: 2, c: 3 };
 Object.assign(obj, { d: 4 }); // { a: 1, b: 2, c: 3, d: 4 }
 Object.entries(obj); // [ ["a", 1], ["b", 2], ["c", 3] ]
 Object.keys(obj); // [ "a", "b", "c" ]

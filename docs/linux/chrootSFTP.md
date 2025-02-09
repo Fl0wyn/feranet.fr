@@ -1,6 +1,6 @@
 # Chroot SFTP
 
-Linux rights reminder
+## Linux Rights Reminder
 
 ```bash
 # Change owner
@@ -8,38 +8,38 @@ chown -R <user>:<group> <path>
 
 # Change rights
 chmod -R 755 <path>
-# 0 : - - - (aucun droit)
-# 1 : - - x (exécution)
-# 2 : - w - (écriture)
-# 3 : - w x (écriture et exécution)
-# 4 : r - - (lecture seule)
-# 5 : r - x (lecture et exécution)
-# 6 : r w - (lecture et écriture)
-# 7 : r w x (lecture, écriture et exécution)
+# 0 : --- (no rights)
+# 1 : --x (execute)
+# 2 : -w- (write)
+# 3 : -wx (write and execute)
+# 4 : r-- (read only)
+# 5 : r-x (read and execute)
+# 6 : rw- (read and write)
+# 7 : rwx (read, write, and execute)
 ```
 
-> In the example, the user myuser will be chrooted in the directory myuser
+> In this example, the user `myuser` will be chrooted in the directory `myuser`.
 
-Add group 'sftp_users' and user 'myuser'
+## Add Group and User
 
 ```bash
 groupadd sftp_users
 useradd -G sftp_users myuser
 ```
 
-Add user password (optional)
+## Add User Password (Optional)
 
 ```bash
 echo "myuser:<my_password>" | chpasswd
 ```
 
-Create directory
+## Create Directory
 
 ```bash
 mkdir -p /var/share/myuser
 ```
 
-Adding right
+## Set Permissions
 
 ```bash
 chown -R root:root /var/share
@@ -47,7 +47,9 @@ chmod -R 755 /var/share
 chown myuser:sftp_users /var/share/myuser
 ```
 
-`/etc/ssh/sshd_config`
+## Update SSH Configuration
+
+Edit `/etc/ssh/sshd_config`:
 
 ```bash
 Subsystem sftp internal-sftp
