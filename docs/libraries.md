@@ -1,4 +1,6 @@
-# JavaScript Libraries
+# Libraries
+
+## JavaScript
 
 | Function         | Name                                                 |
 | ---------------- | ---------------------------------------------------- |

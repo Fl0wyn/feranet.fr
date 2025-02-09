@@ -15,7 +15,7 @@ hero:
       link: https://github.com/Fl0wyn
     - theme: brand
       text: Wiki
-      link: /linux/textManipulation
+      link: /wiki/linux/textManipulation
     - theme: brand
       text: Tools
       link: /tools
@@ -26,6 +26,12 @@ features:
   - icon: ⚙️
     title: Tools
     details: Access various tools and resources to enhance your workflow.
+  - icon: 💻
+    title: Snippets
+    details: Discover code snippets and templates for your projects.
+  - icon: 📚
+    title: Libraries
+    details: Find useful libraries and frameworks for your projects.
 ---
 
 ## Setup

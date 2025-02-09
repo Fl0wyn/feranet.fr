@@ -33,8 +33,10 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: "Home", link: "/" },
-      { text: "Wiki", link: "/linux/textManipulation" },
+      { text: "Wiki", link: "/wiki/linux/textManipulation" },
       { text: "Tools", link: "/tools" },
+      { text: "Snippets", link: "/snippets/bash" },
+      { text: "Libraries", link: "/libraries" },
     ],
 
     search: {
@@ -42,33 +44,33 @@ export default defineConfig({
     },
 
     sidebar: {
-      "/": [
+      "/wiki": [
         {
           text: "Linux",
           collapsed: false,
           items: [
-            { text: "Ansible 🚧", link: "/linux/ansible" },
-            { text: "Apache2 & Nginx", link: "/linux/apache2-nginx" },
-            { text: "Archives", link: "/linux/archives" },
-            { text: "Chroot SFTP", link: "/linux/chrootSFTP" },
-            { text: "Conditions", link: "/linux/conditions" },
-            { text: "Debian GPG Key", link: "/linux/debianGpgKey" },
-            { text: "Docker", link: "/linux/docker" },
-            { text: "Git 🚧", link: "/linux/git" },
+            { text: "Ansible 🚧", link: "/wiki/linux/ansible" },
+            { text: "Apache2 & Nginx", link: "/wiki/linux/apache2-nginx" },
+            { text: "Archives", link: "/wiki/linux/archives" },
+            { text: "Chroot SFTP", link: "/wiki/linux/chrootSFTP" },
+            { text: "Conditions", link: "/wiki/linux/conditions" },
+            { text: "Debian GPG Key", link: "/wiki/linux/debianGpgKey" },
+            { text: "Docker", link: "/wiki/linux/docker" },
+            { text: "Git 🚧", link: "/wiki/linux/git" },
             {
               text: "Iptables & Fail2ban",
-              link: "/linux/iptables-fail2ban",
+              link: "/wiki/linux/iptables-fail2ban",
             },
-            { text: "Kubernetes 🚧", link: "/linux/kubernetes" },
-            { text: "Meraki Auto Reboot", link: "/linux/scheduleMeraki" },
-            { text: "Network", link: "/linux/network" },
-            { text: "PM2", link: "/linux/pm2" },
-            { text: "Screen", link: "/linux/screen" },
-            { text: "Share SAMBA", link: "/linux/samba" },
-            { text: "SQL 🚧", link: "/linux/sql" },
-            { text: "SSH", link: "/linux/ssh" },
-            { text: "Text Manipulation", link: "/linux/textManipulation" },
-            { text: "Vim", link: "/linux/vim" },
+            { text: "Kubernetes 🚧", link: "/wiki/linux/kubernetes" },
+            { text: "Meraki Auto Reboot", link: "/wiki/linux/scheduleMeraki" },
+            { text: "Network", link: "/wiki/linux/network" },
+            { text: "PM2", link: "/wiki/linux/pm2" },
+            { text: "Screen", link: "/wiki/linux/screen" },
+            { text: "Share SAMBA", link: "/wiki/linux/samba" },
+            { text: "SQL 🚧", link: "/wiki/linux/sql" },
+            { text: "SSH", link: "/wiki/linux/ssh" },
+            { text: "Text Manipulation", link: "/wiki/linux/textManipulation" },
+            { text: "Vim", link: "/wiki/linux/vim" },
           ],
         },
         {
@@ -77,19 +79,20 @@ export default defineConfig({
           items: [
             {
               text: "Bloatware & Trackers",
-              link: "/windows/bloatware-trackers",
+              link: "/wiki/windows/bloatware-trackers",
             },
-            { text: "Key Activation", link: "/windows/enable-key" },
+            { text: "Key Activation", link: "/wiki/windows/enable-key" },
             {
               text: "Upgrade to Windows 11",
-              link: "/windows/upgrade-windows-11",
+              link: "/wiki/windows/upgrade-windows-11",
             },
-            { text: "Windows Commands", link: "/windows/commands" },
+            { text: "Windows Commands", link: "/wiki/windows/commands" },
           ],
         },
+      ],
+      "/snippets": [
         {
           text: "Snippets",
-          collapsed: false,
           items: [
             { text: "Bash", link: "/snippets/bash" },
             {
@@ -101,9 +104,6 @@ export default defineConfig({
               link: "/snippets/typeScript-method",
             },
           ],
-        },
-        {
-          items: [{ text: "Libraries", link: "/libraries" }],
         },
       ],
     },
