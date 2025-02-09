@@ -65,6 +65,7 @@ export default defineConfig({
             { text: "PM2", link: "/linux/pm2" },
             // A déplacer dans le dossier Linux
             { text: "Ansible 🚧", link: "/wip/ansible" },
+            { text: "Configuration 🚧", link: "/wip/configuration" },
             { text: "Kubernetes 🚧", link: "/wip/kubernetes" },
             { text: "Git 🚧", link: "/wip/git" },
             { text: "SQL 🚧", link: "/wip/sql" },
