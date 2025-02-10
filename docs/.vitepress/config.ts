@@ -54,6 +54,7 @@ export default defineConfig({
             { text: "Archives", link: "/wiki/linux/archives" },
             { text: "Chroot SFTP", link: "/wiki/linux/chrootSFTP" },
             { text: "Conditions", link: "/wiki/linux/conditions" },
+            { text: "Cron", link: "/wiki/linux/cron" },
             { text: "Debian GPG Key", link: "/wiki/linux/debianGpgKey" },
             { text: "Docker", link: "/wiki/linux/docker" },
             { text: "Git 🚧", link: "/wiki/linux/git" },
