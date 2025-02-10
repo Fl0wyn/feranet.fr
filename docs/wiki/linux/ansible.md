@@ -1,7 +1,1 @@
-# Ansible <Badge type="danger" text="WIP" />
-
-...
-
-```bash
-...
-```
+# Ansible <Badge type="warning" text="WIP" />

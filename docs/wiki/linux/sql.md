@@ -1,7 +1,1 @@
-# SQL <Badge type="danger" text="WIP" />
-
-...
-
-```bash
-...
-```
+# SQL <Badge type="warning" text="WIP" />

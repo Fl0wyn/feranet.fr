@@ -1,7 +1,1 @@
-# Git <Badge type="danger" text="WIP" />
-
-...
-
-```bash
-...
-```
+# Git <Badge type="warning" text="WIP" />

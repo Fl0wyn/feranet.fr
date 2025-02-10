@@ -1,7 +1,1 @@
-# Kubernetes <Badge type="danger" text="WIP" />
-
-...
-
-```bash
-...
-```
+# Kubernetes <Badge type="warning" text="WIP" />
