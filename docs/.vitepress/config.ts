@@ -58,7 +58,7 @@ export default defineConfig({
             { text: "Debian GPG Key", link: "/wiki/linux/debianGpgKey" },
             { text: "Docker", link: "/wiki/linux/docker" },
             { text: "Git 🚧", link: "/wiki/linux/git" },
-            { text: "Iptables & Fail2ban", link: "/wiki/linux/iptables-fail2ban" },
+            { text: "Firewall", link: "/wiki/linux/firewall" },
             { text: "Kubernetes 🚧", link: "/wiki/linux/kubernetes" },
             { text: "Meraki Auto Reboot", link: "/wiki/linux/scheduleMeraki" },
             { text: "Network", link: "/wiki/linux/network" },
@@ -75,9 +75,15 @@ export default defineConfig({
           text: "Windows",
           collapsed: false,
           items: [
-            { text: "Bloatware & Trackers", link: "/wiki/windows/bloatware-trackers" },
+            {
+              text: "Bloatware & Trackers",
+              link: "/wiki/windows/bloatware-trackers",
+            },
             { text: "Key Activation", link: "/wiki/windows/enable-key" },
-            { text: "Upgrade to Windows 11", link: "/wiki/windows/upgrade-windows-11" },
+            {
+              text: "Upgrade to Windows 11",
+              link: "/wiki/windows/upgrade-windows-11",
+            },
             { text: "Windows Commands", link: "/wiki/windows/commands" },
           ],
         },
@@ -87,8 +93,14 @@ export default defineConfig({
           text: "Snippets",
           items: [
             { text: "Bash", link: "/snippets/bash" },
-            { text: "TypeScript - Config", link: "/snippets/typeScript-config" },
-            { text: "TypeScript - Method", link: "/snippets/typeScript-method" },
+            {
+              text: "TypeScript - Config",
+              link: "/snippets/typeScript-config",
+            },
+            {
+              text: "TypeScript - Method",
+              link: "/snippets/typeScript-method",
+            },
           ],
         },
       ],
