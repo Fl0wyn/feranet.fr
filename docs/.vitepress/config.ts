@@ -50,7 +50,7 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: "Ansible", link: "/wiki/linux/ansible" },
-            { text: "Apache2 & Nginx", link: "/wiki/linux/apache2-nginx" },
+            { text: "Apache & Nginx", link: "/wiki/linux/apache-nginx" },
             { text: "Archives", link: "/wiki/linux/archives" },
             { text: "Chroot SFTP", link: "/wiki/linux/chrootSFTP" },
             { text: "Conditions", link: "/wiki/linux/conditions" },

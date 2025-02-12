@@ -1,12 +1,12 @@
 # Bloatware & Trackers
 
-## O&O ShutUp10
+## Chris Titus Tech's Windows Utility
 
-Free anti-spyware tool for Windows 10 and 11. [Download](https://www.oo-software.com/en/shutup10)
+Streamlines installations, fixes configurations, updates, and optimizes Windows systems. [Download](https://github.com/ChrisTitusTech/winutil)
 
-## Privatezilla
-
-Quick privacy and security check for Windows 10. [Download](https://github.com/builtbybel/privatezilla)
+```powershell
+irm "https://christitus.com/win" | iex
+```
 
 ## Win11Debloat
 
@@ -24,10 +24,10 @@ Script to remove bloatware from Windows 10. [Download](https://github.com/Sycnex
 iwr -useb https://git.io/debloat | iex
 ```
 
-## Chris Titus Tech's Windows Utility
+## O&O ShutUp10
 
-Streamlines installations, fixes configurations, updates, and optimizes Windows systems. [Download](https://github.com/ChrisTitusTech/winutil)
+Free anti-spyware tool for Windows 10 and 11. [Download](https://www.oo-software.com/en/shutup10)
 
-```powershell
-irm "https://christitus.com/win" | iex
-```
+## Privatezilla
+
+Quick privacy and security check for Windows 10. [Download](https://github.com/builtbybel/privatezilla)
