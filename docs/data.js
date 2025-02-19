@@ -84,6 +84,7 @@ export const data = [
       { app: "Perplexity", img: "Perplexity.ico", url: "https://www.perplexity.ai/", detail: "AI-based search engine" },
       { app: "LM Studio", img: "lmstudio.ico", url: "https://lmstudio.ai/", detail: "Discover, download, and run local LLMs" },
       { app: "Jan", img: "jan.ico", url: "https://jan.ai/", detail: "Open source ChatGPT-alternative" },
+      { app: "Khoj", img: "khoj.png", url: "https://khoj.dev/", detail: "Your AI Research Copilot" },
     ]
   },
   {
