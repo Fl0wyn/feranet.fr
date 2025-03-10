@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from "vue";
 import { data } from "../data";
 
@@ -26,36 +26,21 @@ const filteredData = computed(() => {
 
 <template>
   <div class="DocSearch DocSearch-Button" style="margin-top: 0.4rem">
-    <input
-      v-model="searchQuery"
-      type="search"
-      placeholder="Filter tools..."
-      style="width: 100%"
-    />
+    <input v-model="searchQuery" type="search" placeholder="Filter tools..." style="width: 100%" />
   </div>
 
   <div v-for="item in filteredData" :key="item.title" class="item">
     <h2 :id="item.title" tabindex="-1">
       {{ item.title }}
-      <a
-        class="header-anchor"
-        :href="'#' + item.title"
-        :aria-label="'Permalink to &quot;' + item.title + '&quot;'"
-        >​</a
-      >
+      <a class="header-anchor" :href="'#' + item.title"
+        :aria-label="'Permalink to &quot;' + item.title + '&quot;'"></a>
       <Badge type="tip" :text="item.items.length" style="margin-left: 0.2rem" />
     </h2>
     <div class="cards">
-      <a
-        v-for="app in item.items"
-        :key="app.app"
-        :href="app.url"
-        target="_blank"
-        class="app"
-      >
+      <a v-for="app in item.items" :key="app.app" :href="app.url" target="_blank" class="app">
         <div class="app-header">
           <span>{{ app.app }}</span>
-          <img :src="`/assets/${app.img}`" :alt="app.app" width="24" />
+          <img :src="`/images/${app.img}`" :alt="app.app" width="24" loading="lazy" />
         </div>
         <span class="detail">{{ app.detail }}</span>
       </a>
