@@ -25,6 +25,7 @@ export const data = [
       { app: "Trangram", img: "Trangram.ico", url: "https://www.trangram.com/", detail: "Online graphic design tool" },
       { app: "Unsplash", img: "Unsplash.ico", url: "https://unsplash.com/", detail: "Free high-resolution photos" },
       { app: "Vecta", img: "Vecta.ico", url: "https://vecta.io/nano", detail: "Online vector graphics editor" },
+      { app: "Recraft", img: "recraft.png", url: "https://www.recraft.ai/", detail: "Premium image generation and editing tool" },
     ]
   },
   {
@@ -109,6 +110,7 @@ export const data = [
       { app: "Useful Forks", img: "UsefulForks.ico", url: "https://useful-forks.github.io/", detail: "Discover useful forks of GitHub projects" },
       { app: "Unsplash", img: "Unsplash.ico", url: "https://unsplash.com/developers", detail: "API to access Unsplash's high-resolution photos" },
       { app: "Virus Total", img: "VirusTotal.ico", url: "https://www.virustotal.com/gui/home/upload", detail: "Analyze files and URLs for viruses" },
+      { app: "Reduce PNG Size", img: "reducepngsize.png", url: "https://reducepngsize.com/", detail: "Reduce file size while preserving quality" },
     ]
   },
   {
