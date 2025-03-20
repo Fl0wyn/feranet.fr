@@ -84,6 +84,7 @@ export const data = [
       { app: "LM Studio", img: "lmstudio.ico", url: "https://lmstudio.ai/", detail: "Discover, download, and run local LLMs" },
       { app: "Jan", img: "jan.ico", url: "https://jan.ai/", detail: "Open source ChatGPT-alternative" },
       { app: "Khoj", img: "khoj.png", url: "https://khoj.dev/", detail: "Your AI Research Copilot" },
+      { app: "Google AI Studio", img: "aistudiogoogle.png", url: "https://aistudio.google.com", detail: "AI Studio by Google" },
     ]
   },
   {
