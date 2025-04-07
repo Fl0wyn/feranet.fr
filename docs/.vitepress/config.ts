@@ -93,6 +93,7 @@ export default defineConfig({
           text: "Snippets",
           items: [
             { text: "Bash", link: "/snippets/bash" },
+            { text: "Python", link: "/snippets/python" },
             {
               text: "TypeScript - Config",
               link: "/snippets/typeScript-config",
