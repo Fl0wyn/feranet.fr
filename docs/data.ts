@@ -124,6 +124,7 @@ export const data = [
       { app: "VuePress", img: "VuePress.ico", url: "https://vuepress.vuejs.org/", detail: "Static site generator for Vue" },
       { app: "VueUse", img: "VueUse.ico", url: "https://vueuse.org/", detail: "Collection of utility functions for Vue" },
       { app: "Vuetify", img: "Vuetify.ico", url: "https://vuetifyjs.com/en/", detail: "UI component framework for Vue" },
+      { app: "DaisyUI", img: "daisyui.ico", url: "https://daisyui.com/", detail: "Tailwind CSS component library" },
     ]
   },
   {
