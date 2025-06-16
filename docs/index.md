@@ -23,15 +23,12 @@ features:
   - icon: 📖
     title: Wiki
     details: Explore practical tips and tricks for developers and creators.
-  - icon: ⚙️
+  - icon: 🛠️
     title: Tools
     details: Access various tools and resources to enhance your workflow.
-  - icon: 💻
-    title: Snippets
-    details: Discover code snippets and templates for your projects.
-  - icon: 📚
-    title: Libraries
-    details: Find useful libraries and frameworks for your projects.
+  - icon: 📦
+    title: Etc
+    details: Discover additional resources and utilities for your projects.
 ---
 
 ## Setup

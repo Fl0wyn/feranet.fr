@@ -64,7 +64,7 @@ export const data = [
       { app: "Github Copilot", img: "Github.ico", url: "https://copilot.github.com/", detail: "AI-based coding assistant" },
       { app: "Lovable", img: "Lovable.ico", url: "https://lovable.dev/", detail: "AI-based coding assistant" },
       { app: "Tabnine", img: "Tabnine.ico", url: "https://www.tabnine.com/", detail: "AI-based code completion" },
-      { app: "V0", img: "V0.png", url: "https://v0.dev/", detail: "AI-based development assistant" },
+      { app: "V0", img: "v0.png", url: "https://v0.dev/", detail: "AI-based development assistant" },
       { app: "Continue", img: "continue.png", url: "https://www.continue.dev/", detail: "The leading open-source AI code assistant." },
     ]
   },
