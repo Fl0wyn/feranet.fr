@@ -18,8 +18,8 @@ export const data = [
       { app: "Photopea", img: "Photopea.ico", url: "https://www.photopea.com/", detail: "Free online image editor" },
       { app: "Pictogrammers", img: "Pictogrammers.ico", url: "https://pictogrammers.com/libraries/", detail: "Open-source icon library" },
       { app: "Pico CSS", img: "PicoCSS.ico", url: "https://picocss.com/", detail: "Minimal CSS framework" },
-      { app: "Radix Colors", img: "radix.ico", url: "https://www.radix-ui.com/colors", detail: "Color palette for developers" },
-      { app: "Radix icons", img: "radix.ico", url: "https://www.radix-ui.com/icons", detail: "Icons for developers" },
+      { app: "Radix Colors", img: "radix.svg", url: "https://www.radix-ui.com/colors", detail: "Color palette for developers" },
+      { app: "Radix icons", img: "radix.svg", url: "https://www.radix-ui.com/icons", detail: "Icons for developers" },
       { app: "SVGPORN", img: "SVGPORN.ico", url: "https://svgporn.com/", detail: "Collection of SVG icons" },
       { app: "Tailwindcss Color", img: "TailwindcssColor.ico", url: "https://tailwindcss.com/docs/customizing-colors", detail: "Customize Tailwind CSS colors" },
       { app: "Trangram", img: "Trangram.ico", url: "https://www.trangram.com/", detail: "Online graphic design tool" },
@@ -60,7 +60,7 @@ export const data = [
   {
     title: "AI Code",
     items: [
-      { app: "Bolt", img: "Bolt.webp", url: "https://bolt.new/", detail: "AI-based code generator" },
+      { app: "Bolt", img: "bolt.svg", url: "https://bolt.new/", detail: "AI-based code generator" },
       { app: "Github Copilot", img: "Github.ico", url: "https://copilot.github.com/", detail: "AI-based coding assistant" },
       { app: "Lovable", img: "Lovable.ico", url: "https://lovable.dev/", detail: "AI-based coding assistant" },
       { app: "Tabnine", img: "Tabnine.ico", url: "https://www.tabnine.com/", detail: "AI-based code completion" },
