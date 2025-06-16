@@ -35,7 +35,7 @@ export default defineConfig({
       { text: "Home", link: "/" },
       { text: "Wiki", link: "/wiki/linux/textManipulation" },
       { text: "Tools", link: "/tools" },
-      { text: "Etc", link: "/etc/bash" },
+      { text: "Archives", link: "/archives/bash" },
     ],
 
     search: {
@@ -88,20 +88,20 @@ export default defineConfig({
           ],
         },
       ],
-      "/etc": [
+      "/archives": [
         {
-          text: "Etc",
+          text: "Archives",
           items: [
-            { text: "Bash", link: "/etc/bash" },
+            { text: "Bash", link: "/archives/bash" },
             {
               text: "TypeScript - Config",
-              link: "/etc/typeScript-config",
+              link: "/archives/typeScript-config",
             },
             {
               text: "TypeScript - Method",
-              link: "/etc/typeScript-method",
+              link: "/archives/typeScript-method",
             },
-            { text: "Libraries", link: "/etc/libraries" },
+            { text: "Libraries", link: "/archives/libraries" },
           ],
         },
       ],

@@ -27,8 +27,8 @@ features:
     title: Tools
     details: Access various tools and resources to enhance your workflow.
   - icon: 📦
-    title: Etc
-    details: Discover additional resources and utilities for your projects.
+    title: Archives
+    details: Discover archived projects and resources that may still be useful.
 ---
 
 ## Setup
