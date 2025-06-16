@@ -57,9 +57,10 @@ export default defineConfig({
             { text: "Cron", link: "/wiki/linux/cron" },
             { text: "Debian GPG Key", link: "/wiki/linux/debianGpgKey" },
             { text: "Docker", link: "/wiki/linux/docker" },
-            { text: "Git", link: "/wiki/linux/git" },
             { text: "Firewall", link: "/wiki/linux/firewall" },
+            { text: "Git", link: "/wiki/linux/git" },
             { text: "Kubernetes", link: "/wiki/linux/kubernetes" },
+            { text: "Logs", link: "/wiki/linux/logs" },
             { text: "Meraki Auto Reboot", link: "/wiki/linux/scheduleMeraki" },
             { text: "Network", link: "/wiki/linux/network" },
             { text: "PM2", link: "/wiki/linux/pm2" },
@@ -93,7 +94,6 @@ export default defineConfig({
           text: "Snippets",
           items: [
             { text: "Bash", link: "/snippets/bash" },
-            { text: "Python", link: "/snippets/python" },
             {
               text: "TypeScript - Config",
               link: "/snippets/typeScript-config",
