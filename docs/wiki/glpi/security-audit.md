@@ -1,4 +1,4 @@
-# GLPI Security Audit
+# GLPI - Security Audit
 
 ## Overview
 
