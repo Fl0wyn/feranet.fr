@@ -10,12 +10,6 @@
   },
   "author": "Fl0wyn",
   "devDependencies": {
-    "vitepress": "^1.6.3"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
-  },
-  "packageManager": "pnpm@10.12.1"
+    "vitepress": "2.0.0-alpha.6"
+  }
 }

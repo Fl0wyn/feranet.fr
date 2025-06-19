@@ -17,7 +17,6 @@ export const data = [
       { app: "Oklch", img: "oklch.webp", url: "https://oklch.com/", detail: "Color converter" },
       { app: "Photopea", img: "Photopea.ico", url: "https://www.photopea.com/", detail: "Free online image editor" },
       { app: "Pictogrammers", img: "Pictogrammers.ico", url: "https://pictogrammers.com/libraries/", detail: "Open-source icon library" },
-      { app: "Pico CSS", img: "PicoCSS.ico", url: "https://picocss.com/", detail: "Minimal CSS framework" },
       { app: "Radix Colors", img: "radix.svg", url: "https://www.radix-ui.com/colors", detail: "Color palette for developers" },
       { app: "Radix icons", img: "radix.svg", url: "https://www.radix-ui.com/icons", detail: "Icons for developers" },
       { app: "SVGPORN", img: "SVGPORN.ico", url: "https://svgporn.com/", detail: "Collection of SVG icons" },
@@ -110,6 +109,7 @@ export const data = [
       { app: "Unsplash", img: "Unsplash.ico", url: "https://unsplash.com/developers", detail: "API to access Unsplash's high-resolution photos" },
       { app: "Virus Total", img: "VirusTotal.ico", url: "https://www.virustotal.com/gui/home/upload", detail: "Analyze files and URLs for viruses" },
       { app: "Reduce PNG Size", img: "reducepngsize.png", url: "https://reducepngsize.com/", detail: "Reduce file size while preserving quality" },
+      { app: "VueUse", img: "VueUse.ico", url: "https://vueuse.org/", detail: "Collection of utility functions for Vue" },
     ]
   },
   {
@@ -122,9 +122,9 @@ export const data = [
       { app: "Tabler", img: "Tabler.ico", url: "https://tabler.io/", detail: "Open-source UI component library" },
       { app: "Tailwindcss", img: "Tailwindcss.ico", url: "https://tailwindcss.com/", detail: "Utility-first CSS framework" },
       { app: "VuePress", img: "VuePress.ico", url: "https://vuepress.vuejs.org/", detail: "Static site generator for Vue" },
-      { app: "VueUse", img: "VueUse.ico", url: "https://vueuse.org/", detail: "Collection of utility functions for Vue" },
       { app: "Vuetify", img: "Vuetify.ico", url: "https://vuetifyjs.com/en/", detail: "UI component framework for Vue" },
       { app: "DaisyUI", img: "daisyui.ico", url: "https://daisyui.com/", detail: "Tailwind CSS component library" },
+      { app: "Pico CSS", img: "PicoCSS.ico", url: "https://picocss.com/", detail: "Minimal CSS framework" },
     ]
   },
   {
