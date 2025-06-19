@@ -181,134 +181,101 @@ grep sshd /var/log/auth.log | grep -i "invalid user" | awk '{print $(NF-3)}' | s
 journalctl -u apache2.service --since today
 ```
 
-```bash
-journalctl -b -p err                  # Affiche uniquement les erreurs du dernier démarrage
-journalctl -u ssh.service             # Affiche les logs du service SSH
-journalctl --since "1 hour ago"       # Affiche les logs de la dernière heure
-```
+## System Monitoring Tools
 
-### Commande Last et fichier wtmp
+> This section is based on [Korben's article on btop++](https://korben.info/btop-alternative-htop-monitoring-systeme-gpu.html).
 
-Sous Linux, la commande `last` permet de lire le contenu des fichiers `/var/log/wtmp` et `/var/log/btmp`.
+### btop++: Advanced System Monitor
 
-Pour connaître les dates et heures où la machine s'est arrêtée :
+btop++ is a resource monitor that shows CPU, memory, disk, network, and process information in a clean, intuitive interface. It's an enhanced alternative to tools like top and htop.
 
-```bash
-last -x shutdown --time-format iso
-```
+#### Installation
 
-Pour connaître les dates et heures où la machine a redémarré :
+On Debian/Ubuntu:
 
 ```bash
-last -x reboot --time-format iso
+apt install btop
 ```
 
-Le paramètre `-x` permet d'afficher également les arrêts du système et les modifications de niveau d'exécution (run level).
-
-Les fichiers importants :
-
-- Le fichier `wtmp` contient une trace de toutes les connexions et déconnexions du système (arrêt, reboot).
-- Le fichier `btmp` contient tous les échecs de connexions à votre système.
-
-Ces fichiers ne peuvent pas être lus directement avec un éditeur de texte. Pour les lire de façon plus agréable :
+On Fedora/RHEL:
 
 ```bash
-last -f /var/log/btmp    # Lire les échecs de connexion
-last -f /var/log/wtmp    # Lire l'historique des connexions
+dnf install btop
 ```
 
-### Interprétation des messages de démarrage
-
-Les messages de démarrage fournissent des indications précieuses sur le bon fonctionnement des différents composants du système. Ils incluent notamment :
-
-- Le chargement du noyau et des modules
-- La détection du matériel
-- Le montage des systèmes de fichiers
-- Le démarrage des services systemd
-
-Il est essentiel d'identifier les messages d'erreur (souvent signalés par `Failed` ou `Error`) qui peuvent ralentir ou bloquer le démarrage du serveur. De même, les messages comme `Job running`, `Timeout`, ou `Dependency failed` indiquent des problèmes de dépendances ou de services mal configurés.
-
-## Sécuriser votre système grâce à l'analyse des logs
-
-### Analyse de /var/log/auth.log pour les connexions SSH
-
-L'un des fichiers les plus importants pour suivre l'activité des connexions SSH sur un serveur Linux est le fichier `/var/log/auth.log` (ou `/var/log/secure` sur CentOS/RHEL). Il enregistre toutes les tentatives d'authentification, qu'elles soient réussies ou échouées, ainsi que les élévations de privilèges via sudo.
-
-Pour examiner ces logs de connexion Linux :
+Using Homebrew (macOS/Linux):
 
 ```bash
-grep sshd /var/log/auth.log
+brew install btop
 ```
 
-Cela vous permettra d'identifier quels utilisateurs se sont connectés, à quel moment, depuis quelle adresse IP, et s'ils ont été authentifiés avec succès. Cette analyse est essentielle pour auditer les connexions SSH et maintenir la traçabilité des accès sur votre serveur.
+#### Features
 
-### Détection des tentatives de connexion échouées
+- Real-time CPU usage with per-core details
+- Memory and swap monitoring
+- Disk I/O and usage statistics
+- Network bandwidth monitoring
+- Process management with sorting and filtering
+- GPU monitoring support (NVIDIA, AMD, Intel)
+- Customizable themes and layout
 
-Les tentatives de connexion échouées sont des indicateurs clés d'une éventuelle tentative d'intrusion. Elles apparaissent souvent dans les logs sous la forme : `Failed password for invalid user ...`
+#### Basic Usage
 
-Pour extraire rapidement ces événements :
+Simply run:
+
+```bash
+btop
+```
+
+#### Keyboard Shortcuts
+
+- `Esc`: Exit btop
+- `F2`: Settings menu
+- `m`: Switch memory display mode
+- `p`: Show processes
+- `1`: Toggle between showing average CPU and all cores
+- `h`: Show help
+- `q`: Quit
+
+btop++ provides a comprehensive view of system resources with a modern interface, making it an excellent tool for monitoring and troubleshooting Linux servers.
+
+## FAQ - Log Analysis on Linux Servers
+
+> This section includes frequently asked questions from the original [Quick-Tutoriel article](https://quick-tutoriel.com/logs-serveur-linux/).
+
+### How can I access boot logs on a Linux server?
+
+You can view Linux boot logs using the `journalctl -b` command. This displays all journal messages generated since the last system boot. To analyze a previous boot, use `journalctl -b -n` where n is the boot number (counting back from the current boot).
+
+### Where can I find SSH connection logs on Linux?
+
+SSH connection logs are typically stored in `/var/log/auth.log` (on Debian/Ubuntu distributions) or `/var/log/secure` (on CentOS/RHEL). These logs track successful and failed connections.
+
+### How do I detect failed login attempts?
+
+You can use the following command to spot failed attempts in the log file:
 
 ```bash
 grep "Failed password" /var/log/auth.log
 ```
 
-Pour une vue plus synthétique classée par adresses IP :
+This is useful for auditing SSH connections and identifying potential brute force attacks.
 
-```bash
-awk '/Failed password/ {print $(NF-3)}' /var/log/auth.log | sort | uniq -c | sort -nr
-```
+### What tools can I use to analyze Linux logs?
 
-Cela vous permet de repérer les adresses IP à l'origine de plusieurs échecs, et de mettre en place des contre-mesures (comme fail2ban ou des règles de pare-feu) pour renforcer la sécurité de votre serveur Linux.
+In addition to `journalctl`, you can use tools such as:
 
-## Mettre en place la rotation des fichiers log
+- `logwatch`: For generating daily log reports
+- `logrotate`: For managing log archiving
+- ELK Stack (Elasticsearch, Logstash, Kibana) or Loggly for advanced log analysis with visualization
+- `btop++`: For real-time system monitoring
 
-Il est possible de définir la durée de conservation des logs. Pour ce faire, vous devez éditer le fichier `/etc/logrotate.conf`.
+### Why is it important to monitor Linux server logs?
 
-Voici quelques paramètres importants :
+Regular log analysis allows you to:
 
-```bash
-# Configuration de base de logrotate
-monthly              # La rotation s'effectue tous les mois (alternative: daily, weekly)
-create 0664 root utmp # Droits des fichiers créés
-rotate 4             # Nombre de fichiers à conserver
-minsize 1M           # Taille minimale avant rotation
-compress             # Compression des anciens logs
-```
-
-D'autres paramètres utiles :
-
-- `compress` : Les fichiers logs secondaires seront compressés
-- `delaycompress` : Reporte la compression du journal précédent au prochain cycle
-- `notifempty` : Ne pas permuter le journal lorsqu'il est vide
-- `prerotate`, `postrotate/endscript` : Commandes à exécuter avant/après la rotation
-
-Pour forcer l'exécution de logrotate :
-
-```bash
-logrotate -f /etc/logrotate.conf
-```
-
-Pour déboguer la configuration :
-
-```bash
-logrotate -d /etc/logrotate.conf
-```
-
-## Commandes utiles pour analyser les logs
-
-```bash
-# Afficher les 10 dernières lignes d'un fichier log et suivre son évolution
-tail -f /var/log/syslog
-
-# Rechercher dans les logs d'authentification les connexions réussies
-grep "Accepted password" /var/log/auth.log
-
-# Afficher les utilisateurs ayant utilisé sudo
-grep sudo /var/log/auth.log | grep COMMAND
-
-# Extraire les adresses IP qui ont tenté de se connecter
-grep sshd /var/log/auth.log | grep -i "invalid user" | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr
-
-# Afficher les logs liés à un service spécifique
-journalctl -u apache2.service --since today
-```
+- Quickly identify system errors or configuration problems
+- Detect intrusion attempts or suspicious connections
+- Maintain a high level of security on your Linux server
+- Track user activities and resource usage
+- Diagnose performance issues before they become critical
