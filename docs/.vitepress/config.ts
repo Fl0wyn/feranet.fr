@@ -87,6 +87,16 @@ export default defineConfig({
             { text: "Windows Commands", link: "/wiki/windows/commands" },
           ],
         },
+        {
+          text: "Glpi",
+          collapsed: false,
+          items: [
+            {
+              text: "Security Audit",
+              link: "/wiki/glpi/security-audit",
+            },
+          ],
+        },
       ],
       "/archives": [
         {
