@@ -11,11 +11,5 @@
   "author": "Fl0wyn",
   "devDependencies": {
     "vitepress": "2.0.0-alpha.6"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
-  },
-  "packageManager": "pnpm@10.12.1"
+  }
 }
