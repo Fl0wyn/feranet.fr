@@ -61,6 +61,7 @@ export default defineConfig({
             { text: "Kubernetes", link: "/wiki/linux/kubernetes" },
             { text: "Logs", link: "/wiki/linux/logs" },
             { text: "Meraki Auto Reboot", link: "/wiki/linux/scheduleMeraki" },
+            { text: "MongoDB", link: "/wiki/linux/mongoDB" },
             { text: "Network", link: "/wiki/linux/network" },
             { text: "PM2", link: "/wiki/linux/pm2" },
             { text: "Screen", link: "/wiki/linux/screen" },
