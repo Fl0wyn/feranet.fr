@@ -3,11 +3,13 @@
 ## Basic Commands
 
 ```bash
-sudo pm2 save             # Save active processes
-sudo pm2 startup          # Configure PM2 to start automatically on boot-up
-sudo pm2 ls               # List of active processes
-sudo pm2 log {{app_name}} # View application logs
-sudo pm2 monit            # Show monitor
+pm2 save             # Save current processes
+pm2 startup          # Configure PM2 to start automatically on boot-up
+pm2 ls               # List of active processes
+pm2 log {{app_name}} # View application logs
+pm2 monit            # Show monitor
+pm2 kill                  # Kill pm2 daemon
+pm2 resurrect             # Load saved processes
 ```
 
 ## Start Application
