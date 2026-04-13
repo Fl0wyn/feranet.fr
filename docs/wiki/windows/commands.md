@@ -86,3 +86,26 @@ Restart the service:
 ```powershell
 Restart-Service LanmanServer -Force
 ```
+
+## Add Alias Function PowerShell
+Create or Edit PowerShell Profile
+
+```powershell
+New-Item -ItemType File -Path $PROFILE -Force
+```
+
+```powershell
+notepad $PROFILE
+```
+
+Add Alias Function
+```powershell
+function monscript {
+    & "C:\Scripts\mon_script.ps1"
+}
+```
+
+Reload Profile
+```powershell
+. $PROFILE
+```
