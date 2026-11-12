@@ -5,11 +5,14 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, Search, X } from "lucide-react";
 import { Logo, SocialIcon } from "./icons";
-import { SOCIAL_LINKS, SOCIAL_ORDER, externalProps } from "@/lib/site";
+import { SOCIAL_LINKS, SOCIAL_ORDER, externalProps, type SocialId } from "@/lib/site";
 import { ThemeToggle } from "./theme-toggle";
 import { LanguageToggle } from "./language-toggle";
 import { openCommandMenu } from "./command-menu";
 import { useI18n } from "./i18n-provider";
+
+/** Dans l'en-tête, l'icône e-mail ouvre le formulaire de contact plutôt que la messagerie. */
+const headerHref = (id: SocialId) => (id === "email" ? "/#contact" : SOCIAL_LINKS[id]);
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -81,8 +84,8 @@ export function SiteHeader() {
             {SOCIAL_ORDER.map((id) => (
               <a
                 key={id}
-                href={SOCIAL_LINKS[id]}
-                {...externalProps(SOCIAL_LINKS[id])}
+                href={headerHref(id)}
+                {...externalProps(headerHref(id))}
                 className="inline-flex size-9 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-muted hover:text-foreground"
                 aria-label={t.social[id]}
                 title={t.social[id]}
@@ -132,8 +135,8 @@ export function SiteHeader() {
             {SOCIAL_ORDER.map((id) => (
               <a
                 key={id}
-                href={SOCIAL_LINKS[id]}
-                {...externalProps(SOCIAL_LINKS[id])}
+                href={headerHref(id)}
+                {...externalProps(headerHref(id))}
                 className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-muted"
               >
                 <SocialIcon id={id} className="size-4" /> {t.social[id]}
