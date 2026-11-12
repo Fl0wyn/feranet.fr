@@ -29,10 +29,17 @@ export async function deliverContactMessage(msg: ContactMessage) {
 }
 
 /**
- * Envoi par l'API HTTP de Resend (recommandé par Vercel plutôt que SMTP depuis une fonction).
- * Tant que le domaine feranet.fr n'est pas vérifié dans Resend, l'expéditeur par défaut
- * « onboarding@resend.dev » ne peut écrire qu'à l'adresse du compte Resend (CONTACT_TO).
+ * Expéditeur : CONTACT_FROM s'il est défini, sinon une adresse du domaine fourni par
+ * l'intégration Resend (RESEND_EMAIL_DOMAIN), sinon l'adresse de test de Resend
+ * (qui ne peut écrire qu'à l'adresse du compte Resend).
  */
+function sender() {
+  if (process.env.CONTACT_FROM) return process.env.CONTACT_FROM;
+  const domain = process.env.RESEND_EMAIL_DOMAIN?.trim();
+  return domain ? `Feranet <site@${domain}>` : "Feranet <onboarding@resend.dev>";
+}
+
+/** Envoi par l'API HTTP de Resend (recommandé par Vercel plutôt que SMTP depuis une fonction). */
 async function sendMail(msg: ContactMessage, ticketId: number) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return false;
@@ -41,7 +48,7 @@ async function sendMail(msg: ContactMessage, ticketId: number) {
     method: "POST",
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: process.env.CONTACT_FROM || "Feranet <onboarding@resend.dev>",
+      from: sender(),
       to: [process.env.CONTACT_TO || EMAIL],
       reply_to: msg.email,
       subject: `[feranet.fr] ${msg.subject || `Message de ${msg.name}`}`,
