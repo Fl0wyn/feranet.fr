@@ -15,11 +15,15 @@ import { GithubIcon } from "@/components/icons";
 import { SearchTrigger } from "@/components/search-trigger";
 import { getNavigation } from "@/lib/wiki";
 import { toolCategories, toolCount } from "@/lib/tools";
+import { format } from "@/lib/i18n/dictionaries";
+import { getI18n } from "@/lib/i18n/server";
 
 const SECTION_ICONS = { linux: Terminal, windows: Monitor, glpi: Shield, archives: Archive } as const;
 
 export default async function HomePage() {
-  const nav = await getNavigation();
+  const { locale, t } = await getI18n();
+  const h = t.home;
+  const nav = await getNavigation(locale);
   const articleCount = nav.reduce((n, s) => n + s.pages.length, 0);
   const featured = nav.flatMap((s) => s.pages).filter((p) => p.section !== "archives");
   const toolIcons = toolCategories.flatMap((c) => c.items).filter((t, i, a) => a.findIndex((x) => x.img === t.img) === i);
@@ -40,18 +44,17 @@ export default async function HomePage() {
               href="/tickets"
               className="group inline-flex items-center gap-2 rounded-full border bg-card/70 py-1 pl-1 pr-3 text-xs text-muted-foreground backdrop-blur transition hover:border-brand/40"
             >
-              <span className="rounded-full bg-brand-soft px-2 py-0.5 font-medium text-brand">New</span>
-              Feranet v4 — now with a built-in ticketing desk
+              <span className="rounded-full bg-brand-soft px-2 py-0.5 font-medium text-brand">{h.badgeNew}</span>
+              {h.badge}
               <ArrowRight className="size-3 transition group-hover:translate-x-0.5" />
             </Link>
 
             <h1 className="mt-6 text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
-              Hi, I&apos;m Florian.
-              <span className="mt-2 block text-gradient">Web developer, SysAdmin & graphic designer.</span>
+              {h.hello}
+              <span className="mt-2 block text-gradient">{h.role}</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg text-pretty text-muted-foreground">
-              Feranet is my field notebook: battle-tested commands, configuration recipes, a curated toolbox — and
-              a lightweight ticketing desk to keep track of what&apos;s next.
+              {h.intro}
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -59,13 +62,13 @@ export default async function HomePage() {
                 href="/wiki"
                 className="inline-flex h-11 items-center gap-2 rounded-xl bg-foreground px-5 text-sm font-medium text-background shadow-lg shadow-black/10 transition hover:opacity-90"
               >
-                <BookOpen className="size-4" /> Explore the wiki
+                <BookOpen className="size-4" /> {h.exploreWiki}
               </Link>
               <Link
                 href="/tools"
                 className="inline-flex h-11 items-center gap-2 rounded-xl border bg-card px-5 text-sm font-medium transition hover:border-brand/40"
               >
-                <Wrench className="size-4" /> Browse {toolCount} tools
+                <Wrench className="size-4" /> {format(h.browseTools, { n: toolCount })}
               </Link>
               <a
                 href="https://github.com/Fl0wyn"
@@ -79,9 +82,9 @@ export default async function HomePage() {
 
             <dl className="mt-12 grid max-w-md grid-cols-3 gap-6">
               {[
-                [articleCount, "Wiki articles"],
-                [toolCount, "Curated tools"],
-                [nav.length, "Topics"],
+                [articleCount, h.statArticles],
+                [toolCount, h.statTools],
+                [nav.length, h.statTopics],
               ].map(([value, label]) => (
                 <div key={label}>
                   <dt className="text-xs text-muted-foreground">{label}</dt>
@@ -112,13 +115,13 @@ export default async function HomePage() {
               <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-7">
                 <code>
                   <Line prompt>feranet search &quot;docker&quot;</Line>
-                  <Line muted>→ Wiki › Linux › Docker (14 commands)</Line>
+                  <Line muted>{h.terminalResult}</Line>
                   <Line prompt>docker run -d --name web -p 80:80 nginx</Line>
                   <Line muted>a3f9c21e7b04…</Line>
                   <Line prompt>tickets new --priority high</Line>
                   <Line>
-                    <span className="text-emerald-500">✔</span> Created <span className="text-brand">#0042</span>{" "}
-                    <span className="text-muted-foreground">“Renew TLS certificates”</span>
+                    <span className="text-emerald-500">✔</span> {h.terminalCreated} <span className="text-brand">#0042</span>{" "}
+                    <span className="text-muted-foreground">{h.terminalTicket}</span>
                   </Line>
                   <Line prompt>
                     <span className="inline-block h-4 w-2 translate-y-0.5 animate-pulse bg-foreground/70" />
@@ -133,18 +136,17 @@ export default async function HomePage() {
       {/* ---------- Bento ---------- */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
         <div className="max-w-2xl">
-          <p className="text-sm font-medium text-brand">Everything in one place</p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Notes, tools and follow-up.</h2>
+          <p className="text-sm font-medium text-brand">{h.eyebrow}</p>
+          <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">{h.heading}</h2>
           <p className="mt-4 text-muted-foreground">
-            Three spaces that work together: document what you learn, keep your favourite tools at hand, and
-            track the work that still needs to be done.
+            {h.lead}
           </p>
         </div>
 
         <div className="mt-12 grid gap-4 md:grid-cols-6">
           {/* Wiki */}
           <Link href="/wiki" className="group relative overflow-hidden rounded-3xl border bg-card p-7 transition hover:border-brand/40 md:col-span-4">
-            <CardHeading icon={BookOpen} title="Wiki" text="Practical, copy-paste-ready guides for Linux, Windows and GLPI." />
+            <CardHeading icon={BookOpen} title={t.nav.wiki} text={h.wikiText} />
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {nav.map((s) => {
                 const Icon = SECTION_ICONS[s.id];
@@ -155,7 +157,7 @@ export default async function HomePage() {
                     </span>
                     <div className="min-w-0">
                       <p className="text-sm font-medium">{s.title}</p>
-                      <p className="truncate text-xs text-muted-foreground">{s.pages.length} articles</p>
+                      <p className="truncate text-xs text-muted-foreground">{format(h.articles, { n: s.pages.length })}</p>
                     </div>
                   </div>
                 );
@@ -166,18 +168,18 @@ export default async function HomePage() {
 
           {/* Search */}
           <div className="relative overflow-hidden rounded-3xl border bg-card p-7 md:col-span-2">
-            <CardHeading icon={Command} title="Instant search" text="Find any command, article or tool from anywhere." />
-            <SearchTrigger />
+            <CardHeading icon={Command} title={h.searchTitle} text={h.searchText} />
+            <SearchTrigger label={h.searchPlaceholder} />
           </div>
 
           {/* Ticketing */}
           <Link href="/tickets" className="group relative overflow-hidden rounded-3xl border bg-card p-7 transition hover:border-brand/40 md:col-span-3">
-            <CardHeading icon={Ticket} title="Ticketing" text="A minimal help desk: priorities, statuses, a kanban board and a full activity log." />
+            <CardHeading icon={Ticket} title={h.ticketsTitle} text={h.ticketsText} />
             <div className="mt-8 grid grid-cols-3 gap-2 text-xs">
               {[
-                { label: "Open", color: "bg-sky-500", items: ["Renew TLS certs", "Printer offline"] },
-                { label: "In progress", color: "bg-violet-500", items: ["Migrate to Debian 13"] },
-                { label: "Resolved", color: "bg-emerald-500", items: ["Samba share ACL", "Backup cron"] },
+                { label: t.tickets.status.open, color: "bg-sky-500", items: h.demo.open },
+                { label: t.tickets.status.in_progress, color: "bg-violet-500", items: h.demo.progress },
+                { label: t.tickets.status.resolved, color: "bg-emerald-500", items: h.demo.resolved },
               ].map((col) => (
                 <div key={col.label} className="rounded-xl bg-muted/60 p-2">
                   <p className="mb-2 flex items-center gap-1.5 px-1 font-medium">
@@ -196,7 +198,7 @@ export default async function HomePage() {
 
           {/* Tools */}
           <Link href="/tools" className="group relative overflow-hidden rounded-3xl border bg-card p-7 transition hover:border-brand/40 md:col-span-3">
-            <CardHeading icon={Wrench} title="Toolbox" text={`${toolCount} hand-picked tools for design, AI, APIs and UI libraries.`} />
+            <CardHeading icon={Wrench} title={h.toolsTitle} text={format(h.toolsText, { n: toolCount })} />
             <div className="relative mt-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_12%,#000_88%,transparent)]">
               <div className="flex w-max animate-marquee gap-3 group-hover:[animation-play-state:paused]">
                 {[...toolIcons, ...toolIcons].map((t, i) => (
@@ -216,11 +218,11 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-sm font-medium text-brand">Popular topics</p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight">Jump straight in</h2>
+            <p className="text-sm font-medium text-brand">{h.topicsEyebrow}</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">{h.topicsHeading}</h2>
           </div>
           <Link href="/wiki" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-            All articles <ArrowRight className="size-3.5" />
+            {h.allArticles} <ArrowRight className="size-3.5" />
           </Link>
         </div>
         <div className="mt-8 flex flex-wrap gap-2">
@@ -242,10 +244,10 @@ export default async function HomePage() {
           <div className="absolute inset-0 -z-10 bg-gradient-to-br from-brand-1/15 via-transparent to-brand-2/15" />
           <Sparkles className="mx-auto size-6 text-brand" />
           <h2 className="mx-auto mt-4 max-w-xl text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-            Open source, and open to contributions.
+            {h.ctaTitle}
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
-            Every wiki page is a Markdown file on GitHub. Spotted a typo or have a better one-liner? Send a pull request.
+            {h.ctaText}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
@@ -254,10 +256,10 @@ export default async function HomePage() {
               rel="noopener noreferrer"
               className="inline-flex h-11 items-center gap-2 rounded-xl bg-foreground px-5 text-sm font-medium text-background transition hover:opacity-90"
             >
-              <GithubIcon className="size-4" /> View on GitHub
+              <GithubIcon className="size-4" /> {h.viewGithub}
             </a>
             <Link href="/tickets/new" className="inline-flex h-11 items-center gap-2 rounded-xl border bg-background px-5 text-sm font-medium transition hover:border-brand/40">
-              <Ticket className="size-4" /> Open a ticket
+              <Ticket className="size-4" /> {h.openTicket}
             </Link>
           </div>
         </div>

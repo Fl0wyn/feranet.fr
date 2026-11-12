@@ -19,6 +19,16 @@ pnpm dev
 
 Then open <http://localhost:3000>. Press <kbd>Ctrl</kbd> + <kbd>K</kbd> anywhere to search the wiki and tools.
 
+## Languages (EN / FR)
+
+The interface is available in English and French. Like the dark mode, the language follows the browser
+preference (`Accept-Language`) until the visitor picks one with the header toggle (stored in the `locale` cookie).
+URLs stay the same: [`proxy.ts`](proxy.ts) rewrites each request to `app/[lang]/…`, so every page is prerendered
+in both languages. `/fr/...` or `/en/...` links force a language and redirect to the plain URL.
+
+UI strings live in [`lib/i18n/dictionaries.ts`](lib/i18n/dictionaries.ts) and tool descriptions in
+[`lib/tools-fr.ts`](lib/tools-fr.ts). Wiki articles stay in English.
+
 ## Writing wiki pages
 
 Add a Markdown file to `content/wiki/<section>/<slug>.md` (sections: `linux`, `windows`, `glpi`, `archives`).

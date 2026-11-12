@@ -6,7 +6,12 @@ import { getDisplayName, rememberDisplayName, requireAuth, signIn, signOut } fro
 import { addComment, createTicket, deleteTicket, updateTicket } from "@/lib/tickets";
 import { isCategory, isPriority, isStatus } from "@/lib/ticket-meta";
 
-export type FormState = { error?: string; fieldErrors?: Record<string, string>; ok?: number } | undefined;
+// Les erreurs sont des clés de traduction (dictionnaire tickets.errors), traduites côté client.
+export type ErrorKey = "title" | "requester" | "priority" | "category" | "comment" | "password";
+export type FormState = { error?: ErrorKey; fieldErrors?: Partial<Record<ErrorKey, ErrorKey>>; ok?: number } | undefined;
+
+/** Toutes les pages du ticketing, dans les deux langues. */
+const revalidateTickets = () => revalidatePath("/[lang]/tickets", "layout");
 
 const str = (fd: FormData, key: string, max = 200) => String(fd.get(key) ?? "").trim().slice(0, max);
 
@@ -23,7 +28,7 @@ async function authorName(fd?: FormData) {
 
 export async function loginAction(_prev: FormState, fd: FormData): Promise<FormState> {
   const ok = await signIn(String(fd.get("password") ?? ""));
-  if (!ok) return { error: "Incorrect password." };
+  if (!ok) return { error: "password" };
   redirect("/tickets");
 }
 
@@ -43,11 +48,11 @@ export async function createTicketAction(_prev: FormState, fd: FormData): Promis
   const requester = str(fd, "requester", 60);
   const assignee = str(fd, "assignee", 60);
 
-  const fieldErrors: Record<string, string> = {};
-  if (title.length < 3) fieldErrors.title = "Give the ticket a title (3 characters minimum).";
-  if (!requester) fieldErrors.requester = "Tell us who is asking.";
-  if (!isPriority(priority)) fieldErrors.priority = "Pick a priority.";
-  if (!isCategory(category)) fieldErrors.category = "Pick a category.";
+  const fieldErrors: NonNullable<NonNullable<FormState>["fieldErrors"]> = {};
+  if (title.length < 3) fieldErrors.title = "title";
+  if (!requester) fieldErrors.requester = "requester";
+  if (!isPriority(priority)) fieldErrors.priority = "priority";
+  if (!isCategory(category)) fieldErrors.category = "category";
   if (Object.keys(fieldErrors).length) return { fieldErrors };
 
   await rememberDisplayName(requester);
@@ -59,7 +64,7 @@ export async function createTicketAction(_prev: FormState, fd: FormData): Promis
     requester,
     assignee,
   });
-  revalidatePath("/tickets");
+  revalidateTickets();
   redirect(`/tickets/${id}`);
 }
 
@@ -75,36 +80,33 @@ export async function updateTicketAction(id: number, fd: FormData) {
   if (fd.has("assignee")) patch.assignee = str(fd, "assignee", 60);
 
   await updateTicket(id, patch, await authorName());
-  revalidatePath("/tickets");
-  revalidatePath(`/tickets/${id}`);
+  revalidateTickets();
 }
 
 export async function setStatusAction(id: number, status: string) {
   await requireAuth();
   if (!isStatus(status)) return;
   await updateTicket(id, { status }, await authorName());
-  revalidatePath("/tickets");
-  revalidatePath(`/tickets/${id}`);
+  revalidateTickets();
 }
 
 export async function commentAction(id: number, _prev: FormState, fd: FormData): Promise<FormState> {
   await requireAuth();
   const body = str(fd, "body", 20000);
   const nextStatus = fd.get("next_status");
-  if (!body && !isStatus(nextStatus)) return { error: "Write a comment first." };
+  if (!body && !isStatus(nextStatus)) return { error: "comment" };
 
   const author = await authorName(fd);
   if (body) await addComment(id, author, body);
   if (isStatus(nextStatus)) await updateTicket(id, { status: nextStatus }, author);
 
-  revalidatePath("/tickets");
-  revalidatePath(`/tickets/${id}`);
+  revalidateTickets();
   return { ok: Date.now() };
 }
 
 export async function deleteTicketAction(id: number) {
   await requireAuth();
   await deleteTicket(id);
-  revalidatePath("/tickets");
+  revalidateTickets();
   redirect("/tickets");
 }

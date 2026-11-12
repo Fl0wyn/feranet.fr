@@ -1,11 +1,16 @@
+"use client";
+
 import { priorityMeta, statusMeta } from "@/lib/ticket-meta";
+import { format } from "@/lib/i18n/dictionaries";
+import { useI18n } from "../i18n-provider";
 
 export function StatusBadge({ status, className = "" }: { status: string; className?: string }) {
   const s = statusMeta(status);
+  const { t } = useI18n();
   return (
     <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${s.badge} ${className}`}>
       <span className={`size-1.5 rounded-full ${s.dot}`} />
-      {s.label}
+      {t.tickets.status[s.id]}
     </span>
   );
 }
@@ -13,8 +18,10 @@ export function StatusBadge({ status, className = "" }: { status: string; classN
 /** Indicateur de priorité à 4 barres. */
 export function PriorityIndicator({ priority, showLabel = true }: { priority: string; showLabel?: boolean }) {
   const p = priorityMeta(priority);
+  const { t } = useI18n();
+  const label = t.tickets.priority[p.id];
   return (
-    <span className={`inline-flex items-center gap-1.5 whitespace-nowrap text-xs font-medium ${p.badge}`} title={`${p.label} priority`}>
+    <span className={`inline-flex items-center gap-1.5 whitespace-nowrap text-xs font-medium ${p.badge}`} title={format(t.tickets.priorityTitle, { p: label })}>
       <span className="flex h-3 items-end gap-[2px]" aria-hidden="true">
         {[1, 2, 3, 4].map((i) => (
           <span
@@ -24,7 +31,7 @@ export function PriorityIndicator({ priority, showLabel = true }: { priority: st
           />
         ))}
       </span>
-      {showLabel && p.label}
+      {showLabel && label}
     </span>
   );
 }

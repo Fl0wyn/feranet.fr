@@ -6,18 +6,21 @@ import { useEffect, useState } from "react";
 import { Menu, Search, X } from "lucide-react";
 import { GithubIcon, Logo } from "./icons";
 import { ThemeToggle } from "./theme-toggle";
+import { LanguageToggle } from "./language-toggle";
 import { openCommandMenu } from "./command-menu";
-
-const LINKS = [
-  { href: "/wiki", label: "Wiki" },
-  { href: "/tools", label: "Tools" },
-  { href: "/tickets", label: "Tickets" },
-];
+import { useI18n } from "./i18n-provider";
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const { t } = useI18n();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const links = [
+    { href: "/wiki", label: t.nav.wiki },
+    { href: "/tools", label: t.nav.tools },
+    { href: "/tickets", label: t.nav.tickets },
+  ];
 
   useEffect(() => setMobileOpen(false), [pathname]);
   useEffect(() => {
@@ -36,12 +39,12 @@ export function SiteHeader() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4 sm:px-6">
-        <Link href="/" aria-label="Feranet home">
+        <Link href="/" aria-label={t.nav.home}>
           <Logo />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
-          {LINKS.map((l) => (
+          {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
@@ -61,14 +64,14 @@ export function SiteHeader() {
             className="hidden h-9 items-center gap-2 rounded-lg border bg-card/60 pl-3 pr-1.5 text-sm text-muted-foreground transition hover:border-brand/40 hover:text-foreground sm:flex sm:w-56"
           >
             <Search className="size-4" />
-            <span>Search…</span>
+            <span>{t.nav.search}</span>
             <kbd className="ml-auto rounded border bg-muted px-1.5 py-0.5 font-mono text-[10px]">Ctrl K</kbd>
           </button>
           <button
             type="button"
             onClick={openCommandMenu}
             className="inline-flex size-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground sm:hidden"
-            aria-label="Search"
+            aria-label={t.nav.searchAria}
           >
             <Search className="size-4" />
           </button>
@@ -81,12 +84,13 @@ export function SiteHeader() {
           >
             <GithubIcon className="size-4" />
           </a>
+          <LanguageToggle />
           <ThemeToggle />
           <button
             type="button"
             onClick={() => setMobileOpen((o) => !o)}
             className="inline-flex size-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted md:hidden"
-            aria-label="Menu"
+            aria-label={t.nav.menu}
             aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X className="size-4" /> : <Menu className="size-4" />}
@@ -96,7 +100,7 @@ export function SiteHeader() {
 
       {mobileOpen && (
         <nav className="border-t px-4 py-3 md:hidden">
-          {LINKS.map((l) => (
+          {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}

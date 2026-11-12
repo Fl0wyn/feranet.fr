@@ -3,8 +3,8 @@
 import { Search } from "lucide-react";
 import { openCommandMenu } from "./command-menu";
 
-/** Faux champ de recherche qui ouvre la palette ⌘K. */
-export function SearchTrigger({ label = "Search docker, ssh, regex…" }: { label?: string }) {
+/** Faux champ de recherche qui ouvre la palette Ctrl+K. */
+export function SearchTrigger({ label }: { label: string }) {
   return (
     <button
       type="button"

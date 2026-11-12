@@ -3,12 +3,18 @@ import { redirect } from "next/navigation";
 import { Ticket, TriangleAlert } from "lucide-react";
 import { authMode, isAuthenticated } from "@/lib/auth";
 import { LoginForm } from "@/components/tickets/forms";
+import { getI18n } from "@/lib/i18n/server";
 
-export const metadata: Metadata = { title: "Sign in · Tickets", robots: { index: false } };
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getI18n();
+  return { title: t.tickets.login.metaTitle, robots: { index: false } };
+}
 
 export default async function LoginPage() {
   if (await isAuthenticated()) redirect("/tickets");
   const mode = authMode();
+  const { t } = await getI18n();
+  const l = t.tickets.login;
 
   return (
     <div className="relative isolate grid min-h-[calc(100dvh-4rem)] place-items-center px-4 py-16">
@@ -17,18 +23,17 @@ export default async function LoginPage() {
         <span className="grid size-11 place-items-center rounded-xl bg-gradient-to-br from-brand-1 to-brand-2 text-white">
           <Ticket className="size-5" />
         </span>
-        <h1 className="mt-5 text-xl font-semibold tracking-tight">Ticketing desk</h1>
+        <h1 className="mt-5 text-xl font-semibold tracking-tight">{l.title}</h1>
         {mode === "unconfigured" ? (
           <div className="mt-4 flex gap-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-sm">
             <TriangleAlert className="mt-0.5 size-4 shrink-0 text-amber-600" />
             <p>
-              The ticketing desk is locked. Set the <code className="font-mono text-xs">TICKETS_PASSWORD</code>{" "}
-              environment variable to enable it.
+              {l.lockedBefore} <code className="font-mono text-xs">TICKETS_PASSWORD</code> {l.lockedAfter}
             </p>
           </div>
         ) : (
           <>
-            <p className="mt-1 text-sm text-muted-foreground">Enter the access password to continue.</p>
+            <p className="mt-1 text-sm text-muted-foreground">{l.lead}</p>
             <div className="mt-6">
               <LoginForm />
             </div>

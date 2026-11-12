@@ -10,7 +10,8 @@ import {
   loginAction,
   updateTicketAction,
   type FormState,
-} from "@/app/tickets/actions";
+} from "@/lib/ticket-actions";
+import { useI18n } from "../i18n-provider";
 import { CATEGORIES, PRIORITIES, STATUSES, type Ticket } from "@/lib/ticket-meta";
 
 export const inputCls =
@@ -48,9 +49,10 @@ function Field({ label, error, children, hint }: { label: string; error?: string
 
 export function LoginForm() {
   const [state, action] = useActionState<FormState, FormData>(loginAction, undefined);
+  const { t } = useI18n();
   return (
     <form action={action} className="space-y-4">
-      <Field label="Password" error={state?.error}>
+      <Field label={t.tickets.login.password} error={state?.error && t.tickets.errors[state.error]}>
         <div className="relative">
           <Lock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <input
@@ -64,7 +66,7 @@ export function LoginForm() {
           />
         </div>
       </Field>
-      <SubmitButton className="h-11 w-full">Sign in</SubmitButton>
+      <SubmitButton className="h-11 w-full">{t.tickets.login.signIn}</SubmitButton>
     </form>
   );
 }
@@ -74,29 +76,32 @@ export function LoginForm() {
 export function NewTicketForm({ defaultName }: { defaultName: string }) {
   const [state, action] = useActionState<FormState, FormData>(createTicketAction, undefined);
   const [priority, setPriority] = useState("medium");
-  const e = state?.fieldErrors ?? {};
+  const { t } = useI18n();
+  const f = t.tickets.form;
+  const fe = state?.fieldErrors ?? {};
+  const e = Object.fromEntries(Object.entries(fe).map(([k, v]) => [k, v && t.tickets.errors[v]])) as Record<string, string | undefined>;
 
   return (
     <form action={action} className="space-y-6">
-      <Field label="Title" error={e.title}>
+      <Field label={f.titleLabel} error={e.title}>
         <input
           name="title"
           required
           minLength={3}
           maxLength={160}
           autoFocus
-          placeholder="e.g. Nginx returns 502 on /api"
+          placeholder={f.titlePlaceholder}
           className={`${inputCls} h-11`}
           aria-invalid={!!e.title}
         />
       </Field>
 
-      <Field label="Description" hint="Steps to reproduce, error messages, what you already tried…">
+      <Field label={f.description} hint={f.descriptionHint}>
         <textarea name="description" rows={7} maxLength={20000} className={`${inputCls} resize-y font-mono text-[13px]`} />
       </Field>
 
       <div>
-        <span className="mb-1.5 block text-sm font-medium">Priority</span>
+        <span className="mb-1.5 block text-sm font-medium">{f.priority}</span>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4" role="radiogroup">
           {PRIORITIES.map((p) => (
             <label
@@ -113,40 +118,40 @@ export function NewTicketForm({ defaultName }: { defaultName: string }) {
                 onChange={() => setPriority(p.id)}
                 className="sr-only"
               />
-              <span className={p.badge}>{p.label}</span>
+              <span className={p.badge}>{t.tickets.priority[p.id]}</span>
             </label>
           ))}
         </div>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-3">
-        <Field label="Category" error={e.category}>
+        <Field label={f.category} error={e.category}>
           <select name="category" defaultValue="other" className={`${inputCls} h-10`}>
             {CATEGORIES.map((c) => (
               <option key={c.id} value={c.id}>
-                {c.label}
+                {t.tickets.category[c.id]}
               </option>
             ))}
           </select>
         </Field>
-        <Field label="Requester" error={e.requester}>
+        <Field label={f.requester} error={e.requester}>
           <input
             name="requester"
             required
             maxLength={60}
             defaultValue={defaultName}
-            placeholder="Your name"
+            placeholder={f.requesterPlaceholder}
             className={`${inputCls} h-10`}
             aria-invalid={!!e.requester}
           />
         </Field>
-        <Field label="Assignee" hint="Optional">
-          <input name="assignee" maxLength={60} placeholder="Unassigned" className={`${inputCls} h-10`} />
+        <Field label={f.assignee} hint={f.optional}>
+          <input name="assignee" maxLength={60} placeholder={t.tickets.unassigned} className={`${inputCls} h-10`} />
         </Field>
       </div>
 
       <div className="flex justify-end gap-3 border-t pt-6">
-        <SubmitButton>Create ticket</SubmitButton>
+        <SubmitButton>{f.create}</SubmitButton>
       </div>
     </form>
   );
@@ -157,42 +162,44 @@ export function NewTicketForm({ defaultName }: { defaultName: string }) {
 export function TicketProperties({ ticket }: { ticket: Ticket }) {
   const formRef = useRef<HTMLFormElement>(null);
   const submit = () => formRef.current?.requestSubmit();
+  const { t } = useI18n();
+  const f = t.tickets.filters;
   const update = updateTicketAction.bind(null, ticket.id);
 
   return (
     <form ref={formRef} action={update} className="space-y-4" key={ticket.updated_at}>
-      <Field label="Status">
+      <Field label={f.status}>
         <select name="status" defaultValue={ticket.status} onChange={submit} className={`${inputCls} h-9`}>
           {STATUSES.map((s) => (
             <option key={s.id} value={s.id}>
-              {s.label}
+              {t.tickets.status[s.id]}
             </option>
           ))}
         </select>
       </Field>
-      <Field label="Priority">
+      <Field label={f.priority}>
         <select name="priority" defaultValue={ticket.priority} onChange={submit} className={`${inputCls} h-9`}>
           {PRIORITIES.map((p) => (
             <option key={p.id} value={p.id}>
-              {p.label}
+              {t.tickets.priority[p.id]}
             </option>
           ))}
         </select>
       </Field>
-      <Field label="Category">
+      <Field label={f.category}>
         <select name="category" defaultValue={ticket.category} onChange={submit} className={`${inputCls} h-9`}>
           {CATEGORIES.map((c) => (
             <option key={c.id} value={c.id}>
-              {c.label}
+              {t.tickets.category[c.id]}
             </option>
           ))}
         </select>
       </Field>
-      <Field label="Assignee">
+      <Field label={t.tickets.form.assignee}>
         <input
           name="assignee"
           defaultValue={ticket.assignee}
-          placeholder="Unassigned"
+          placeholder={t.tickets.unassigned}
           maxLength={60}
           onBlur={(e) => e.target.value.trim() !== ticket.assignee && submit()}
           onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), submit())}
@@ -209,6 +216,8 @@ export function CommentForm({ ticket, defaultName }: { ticket: Ticket; defaultNa
   const [state, action] = useActionState<FormState, FormData>(commentAction.bind(null, ticket.id), undefined);
   const formRef = useRef<HTMLFormElement>(null);
   const isClosed = ticket.status === "resolved" || ticket.status === "closed";
+  const { t } = useI18n();
+  const d = t.tickets.detail;
 
   useEffect(() => {
     if (state?.ok) {
@@ -223,7 +232,7 @@ export function CommentForm({ ticket, defaultName }: { ticket: Ticket; defaultNa
         name="body"
         rows={4}
         maxLength={20000}
-        placeholder="Add a comment…"
+        placeholder={d.commentPlaceholder}
         className="block w-full resize-y bg-transparent px-4 py-3 text-sm outline-none placeholder:text-muted-foreground"
         onKeyDown={(e) => {
           if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) formRef.current?.requestSubmit();
@@ -233,12 +242,12 @@ export function CommentForm({ ticket, defaultName }: { ticket: Ticket; defaultNa
         <input
           name="author"
           defaultValue={defaultName}
-          placeholder="Your name"
+          placeholder={d.yourName}
           maxLength={60}
           className="h-8 w-40 rounded-md border bg-card px-2 text-sm outline-none focus:border-brand/50"
-          aria-label="Your name"
+          aria-label={d.yourName}
         />
-        {state?.error && <span className="text-xs text-red-600 dark:text-red-400">{state.error}</span>}
+        {state?.error && <span className="text-xs text-red-600 dark:text-red-400">{t.tickets.errors[state.error]}</span>}
         <div className="ml-auto flex gap-2">
           <ResolveButton isClosed={isClosed} />
           <CommentSubmit />
@@ -250,6 +259,7 @@ export function CommentForm({ ticket, defaultName }: { ticket: Ticket; defaultNa
 
 function ResolveButton({ isClosed }: { isClosed: boolean }) {
   const { pending } = useFormStatus();
+  const { t } = useI18n();
   return (
     <button
       type="submit"
@@ -258,13 +268,14 @@ function ResolveButton({ isClosed }: { isClosed: boolean }) {
       disabled={pending}
       className="h-8 rounded-md border bg-card px-3 text-sm transition hover:border-foreground/30 disabled:opacity-60"
     >
-      {isClosed ? "Reopen" : "Resolve"}
+      {isClosed ? t.tickets.detail.reopen : t.tickets.detail.resolve}
     </button>
   );
 }
 
 function CommentSubmit() {
   const { pending } = useFormStatus();
+  const { t } = useI18n();
   return (
     <button
       type="submit"
@@ -272,7 +283,7 @@ function CommentSubmit() {
       className="inline-flex h-8 items-center gap-1.5 rounded-md bg-foreground px-3 text-sm font-medium text-background transition hover:opacity-90 disabled:opacity-60"
     >
       {pending ? <Loader2 className="size-3.5 animate-spin" /> : <Send className="size-3.5" />}
-      Comment
+      {t.tickets.detail.comment}
     </button>
   );
 }
@@ -282,6 +293,8 @@ function CommentSubmit() {
 export function DeleteTicketButton({ id }: { id: number }) {
   const [confirming, setConfirming] = useState(false);
   const remove = deleteTicketAction.bind(null, id);
+  const { t } = useI18n();
+  const d = t.tickets.detail;
 
   if (!confirming) {
     return (
@@ -290,19 +303,19 @@ export function DeleteTicketButton({ id }: { id: number }) {
         onClick={() => setConfirming(true)}
         className="inline-flex items-center gap-2 text-sm text-muted-foreground transition hover:text-red-600"
       >
-        <Trash2 className="size-4" /> Delete ticket
+        <Trash2 className="size-4" /> {d.delete}
       </button>
     );
   }
   return (
     <form action={remove} className="space-y-2 rounded-lg border border-red-500/30 bg-red-500/5 p-3">
-      <p className="text-sm">Delete this ticket and its history? This cannot be undone.</p>
+      <p className="text-sm">{d.deleteConfirm}</p>
       <div className="flex gap-2">
         <button type="submit" className="h-8 rounded-md bg-red-600 px-3 text-sm font-medium text-white hover:bg-red-700">
-          Delete
+          {d.deleteButton}
         </button>
         <button type="button" onClick={() => setConfirming(false)} className="h-8 rounded-md border bg-card px-3 text-sm">
-          Cancel
+          {d.cancel}
         </button>
       </div>
     </form>

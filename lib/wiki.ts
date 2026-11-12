@@ -14,6 +14,7 @@ import rehypeStringify from "rehype-stringify";
 import { visit } from "unist-util-visit";
 import { toString } from "hast-util-to-string";
 import type { Root, Element } from "hast";
+import { dictionaries, type Locale } from "./i18n/dictionaries";
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "wiki");
 const REPO_URL = "https://github.com/Fl0wyn/feranet.fr";
@@ -119,19 +120,26 @@ export const getAllPages = cache(async (): Promise<WikiPageMeta[]> => {
   );
 });
 
-export async function getNavigation() {
+/** Sections avec titre et description dans la langue demandée. */
+export function getSections(locale: Locale = "en") {
+  const t = dictionaries[locale].wiki.sections;
+  return SECTIONS.map((s) => ({ ...s, ...t[s.id] }));
+}
+
+export async function getNavigation(locale: Locale = "en") {
   const pages = await getAllPages();
-  return SECTIONS.map((s) => ({ ...s, pages: pages.filter((p) => p.section === s.id) }));
+  return getSections(locale).map((s) => ({ ...s, pages: pages.filter((p) => p.section === s.id) }));
 }
 
 /** Index plein texte léger, chargé à la demande par la palette de recherche. */
-export async function getSearchIndex() {
+export async function getSearchIndex(locale: Locale = "en") {
   const pages = await getAllPages();
+  const sections = getSections(locale);
   return Promise.all(
     pages.map(async (p) => ({
       title: p.title,
       href: p.href,
-      section: SECTIONS.find((s) => s.id === p.section)!.title,
+      section: sections.find((s) => s.id === p.section)!.title,
       headings: p.headings,
       text: stripMarkdown((await readSource(p.section, p.slug)) ?? "").slice(0, 4000),
     })),

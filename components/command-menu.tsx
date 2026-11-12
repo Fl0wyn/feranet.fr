@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useI18n } from "./i18n-provider";
+import { format, type Dictionary } from "@/lib/i18n/dictionaries";
 import { ArrowUpRight, BookOpen, CornerDownLeft, FileText, Search, Ticket, Wrench } from "lucide-react";
 
 type PageEntry = { title: string; href: string; section: string; headings: string[]; text: string };
@@ -17,12 +19,15 @@ type Result = {
   score: number;
 };
 
-const NAV: Result[] = [
-  { key: "nav-wiki", group: "Navigation", title: "Wiki", subtitle: "Browse every article", href: "/wiki", score: 0 },
-  { key: "nav-tools", group: "Navigation", title: "Tools", subtitle: "Curated tools & resources", href: "/tools", score: 0 },
-  { key: "nav-tickets", group: "Navigation", title: "Tickets", subtitle: "Open the ticketing board", href: "/tickets", score: 0 },
-  { key: "nav-new", group: "Navigation", title: "New ticket", subtitle: "Create a support ticket", href: "/tickets/new", score: 0 },
-];
+
+function navResults(t: Dictionary): Result[] {
+  return [
+    { key: "nav-wiki", group: "Navigation", title: t.nav.wiki, subtitle: t.search.wikiSub, href: "/wiki", score: 0 },
+    { key: "nav-tools", group: "Navigation", title: t.nav.tools, subtitle: t.search.toolsSub, href: "/tools", score: 0 },
+    { key: "nav-tickets", group: "Navigation", title: t.nav.tickets, subtitle: t.search.ticketsSub, href: "/tickets", score: 0 },
+    { key: "nav-new", group: "Navigation", title: t.search.newTicket, subtitle: t.search.newTicketSub, href: "/tickets/new", score: 0 },
+  ];
+}
 
 export const openCommandMenu = () => window.dispatchEvent(new Event("feranet:command-menu"));
 
@@ -35,10 +40,11 @@ function snippet(text: string, q: string) {
 
 export function CommandMenu() {
   const router = useRouter();
+  const { locale, t } = useI18n();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
-  const [index, setIndex] = useState<{ pages: PageEntry[]; tools: ToolEntry[] } | null>(null);
+  const [index, setIndex] = useState<{ locale: string; pages: PageEntry[]; tools: ToolEntry[] } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -72,15 +78,16 @@ export function CommandMenu() {
 
   // Index de recherche chargé à la première ouverture.
   useEffect(() => {
-    if (!open || index) return;
-    fetch("/api/search")
+    if (!open || index?.locale === locale) return;
+    fetch(`/api/search/${locale}`)
       .then((r) => r.json())
-      .then(setIndex)
-      .catch(() => setIndex({ pages: [], tools: [] }));
-  }, [open, index]);
+      .then((data) => setIndex({ locale, ...data }))
+      .catch(() => setIndex({ locale, pages: [], tools: [] }));
+  }, [open, index, locale]);
 
   const results = useMemo<Result[]>(() => {
     const q = query.trim().toLowerCase();
+    const NAV = navResults(t);
     if (!q) return NAV;
     const nav = NAV.filter((n) => n.title.toLowerCase().includes(q));
     const pages: Result[] = (index?.pages ?? [])
@@ -121,7 +128,7 @@ export function CommandMenu() {
       .sort((a, b) => b.score - a.score)
       .slice(0, 6);
     return [...nav, ...pages, ...tools];
-  }, [query, index]);
+  }, [query, index, t]);
 
   useEffect(() => setActive(0), [query]);
 
@@ -158,7 +165,7 @@ export function CommandMenu() {
   let lastGroup = "";
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-[12vh]" role="dialog" aria-modal="true" aria-label="Search">
+    <div className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-[12vh]" role="dialog" aria-modal="true" aria-label={t.nav.searchAria}>
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setOpen(false)} />
       <div className="relative w-full max-w-xl overflow-hidden rounded-2xl border bg-card shadow-2xl shadow-black/20 animate-fade-up [animation-duration:.25s]">
         <div className="flex items-center gap-3 border-b px-4">
@@ -168,16 +175,16 @@ export function CommandMenu() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onKeyDown}
-            placeholder="Search the wiki, tools, pages…"
+            placeholder={t.search.placeholder}
             className="h-14 w-full bg-transparent text-[15px] outline-none placeholder:text-muted-foreground"
-            aria-label="Search"
+            aria-label={t.nav.searchAria}
           />
           <kbd className="rounded border bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">ESC</kbd>
         </div>
         <div ref={listRef} className="max-h-[min(60vh,440px)] overflow-y-auto p-2">
           {results.length === 0 && (
             <p className="px-3 py-10 text-center text-sm text-muted-foreground">
-              {index ? `No results for “${query}”.` : "Loading index…"}
+              {index ? format(t.search.noResults, { q: query }) : t.search.loading}
             </p>
           )}
           {results.map((r, i) => {
@@ -186,7 +193,7 @@ export function CommandMenu() {
             const Icon = r.group === "Wiki" ? FileText : r.href.startsWith("/tickets") ? Ticket : r.href === "/tools" ? Wrench : BookOpen;
             return (
               <div key={r.key}>
-                {header && <p className="px-3 pb-1 pt-3 text-xs font-medium text-muted-foreground">{header}</p>}
+                {header && <p className="px-3 pb-1 pt-3 text-xs font-medium text-muted-foreground">{t.search.groups[header]}</p>}
                 <button
                   type="button"
                   data-index={i}
