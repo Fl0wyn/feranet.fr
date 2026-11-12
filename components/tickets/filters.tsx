@@ -4,12 +4,15 @@ import { useEffect, useState, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { LayoutGrid, List, Search } from "lucide-react";
 import { CATEGORIES, PRIORITIES, STATUSES } from "@/lib/ticket-meta";
+import { useI18n } from "../i18n-provider";
 
 const selectCls =
   "h-9 rounded-lg border bg-card px-2.5 text-sm outline-none transition focus:border-brand/50 focus:ring-4 focus:ring-brand-soft";
 
 export function TicketFilters() {
   const router = useRouter();
+  const { t } = useI18n();
+  const f = t.tickets.filters;
   const pathname = usePathname();
   const params = useSearchParams();
   const [pending, startTransition] = useTransition();
@@ -42,70 +45,70 @@ export function TicketFilters() {
           type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search by title, person or #id…"
+          placeholder={f.search}
           className="h-9 w-full rounded-lg border bg-card pl-9 pr-3 text-sm outline-none transition placeholder:text-muted-foreground focus:border-brand/50 focus:ring-4 focus:ring-brand-soft"
-          aria-label="Search tickets"
+          aria-label={f.searchAria}
         />
       </div>
 
       {view === "list" && (
         <select
-          aria-label="Status"
+          aria-label={f.status}
           className={selectCls}
           value={params.get("status") ?? "active"}
           onChange={(e) => update({ status: e.target.value === "active" ? null : e.target.value })}
         >
-          <option value="active">Active</option>
-          <option value="all">All statuses</option>
+          <option value="active">{f.active}</option>
+          <option value="all">{f.allStatuses}</option>
           {STATUSES.map((s) => (
             <option key={s.id} value={s.id}>
-              {s.label}
+              {t.tickets.status[s.id]}
             </option>
           ))}
         </select>
       )}
       <select
-        aria-label="Priority"
+        aria-label={f.priority}
         className={selectCls}
         value={params.get("priority") ?? ""}
         onChange={(e) => update({ priority: e.target.value || null })}
       >
-        <option value="">Any priority</option>
+        <option value="">{f.anyPriority}</option>
         {PRIORITIES.map((p) => (
           <option key={p.id} value={p.id}>
-            {p.label}
+            {t.tickets.priority[p.id]}
           </option>
         ))}
       </select>
       <select
-        aria-label="Category"
+        aria-label={f.category}
         className={selectCls}
         value={params.get("category") ?? ""}
         onChange={(e) => update({ category: e.target.value || null })}
       >
-        <option value="">Any category</option>
+        <option value="">{f.anyCategory}</option>
         {CATEGORIES.map((c) => (
           <option key={c.id} value={c.id}>
-            {c.label}
+            {t.tickets.category[c.id]}
           </option>
         ))}
       </select>
       <select
-        aria-label="Sort"
+        aria-label={f.sort}
         className={selectCls}
         value={params.get("sort") ?? "updated"}
         onChange={(e) => update({ sort: e.target.value === "updated" ? null : e.target.value })}
       >
-        <option value="updated">Recently updated</option>
-        <option value="created">Newest</option>
-        <option value="priority">Priority</option>
+        <option value="updated">{f.sortUpdated}</option>
+        <option value="created">{f.sortCreated}</option>
+        <option value="priority">{f.sortPriority}</option>
       </select>
 
-      <div className="flex rounded-lg border bg-card p-0.5" role="group" aria-label="View">
+      <div className="flex rounded-lg border bg-card p-0.5" role="group" aria-label={f.view}>
         {(
           [
-            ["list", List, "List"],
-            ["board", LayoutGrid, "Board"],
+            ["list", List, f.list],
+            ["board", LayoutGrid, f.board],
           ] as const
         ).map(([id, Icon, label]) => (
           <button

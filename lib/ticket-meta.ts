@@ -62,20 +62,3 @@ export const isPriority = (v: unknown): v is Priority => PRIORITIES.some((p) => 
 export const isCategory = (v: unknown): v is Category => CATEGORIES.some((c) => c.id === v);
 
 export const ticketRef = (id: number) => `#${String(id).padStart(4, "0")}`;
-
-export function timeAgo(iso: string, now = Date.now()) {
-  const s = Math.round((now - new Date(iso).getTime()) / 1000);
-  if (s < 60) return "just now";
-  const units: [number, string][] = [
-    [60, "minute"],
-    [3600, "hour"],
-    [86400, "day"],
-    [604800, "week"],
-    [2629800, "month"],
-    [31557600, "year"],
-  ];
-  let [div, unit] = units[0];
-  for (const u of units) if (s >= u[0]) [div, unit] = u;
-  const n = Math.floor(s / div);
-  return `${n} ${unit}${n > 1 ? "s" : ""} ago`;
-}

@@ -2,18 +2,20 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useI18n } from "../i18n-provider";
 
 export type NavSection = { id: string; title: string; pages: { href: string; title: string }[] };
 
 export function WikiSidebar({ sections }: { sections: NavSection[] }) {
   const pathname = usePathname();
+  const { t } = useI18n();
   return (
     <nav className="space-y-7 text-sm">
       <Link
         href="/wiki"
         className={`block rounded-lg px-3 py-1.5 font-medium ${pathname === "/wiki" ? "bg-brand-soft text-brand" : "hover:bg-muted"}`}
       >
-        Overview
+        {t.wiki.overview}
       </Link>
       {sections.map((s) => (
         <div key={s.id}>

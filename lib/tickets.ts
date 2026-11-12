@@ -9,9 +9,6 @@ import {
   type Status,
   type Ticket,
   type TicketEvent,
-  categoryMeta,
-  priorityMeta,
-  statusMeta,
 } from "./ticket-meta";
 
 const now = () => new Date().toISOString();
@@ -121,13 +118,6 @@ export async function createTicket(input: {
 
 type Patch = Partial<Pick<Ticket, "status" | "priority" | "assignee" | "category">>;
 
-const DESCRIBE: Record<keyof Patch, (v: string) => string> = {
-  status: (v) => statusMeta(v).label,
-  priority: (v) => priorityMeta(v).label,
-  category: (v) => categoryMeta(v).label,
-  assignee: (v) => v || "nobody",
-};
-
 /** Applique les changements et journalise chaque modification dans l'activité. */
 export async function updateTicket(id: number, patch: Patch, author: string) {
   const current = await getTicket(id);
@@ -141,7 +131,8 @@ export async function updateTicket(id: number, patch: Patch, author: string) {
     stmts.push({ sql: `UPDATE tickets SET ${key} = ?, updated_at = ? WHERE id = ?`, args: [value, ts, id] });
     stmts.push({
       sql: "INSERT INTO ticket_events (ticket_id, kind, author, body, created_at) VALUES (?, ?, ?, ?, ?)",
-      args: [id, key, author, `${DESCRIBE[key](current.ticket[key])} → ${DESCRIBE[key](value)}`, ts],
+      // Valeurs brutes « avant|après », traduites à l'affichage.
+      args: [id, key, author, `${current.ticket[key]}|${value}`, ts],
     });
     if (key === "status") {
       const closed = value === "resolved" || value === "closed";

@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useI18n } from "../i18n-provider";
 
 type Heading = { id: string; text: string; depth: 2 | 3 };
 
 export function TableOfContents({ headings }: { headings: Heading[] }) {
+  const { t } = useI18n();
   const [active, setActive] = useState(headings[0]?.id);
 
   useEffect(() => {
@@ -24,7 +26,7 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
 
   return (
     <div className="text-sm">
-      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">On this page</p>
+      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t.wiki.onThisPage}</p>
       <ul className="space-y-1.5 border-l">
         {headings.map((h) => (
           <li key={h.id}>

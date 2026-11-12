@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight } from "lucide-react";
-import { getNavigation, SECTIONS } from "@/lib/wiki";
+import { getNavigation, getSections, SECTIONS } from "@/lib/wiki";
+import { getI18n } from "@/lib/i18n/server";
 
 export const dynamicParams = false;
 
@@ -10,15 +11,17 @@ export function generateStaticParams() {
   return SECTIONS.map((s) => ({ section: s.id }));
 }
 
-export async function generateMetadata(props: PageProps<"/wiki/[section]">): Promise<Metadata> {
+export async function generateMetadata(props: PageProps<"/[lang]/wiki/[section]">): Promise<Metadata> {
   const { section } = await props.params;
-  const s = SECTIONS.find((x) => x.id === section);
+  const { locale } = await getI18n();
+  const s = getSections(locale).find((x) => x.id === section);
   return s ? { title: `${s.title} · Wiki`, description: s.description } : {};
 }
 
-export default async function SectionPage(props: PageProps<"/wiki/[section]">) {
+export default async function SectionPage(props: PageProps<"/[lang]/wiki/[section]">) {
   const { section } = await props.params;
-  const s = (await getNavigation()).find((x) => x.id === section);
+  const { locale } = await getI18n();
+  const s = (await getNavigation(locale)).find((x) => x.id === section);
   if (!s) notFound();
 
   return (

@@ -3,27 +3,30 @@ import Link from "next/link";
 import { Archive, ArrowRight, Monitor, Shield, Terminal } from "lucide-react";
 import { getNavigation } from "@/lib/wiki";
 import { SearchTrigger } from "@/components/search-trigger";
+import { format } from "@/lib/i18n/dictionaries";
+import { getI18n } from "@/lib/i18n/server";
 
-export const metadata: Metadata = {
-  title: "Wiki",
-  description: "Practical guides and commands for Linux, Windows and GLPI.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getI18n();
+  return { title: "Wiki", description: t.wiki.metaDescription };
+}
 
 const ICONS = { linux: Terminal, windows: Monitor, glpi: Shield, archives: Archive } as const;
 
 export default async function WikiHome() {
-  const nav = await getNavigation();
+  const { locale, t } = await getI18n();
+  const nav = await getNavigation(locale);
   const total = nav.reduce((n, s) => n + s.pages.length, 0);
 
   return (
     <div>
-      <p className="text-sm font-medium text-brand">Wiki · {total} articles</p>
-      <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Field notes for sysadmins & developers</h1>
+      <p className="text-sm font-medium text-brand">{format(t.wiki.eyebrow, { n: total })}</p>
+      <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">{t.wiki.title}</h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">
-        Copy-paste-ready commands and configuration recipes, organised by topic.
+        {t.wiki.lead}
       </p>
       <div className="max-w-xl">
-        <SearchTrigger label="Search articles and commands…" />
+        <SearchTrigger label={t.wiki.searchPlaceholder} />
       </div>
 
       <div className="mt-12 grid gap-5 md:grid-cols-2">

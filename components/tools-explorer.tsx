@@ -3,10 +3,13 @@
 import { useMemo, useState } from "react";
 import { ArrowUpRight, Search, X } from "lucide-react";
 import type { ToolCategory } from "@/lib/tools";
+import { format } from "@/lib/i18n/dictionaries";
+import { useI18n } from "./i18n-provider";
 
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
 export function ToolsExplorer({ categories }: { categories: ToolCategory[] }) {
+  const { t } = useI18n();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string | null>(null);
 
@@ -34,16 +37,16 @@ export function ToolsExplorer({ categories }: { categories: ToolCategory[] }) {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Filter tools by name or description…"
+            placeholder={t.tools.filter}
             className="h-11 w-full rounded-xl border bg-card pl-10 pr-10 text-sm outline-none transition placeholder:text-muted-foreground focus:border-brand/50 focus:ring-4 focus:ring-brand-soft"
-            aria-label="Filter tools"
+            aria-label={t.tools.filterAria}
           />
           {query && (
             <button
               type="button"
               onClick={() => setQuery("")}
               className="absolute right-2 top-1/2 grid size-7 -translate-y-1/2 place-items-center rounded-md text-muted-foreground hover:bg-muted"
-              aria-label="Clear"
+              aria-label={t.tools.clear}
             >
               <X className="size-4" />
             </button>
@@ -51,7 +54,7 @@ export function ToolsExplorer({ categories }: { categories: ToolCategory[] }) {
         </div>
         <div className="mt-3 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
           <Chip active={!category} onClick={() => setCategory(null)}>
-            All
+            {t.tools.all}
           </Chip>
           {categories.map((c) => (
             <Chip key={c.title} active={category === c.title} onClick={() => setCategory(category === c.title ? null : c.title)}>
@@ -63,7 +66,7 @@ export function ToolsExplorer({ categories }: { categories: ToolCategory[] }) {
 
       {shown === 0 && (
         <p className="py-20 text-center text-muted-foreground">
-          No tool matches “{query}”.
+          {format(t.tools.noMatch, { q: query })}
         </p>
       )}
 
