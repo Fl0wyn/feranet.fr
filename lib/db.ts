@@ -33,11 +33,13 @@ type DbState = { client: Client; ready: Promise<void> };
 const globalForDb = globalThis as unknown as { __feranetDb?: DbState };
 
 function init(): DbState {
-  const url = process.env.DATABASE_URL || "file:./data/tickets.db";
+  // DATABASE_* en priorité ; TURSO_* sont injectées par l'intégration Turso de Vercel.
+  const url = process.env.DATABASE_URL || process.env.TURSO_DATABASE_URL || "file:./data/tickets.db";
+  const authToken = process.env.DATABASE_AUTH_TOKEN || process.env.TURSO_AUTH_TOKEN || undefined;
   if (url.startsWith("file:")) {
     fs.mkdirSync(path.dirname(path.resolve(url.slice("file:".length))), { recursive: true });
   }
-  const client = createClient({ url, authToken: process.env.DATABASE_AUTH_TOKEN || undefined });
+  const client = createClient({ url, authToken });
   return { client, ready: client.executeMultiple(SCHEMA) };
 }
 
