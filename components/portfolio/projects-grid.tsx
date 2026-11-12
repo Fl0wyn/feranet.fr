@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, CodeXml, Server } from "lucide-react";
+import { ArrowUpRight, CodeXml, HeartHandshake, Server } from "lucide-react";
 import { GithubIcon } from "../icons";
 import { TiltCard } from "../tilt-card";
 import { useI18n } from "../i18n-provider";
@@ -18,7 +18,7 @@ export function ProjectsGrid({ projects }: { projects: Project[] }) {
   return (
     <div>
       <div className="flex justify-center gap-2" role="group">
-        {(["all", "web", "sysadmin"] as const).map((f) => (
+        {(["all", "client", "web", "sysadmin"] as const).map((f) => (
           <button
             key={f}
             type="button"
@@ -37,7 +37,7 @@ export function ProjectsGrid({ projects }: { projects: Project[] }) {
 
       <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {shown.map((project) => {
-          const Icon = project.kind === "web" ? CodeXml : Server;
+          const Icon = project.kind === "client" ? HeartHandshake : project.kind === "web" ? CodeXml : Server;
           return (
             <TiltCard key={project.name} max={8} className="flex h-full flex-col rounded-3xl border bg-card p-6">
               <div className="tilt-pop-sm flex items-start justify-between gap-3">
