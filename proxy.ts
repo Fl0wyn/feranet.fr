@@ -3,6 +3,11 @@ import { LOCALE_COOKIE, LOCALES, isLocale, negotiateLocale } from "@/lib/i18n/di
 
 const ONE_YEAR = 60 * 60 * 24 * 365;
 
+/** Anciennes URL qui ne diffèrent que par la casse (comparaison exacte). */
+const CASE_REDIRECTS: Record<string, string> = {
+  "/wiki/linux/mongoDB": "/wiki/linux/mongodb",
+};
+
 /**
  * Langue comme le thème : choix explicite (cookie) sinon préférence du navigateur
  * (Accept-Language). Les URL restent sans préfixe : la requête est réécrite en
@@ -10,6 +15,13 @@ const ONE_YEAR = 60 * 60 * 24 * 365;
  */
 export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
+
+  const legacy = CASE_REDIRECTS[pathname];
+  if (legacy) {
+    const url = request.nextUrl.clone();
+    url.pathname = legacy;
+    return NextResponse.redirect(url, 308);
+  }
 
   // /fr/… ou /en/… : on mémorise la langue et on redirige vers l'URL sans préfixe.
   const prefix = LOCALES.find((l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`));
