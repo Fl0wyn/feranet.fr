@@ -115,7 +115,7 @@ export type Project = {
   name: string;
   description: L;
   tags: string[];
-  kind: "web" | "sysadmin";
+  kind: "web" | "sysadmin" | "client";
   repo?: string;
   demo?: string;
 };
@@ -133,6 +133,36 @@ export const PROJECTS: Project[] = [
     kind: "web",
     repo: gh("feranet.fr"),
     demo: "https://www.feranet.fr",
+  },
+  {
+    name: "Cindy Kate",
+    description: {
+      en: "Showcase website for an artist and well-being guide: music, sessions, creative kits, podcasts, her book and a contact page.",
+      fr: "Site vitrine d'une artiste et accompagnante bien-être : musique, soins, kits créatifs, podcasts, son livre et une page de contact.",
+    },
+    tags: ["Next.js", "TypeScript", "Showcase site"],
+    kind: "client",
+    demo: "https://cindy-kate.vercel.app",
+  },
+  {
+    name: "Jérôme Met Le Feu",
+    description: {
+      en: "Tour website for the 2027 show: an opening video, the full list of dates and venues, and links to the ticket office.",
+      fr: "Site de la tournée 2027 du spectacle : vidéo d'ouverture, liste des dates et des salles, et liens vers la billetterie.",
+    },
+    tags: ["HTML", "CSS", "Responsive"],
+    kind: "client",
+    demo: "https://jeromemetlefeu.vercel.app",
+  },
+  {
+    name: "Les Cartes d'un Ami",
+    description: {
+      en: "A treasure hunt made of 4 physical postcards: each QR code opens a step of the story, and the last one reveals a final message.",
+      fr: "Un jeu de piste en 4 cartes postales physiques : chaque QR code ouvre une étape de l'histoire, et la dernière révèle un message final.",
+    },
+    tags: ["Next.js", "Tailwind", "QR codes"],
+    kind: "client",
+    repo: gh("cartes-damien"),
   },
   {
     name: "SSH Web Manager",
