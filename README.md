@@ -49,9 +49,10 @@ Serverless hosts such as Vercel have a read-only file system: use a Turso databa
 ## Contact form
 
 The contact form on the home page (`#contact`) creates a request in the support space for every message, so
-nothing is lost. To also receive each message by email, set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`
-(and optionally `SMTP_FROM` / `CONTACT_TO`) — see [`.env.example`](.env.example). Spam is filtered with a hidden
-honeypot field and a minimum fill time.
+nothing is lost. To also receive each message by email, install the **Resend** integration from the Vercel
+Marketplace: it adds `RESEND_API_KEY` to the project (Vercel has no mail service of its own and recommends an HTTP
+API over SMTP). Optional: `CONTACT_TO` (recipient) and `CONTACT_FROM` (sender, once `feranet.fr` is verified in
+Resend) — see [`.env.example`](.env.example). Spam is filtered with a hidden honeypot field and a minimum fill time.
 
 ## Scripts
 
