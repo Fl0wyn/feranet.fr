@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
       // Anciennes URLs VitePress
       { source: "/archives/:slug", destination: "/wiki/archives/:slug", permanent: true },
       { source: "/wiki/linux/mongoDB", destination: "/wiki/linux/mongodb", permanent: true },
+      // La page Outils a été retirée.
+      { source: "/tools", destination: "/", permanent: true },
     ];
   },
 };

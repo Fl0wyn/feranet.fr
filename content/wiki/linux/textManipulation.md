@@ -35,7 +35,7 @@
 | `cut -c1-10`                    | Display from the 1st to the 10th character                        |
 | `cut -c-5`                      | Display up to the 5th character                                   |
 | `cut -c3-`                      | Display from the 3rd character                                    |
-| `cut -c2,4`                     | Display the 2nd and 10th character                                |
+| `cut -c2,4`                     | Display the 2nd and 4th character                                 |
 | `cut -d; -f2`                   | Display the 2nd field separated by ';'                            |
 | `cut -d; --complement -s -f1,3` | Display all fields separated by ';' except the 1st and 3rd fields |
 

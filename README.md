@@ -1,10 +1,11 @@
 # Feranet
 
-A collection of useful tips, tricks and tools for developers, sysadmins and creators — built with **Next.js 16**, React 19 and Tailwind CSS 4.
+Florian's field notebook — Linux & Windows guides, instant search and a ticketing desk — built with **Next.js 16**, React 19, Tailwind CSS 4 and a React Three Fiber 3D hero.
 
-- **Landing page** — `/`
+- **Landing page** — `/`, with a 3D hero ([`components/three`](components/three))
+- **Portfolio** — `/portfolio`, and a printable **CV** — `/cv` (content in [`lib/cv.ts`](lib/cv.ts))
+- **Personal links** — email, LinkedIn, GitHub and SIRET, set in [`lib/site.ts`](lib/site.ts)
 - **Wiki** — `/wiki`, generated from the Markdown files in [`content/wiki`](content/wiki)
-- **Tools** — `/tools`, data in [`lib/tools.ts`](lib/tools.ts)
 - **Ticketing** — `/tickets`, a small help desk (list & kanban board, priorities, comments, activity log)
 
 ## Getting started
@@ -17,7 +18,7 @@ cp .env.example .env.local
 pnpm dev
 ```
 
-Then open <http://localhost:3000>. Press <kbd>Ctrl</kbd> + <kbd>K</kbd> anywhere to search the wiki and tools.
+Then open <http://localhost:3000>. Press <kbd>Ctrl</kbd> + <kbd>K</kbd> anywhere to search the wiki and links.
 
 ## Languages (EN / FR)
 
@@ -26,8 +27,7 @@ preference (`Accept-Language`) until the visitor picks one with the header toggl
 URLs stay the same: [`proxy.ts`](proxy.ts) rewrites each request to `app/[lang]/…`, so every page is prerendered
 in both languages. `/fr/...` or `/en/...` links force a language and redirect to the plain URL.
 
-UI strings live in [`lib/i18n/dictionaries.ts`](lib/i18n/dictionaries.ts) and tool descriptions in
-[`lib/tools-fr.ts`](lib/tools-fr.ts). Wiki articles stay in English.
+UI strings live in [`lib/i18n/dictionaries.ts`](lib/i18n/dictionaries.ts). Wiki articles stay in English.
 
 ## Writing wiki pages
 

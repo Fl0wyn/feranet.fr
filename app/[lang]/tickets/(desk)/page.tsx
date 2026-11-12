@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Flame, Inbox, LogOut, MessageSquare, Plus } from "lucide-react";
-import { authMode } from "@/lib/auth";
+import { Flame, LogOut, MessageSquare, Plus } from "lucide-react";
+import { authMode, getDisplayName } from "@/lib/auth";
 import { getStats, listTickets, type TicketFilters as Filters } from "@/lib/tickets";
 import { categoryMeta, isCategory, isPriority, isStatus, ticketRef } from "@/lib/ticket-meta";
 import { logoutAction } from "@/lib/ticket-actions";
@@ -11,7 +11,10 @@ import { TicketFilters } from "@/components/tickets/filters";
 import { TicketBoard } from "@/components/tickets/board";
 import { Avatar, PriorityIndicator, StatusBadge } from "@/components/tickets/badges";
 
-export const metadata: Metadata = { title: "Tickets" };
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getI18n();
+  return { title: t.tickets.title };
+}
 
 export default async function TicketsPage(props: PageProps<"/[lang]/tickets">) {
   const sp = await props.searchParams;
@@ -30,16 +33,21 @@ export default async function TicketsPage(props: PageProps<"/[lang]/tickets">) {
     sort: sort === "created" || sort === "priority" ? sort : "updated",
   };
 
-  const [tickets, stats] = await Promise.all([listTickets(filters), getStats()]);
+  const [tickets, stats, name] = await Promise.all([listTickets(filters), getStats(), getDisplayName()]);
   const now = Date.now();
   const hasFilters = !!(filters.q || filters.priority || filters.category || (status && view === "list"));
 
   return (
     <div>
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
+      <div className="relative isolate flex flex-wrap items-end justify-between gap-6 overflow-hidden rounded-3xl border bg-card p-6 sm:p-8">
+        <div className="absolute -right-10 -top-16 -z-10 size-56 rounded-full bg-brand-1/20 blur-3xl" />
+        <div className="absolute -bottom-20 left-1/3 -z-10 size-56 rounded-full bg-brand-2/15 blur-3xl" />
+        <div className="max-w-xl">
           <p className="text-sm font-medium text-brand">{tt.eyebrow}</p>
-          <h1 className="mt-1 text-3xl font-semibold tracking-tight">{tt.title}</h1>
+          <h1 className="mt-1 text-3xl font-semibold tracking-tight">
+            {name ? format(tt.greeting, { name }) : tt.greetingAnon}
+          </h1>
+          <p className="mt-2 text-muted-foreground">{tt.intro}</p>
         </div>
         <div className="flex items-center gap-2">
           {authMode() === "protected" && (
@@ -54,7 +62,7 @@ export default async function TicketsPage(props: PageProps<"/[lang]/tickets">) {
           )}
           <Link
             href="/tickets/new"
-            className="inline-flex h-10 items-center gap-2 rounded-lg bg-foreground px-4 text-sm font-medium text-background shadow-sm transition hover:opacity-90"
+            className="inline-flex h-11 items-center gap-2 rounded-xl bg-gradient-to-r from-brand-1 to-brand-2 px-5 text-sm font-medium text-white shadow-lg shadow-brand-1/25 transition hover:-translate-y-0.5"
           >
             <Plus className="size-4" /> {tt.newTicket}
           </Link>
@@ -62,7 +70,7 @@ export default async function TicketsPage(props: PageProps<"/[lang]/tickets">) {
       </div>
 
       {/* Statistiques */}
-      <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-5">
+      <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-5">
         <Stat label={tt.stats.active} value={stats.active} accent />
         <Stat label={tt.stats.open} value={stats.counts.open} dot="bg-sky-500" />
         <Stat label={tt.stats.in_progress} value={stats.counts.in_progress} dot="bg-violet-500" />
@@ -176,9 +184,9 @@ function Stat({
 
 function EmptyState({ t }: { t: Dictionary }) {
   return (
-    <div className="rounded-2xl border border-dashed px-6 py-20 text-center">
-      <span className="mx-auto grid size-12 place-items-center rounded-2xl bg-muted">
-        <Inbox className="size-5 text-muted-foreground" />
+    <div className="rounded-3xl border border-dashed px-6 py-20 text-center">
+      <span className="mx-auto grid size-16 place-items-center rounded-3xl bg-gradient-to-br from-brand-1/15 to-brand-2/15 text-3xl">
+        📬
       </span>
       <h2 className="mt-4 font-semibold">{t.tickets.emptyTitle}</h2>
       <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">
@@ -186,7 +194,7 @@ function EmptyState({ t }: { t: Dictionary }) {
       </p>
       <Link
         href="/tickets/new"
-        className="mt-6 inline-flex h-10 items-center gap-2 rounded-lg bg-foreground px-4 text-sm font-medium text-background transition hover:opacity-90"
+        className="mt-6 inline-flex h-11 items-center gap-2 rounded-xl bg-gradient-to-r from-brand-1 to-brand-2 px-5 text-sm font-medium text-white shadow-lg shadow-brand-1/25 transition hover:-translate-y-0.5"
       >
         <Plus className="size-4" /> {t.tickets.newTicket}
       </Link>

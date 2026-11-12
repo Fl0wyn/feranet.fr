@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useI18n } from "../i18n-provider";
+import { SECTION_STYLE } from "./section-style";
+import type { SectionId } from "@/lib/wiki";
 
-export type NavSection = { id: string; title: string; pages: { href: string; title: string }[] };
+export type NavSection = { id: SectionId; title: string; pages: { href: string; title: string }[] };
 
 export function WikiSidebar({ sections }: { sections: NavSection[] }) {
   const pathname = usePathname();
@@ -20,6 +22,7 @@ export function WikiSidebar({ sections }: { sections: NavSection[] }) {
       {sections.map((s) => (
         <div key={s.id}>
           <Link href={`/wiki/${s.id}`} className="mb-2 block px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground">
+            <span className="mr-1.5">{SECTION_STYLE[s.id].emoji}</span>
             {s.title}
           </Link>
           <ul className="space-y-0.5 border-l ml-3">
