@@ -46,6 +46,13 @@ syntax highlighting (Shiki) and `::: info` / `::: tip` / `::: warning` callouts 
 Serverless hosts such as Vercel have a read-only file system: use a Turso database
 (`DATABASE_URL=libsql://…` + `DATABASE_AUTH_TOKEN`) in production. The schema is created automatically on first use.
 
+## Contact form
+
+The contact form on the home page (`#contact`) creates a request in the support space for every message, so
+nothing is lost. To also receive each message by email, set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`
+(and optionally `SMTP_FROM` / `CONTACT_TO`) — see [`.env.example`](.env.example). Spam is filtered with a hidden
+honeypot field and a minimum fill time.
+
 ## Scripts
 
 | Command      | Description              |

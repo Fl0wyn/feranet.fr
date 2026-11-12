@@ -7,7 +7,6 @@ import {
   ChevronDown,
   CodeXml,
   HeartHandshake,
-  Mail,
   Layers,
   MapPin,
   Palette,
@@ -21,6 +20,7 @@ import { SocialIcon } from "@/components/icons";
 import { HeroCanvas } from "@/components/three/hero-canvas";
 import { TiltCard } from "@/components/tilt-card";
 import { Reveal } from "@/components/reveal";
+import { ContactForm } from "@/components/contact-form";
 import { getNavigation } from "@/lib/wiki";
 import { SOCIAL_LINKS, SOCIAL_ORDER, externalProps } from "@/lib/site";
 import { format } from "@/lib/i18n/dictionaries";
@@ -248,45 +248,37 @@ export default async function HomePage() {
       {/* ---------- Contact ---------- */}
       <section id="contact" className="mx-auto max-w-7xl scroll-mt-20 px-4 pb-28 sm:px-6">
         <Reveal>
-          <TiltCard max={4} className="overflow-hidden rounded-[2rem] border bg-card px-6 py-16 sm:px-12">
+          <div className="relative isolate overflow-hidden rounded-[2rem] border bg-card px-6 py-12 sm:px-12 sm:py-16">
             <div className="absolute -left-20 -top-24 -z-10 size-72 rounded-full bg-brand-1/30 blur-3xl animate-blob" />
             <div className="absolute -bottom-24 -right-16 -z-10 size-72 rounded-full bg-brand-2/30 blur-3xl animate-blob [animation-delay:-8s]" />
-            <div className="tilt-pop grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
+            <div className="grid gap-10 lg:grid-cols-[1fr_1.15fr]">
               <div>
                 <p className="text-sm font-medium text-brand">{h.contactEyebrow}</p>
                 <h2 className="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-5xl">{h.contactTitle}</h2>
                 <p className="mt-4 max-w-lg text-lg text-muted-foreground">{h.contactText}</p>
-                <a
-                  href={SOCIAL_LINKS.email}
-                  className="group relative mt-8 inline-flex h-12 items-center gap-2 overflow-hidden rounded-xl bg-foreground px-6 text-sm font-medium text-background shadow-xl shadow-brand-1/20 transition hover:-translate-y-0.5"
-                >
-                  <span className="absolute inset-0 bg-gradient-to-r from-brand-1 to-brand-2 opacity-0 transition group-hover:opacity-100" />
-                  <Mail className="relative size-4" />
-                  <span className="relative">{h.contactPrimary}</span>
-                  <ArrowRight className="relative size-4 transition group-hover:translate-x-0.5" />
-                </a>
+                <div className="mt-8 space-y-2">
+                  {SOCIAL_ORDER.map((id) => (
+                    <a
+                      key={id}
+                      href={SOCIAL_LINKS[id]}
+                      {...externalProps(SOCIAL_LINKS[id])}
+                      className="glass group/link flex items-center gap-3 rounded-2xl border p-3.5 transition hover:-translate-y-0.5 hover:border-brand/40"
+                    >
+                      <span className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-brand-1/15 to-brand-2/15">
+                        <SocialIcon id={id} className="size-5" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block font-medium">{t.social[id]}</span>
+                        <span className="block truncate text-sm text-muted-foreground">{h.socialDesc[id]}</span>
+                      </span>
+                      <ArrowUpRight className="size-4 text-muted-foreground transition group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-brand" />
+                    </a>
+                  ))}
+                </div>
               </div>
-              <div className="space-y-2">
-                {SOCIAL_ORDER.map((id) => (
-                  <a
-                    key={id}
-                    href={SOCIAL_LINKS[id]}
-                    {...externalProps(SOCIAL_LINKS[id])}
-                    className="glass group/link flex items-center gap-3 rounded-2xl border p-4 transition hover:-translate-y-0.5 hover:border-brand/40"
-                  >
-                    <span className="grid size-11 place-items-center rounded-xl bg-gradient-to-br from-brand-1/15 to-brand-2/15">
-                      <SocialIcon id={id} className="size-5" />
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block font-medium">{t.social[id]}</span>
-                      <span className="block truncate text-sm text-muted-foreground">{h.socialDesc[id]}</span>
-                    </span>
-                    <ArrowUpRight className="size-4 text-muted-foreground transition group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-brand" />
-                  </a>
-                ))}
-              </div>
+              <ContactForm />
             </div>
-          </TiltCard>
+          </div>
         </Reveal>
       </section>
     </>
