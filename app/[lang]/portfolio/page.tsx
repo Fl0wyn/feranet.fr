@@ -58,12 +58,12 @@ export default async function PortfolioPage() {
                 <FileText className="relative size-4" />
                 <span className="relative">{p.viewCv}</span>
               </Link>
-              <a
-                href={SOCIAL_LINKS.email}
+              <Link
+                href="/#contact"
                 className="glass inline-flex h-12 items-center gap-2 rounded-xl border px-6 text-sm font-medium transition hover:-translate-y-0.5 hover:border-brand/40"
               >
                 <Mail className="size-4" /> {p.contact}
-              </a>
+              </Link>
             </div>
 
             <dl className="mt-10 grid max-w-lg grid-cols-3 gap-6">

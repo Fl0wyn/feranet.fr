@@ -155,16 +155,6 @@ export const PROJECTS: Project[] = [
     demo: "https://jeromemetlefeu.vercel.app",
   },
   {
-    name: "Les Cartes d'un Ami",
-    description: {
-      en: "A treasure hunt made of 4 physical postcards: each QR code opens a step of the story, and the last one reveals a final message.",
-      fr: "Un jeu de piste en 4 cartes postales physiques : chaque QR code ouvre une étape de l'histoire, et la dernière révèle un message final.",
-    },
-    tags: ["Next.js", "Tailwind", "QR codes"],
-    kind: "client",
-    repo: gh("cartes-damien"),
-  },
-  {
     name: "SSH Web Manager",
     description: {
       en: "A local web interface to browse the hosts of ~/.ssh/config and open interactive SSH sessions right in the browser.",
