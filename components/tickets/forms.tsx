@@ -14,6 +14,8 @@ import {
 import { useI18n } from "../i18n-provider";
 import { CATEGORIES, PRIORITIES, STATUSES, type Ticket } from "@/lib/ticket-meta";
 
+const PRIORITY_EMOJI = { low: "🌱", medium: "👌", high: "⚡", urgent: "🔥" } as const;
+
 export const inputCls =
   "w-full rounded-lg border bg-card px-3 py-2 text-sm outline-none transition placeholder:text-muted-foreground focus:border-brand/50 focus:ring-4 focus:ring-brand-soft aria-[invalid=true]:border-red-500/60";
 
@@ -106,8 +108,10 @@ export function NewTicketForm({ defaultName }: { defaultName: string }) {
           {PRIORITIES.map((p) => (
             <label
               key={p.id}
-              className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg border px-3 py-2 text-sm transition ${
-                priority === p.id ? "border-brand bg-brand-soft font-medium" : "bg-card hover:border-foreground/30"
+              className={`flex cursor-pointer flex-col items-center gap-1 rounded-xl border px-3 py-3 text-center text-sm transition ${
+                priority === p.id
+                  ? "border-brand bg-brand-soft shadow-md shadow-brand-1/10"
+                  : "bg-card hover:-translate-y-0.5 hover:border-foreground/30"
               }`}
             >
               <input
@@ -118,7 +122,11 @@ export function NewTicketForm({ defaultName }: { defaultName: string }) {
                 onChange={() => setPriority(p.id)}
                 className="sr-only"
               />
-              <span className={p.badge}>{t.tickets.priority[p.id]}</span>
+              <span className="text-xl" aria-hidden="true">
+                {PRIORITY_EMOJI[p.id]}
+              </span>
+              <span className={`font-medium ${p.badge}`}>{t.tickets.priority[p.id]}</span>
+              <span className="text-xs text-muted-foreground">{t.tickets.priorityHelp[p.id]}</span>
             </label>
           ))}
         </div>

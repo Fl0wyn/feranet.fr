@@ -4,29 +4,43 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useI18n } from "./i18n-provider";
 import { format, type Dictionary } from "@/lib/i18n/dictionaries";
-import { ArrowUpRight, BookOpen, CornerDownLeft, FileText, Search, Ticket, Wrench } from "lucide-react";
+import { SOCIAL_LINKS, SOCIAL_ORDER, type SocialId } from "@/lib/site";
+import { SocialIcon } from "./icons";
+import { ArrowUpRight, BookOpen, CornerDownLeft, FileText, Search, Ticket } from "lucide-react";
 
 type PageEntry = { title: string; href: string; section: string; headings: string[]; text: string };
-type ToolEntry = { title: string; detail: string; url: string; img: string; category: string };
 type Result = {
   key: string;
-  group: "Navigation" | "Wiki" | "Tools";
+  group: "Navigation" | "Wiki" | "Links";
   title: string;
   subtitle: string;
   href: string;
   external?: boolean;
-  img?: string;
+  social?: SocialId;
   score: number;
 };
 
 
 function navResults(t: Dictionary): Result[] {
   return [
+    { key: "nav-cv", group: "Navigation", title: t.footer.cv, subtitle: t.cv.metaDescription, href: "/cv", score: 0 },
     { key: "nav-wiki", group: "Navigation", title: t.nav.wiki, subtitle: t.search.wikiSub, href: "/wiki", score: 0 },
-    { key: "nav-tools", group: "Navigation", title: t.nav.tools, subtitle: t.search.toolsSub, href: "/tools", score: 0 },
     { key: "nav-tickets", group: "Navigation", title: t.nav.tickets, subtitle: t.search.ticketsSub, href: "/tickets", score: 0 },
     { key: "nav-new", group: "Navigation", title: t.search.newTicket, subtitle: t.search.newTicketSub, href: "/tickets/new", score: 0 },
   ];
+}
+
+function navLinks(t: Dictionary): Result[] {
+  return SOCIAL_ORDER.map((id) => ({
+    key: `link-${id}`,
+    group: "Links" as const,
+    title: t.social[id],
+    subtitle: SOCIAL_LINKS[id].replace(/^(https?:\/\/(www\.)?|mailto:)/, ""),
+    href: SOCIAL_LINKS[id],
+    external: /^https?:/.test(SOCIAL_LINKS[id]),
+    social: id,
+    score: 0,
+  }));
 }
 
 export const openCommandMenu = () => window.dispatchEvent(new Event("feranet:command-menu"));
@@ -44,7 +58,7 @@ export function CommandMenu() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
-  const [index, setIndex] = useState<{ locale: string; pages: PageEntry[]; tools: ToolEntry[] } | null>(null);
+  const [index, setIndex] = useState<{ locale: string; pages: PageEntry[] } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -82,13 +96,13 @@ export function CommandMenu() {
     fetch(`/api/search/${locale}`)
       .then((r) => r.json())
       .then((data) => setIndex({ locale, ...data }))
-      .catch(() => setIndex({ locale, pages: [], tools: [] }));
+      .catch(() => setIndex({ locale, pages: [] }));
   }, [open, index, locale]);
 
   const results = useMemo<Result[]>(() => {
     const q = query.trim().toLowerCase();
     const NAV = navResults(t);
-    if (!q) return NAV;
+    if (!q) return [...NAV, ...navLinks(t)];
     const nav = NAV.filter((n) => n.title.toLowerCase().includes(q));
     const pages: Result[] = (index?.pages ?? [])
       .map((p) => {
@@ -108,26 +122,8 @@ export function CommandMenu() {
       .filter((r) => r.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 8);
-    const tools: Result[] = (index?.tools ?? [])
-      .map((t) => {
-        const title = t.title.toLowerCase();
-        const score =
-          (title.startsWith(q) ? 100 : title.includes(q) ? 60 : 0) + (t.detail.toLowerCase().includes(q) ? 15 : 0);
-        return {
-          key: `tool-${t.title}-${t.url}`,
-          group: "Tools" as const,
-          title: t.title,
-          subtitle: `${t.category} · ${t.detail}`,
-          href: t.url,
-          external: true,
-          img: t.img,
-          score,
-        };
-      })
-      .filter((r) => r.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 6);
-    return [...nav, ...pages, ...tools];
+    const links = navLinks(t).filter((l) => l.title.toLowerCase().includes(q));
+    return [...nav, ...pages, ...links];
   }, [query, index, t]);
 
   useEffect(() => setActive(0), [query]);
@@ -140,6 +136,7 @@ export function CommandMenu() {
     (r: Result) => {
       setOpen(false);
       if (r.external) window.open(r.href, "_blank", "noopener,noreferrer");
+      else if (r.href.startsWith("mailto:")) window.location.href = r.href;
       else router.push(r.href);
     },
     [router],
@@ -190,7 +187,7 @@ export function CommandMenu() {
           {results.map((r, i) => {
             const header = r.group !== lastGroup ? r.group : null;
             lastGroup = r.group;
-            const Icon = r.group === "Wiki" ? FileText : r.href.startsWith("/tickets") ? Ticket : r.href === "/tools" ? Wrench : BookOpen;
+            const Icon = r.group === "Wiki" ? FileText : r.href.startsWith("/tickets") ? Ticket : BookOpen;
             return (
               <div key={r.key}>
                 {header && <p className="px-3 pb-1 pt-3 text-xs font-medium text-muted-foreground">{t.search.groups[header]}</p>}
@@ -201,9 +198,8 @@ export function CommandMenu() {
                   onClick={() => go(r)}
                   className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left ${i === active ? "bg-muted" : ""}`}
                 >
-                  {r.img ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={`/images/${r.img}`} alt="" className="size-5 shrink-0 rounded" loading="lazy" />
+                  {r.social ? (
+                    <SocialIcon id={r.social} className="size-4 shrink-0 text-muted-foreground" />
                   ) : (
                     <Icon className="size-4 shrink-0 text-muted-foreground" />
                   )}

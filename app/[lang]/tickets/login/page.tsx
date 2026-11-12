@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Ticket, TriangleAlert } from "lucide-react";
 import { authMode, isAuthenticated } from "@/lib/auth";
@@ -37,6 +38,11 @@ export default async function LoginPage() {
             <div className="mt-6">
               <LoginForm />
             </div>
+            <p className="mt-6 border-t pt-4 text-center text-sm text-muted-foreground">
+              <Link href="/#contact" className="hover:text-brand">
+                {l.help}
+              </Link>
+            </p>
           </>
         )}
       </div>

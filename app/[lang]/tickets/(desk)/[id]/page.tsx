@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronLeft, CircleDot, MessageSquare, Pencil } from "lucide-react";
+import { Check, ChevronLeft, CircleDot, MessageSquare, Pause, Pencil } from "lucide-react";
 import { getDisplayName } from "@/lib/auth";
 import { getTicket } from "@/lib/tickets";
 import { categoryMeta, ticketRef, type TicketEvent } from "@/lib/ticket-meta";
@@ -47,6 +47,8 @@ export default async function TicketPage(props: PageProps<"/[lang]/tickets/[id]"
         {d.openedBy} <span className="font-medium text-foreground">{ticket.requester || "—"}</span> ·{" "}
         <span title={fmt(ticket.created_at)}>{timeAgo(ticket.created_at, locale, now)}</span>
       </p>
+
+      <Progress status={ticket.status} t={t} />
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px]">
         <div className="min-w-0 space-y-8">
@@ -94,6 +96,50 @@ export default async function TicketPage(props: PageProps<"/[lang]/tickets/[id]"
         </aside>
       </div>
     </div>
+  );
+}
+
+/** Frise d'avancement : Nouvelle → En cours → Résolue, avec une phrase explicative. */
+function Progress({ status, t }: { status: string; t: Dictionary }) {
+  const steps = ["open", "in_progress", "resolved"] as const;
+  const current = status === "closed" ? 2 : status === "waiting" ? 1 : Math.max(0, steps.indexOf(status as (typeof steps)[number]));
+  const help = t.tickets.statusHelp[status as keyof typeof t.tickets.statusHelp];
+  return (
+    <section className="mt-6 rounded-3xl border bg-card p-5 sm:p-6" aria-label={t.tickets.detail.progress}>
+      <ol className="flex items-center">
+        {steps.map((step, i) => {
+          const done = i < current || (i === current && i === steps.length - 1);
+          const active = i === current && !done;
+          const paused = active && status === "waiting";
+          return (
+            <li key={step} className={`flex items-center ${i < steps.length - 1 ? "flex-1" : ""}`}>
+              <div className="flex flex-col items-center gap-1.5">
+                <span
+                  className={`grid size-9 place-items-center rounded-full text-sm font-semibold transition ${
+                    done
+                      ? "bg-gradient-to-br from-brand-1 to-brand-2 text-white shadow-md shadow-brand-1/30"
+                      : active
+                        ? paused
+                          ? "bg-amber-500/15 text-amber-600 ring-2 ring-amber-500/50"
+                          : "bg-brand-soft text-brand ring-2 ring-brand/50"
+                        : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  {done ? <Check className="size-4" strokeWidth={3} /> : paused ? <Pause className="size-4" /> : i + 1}
+                </span>
+                <span className={`text-xs ${done || active ? "font-medium text-foreground" : "text-muted-foreground"}`}>
+                  {paused ? t.tickets.status.waiting : t.tickets.status[step]}
+                </span>
+              </div>
+              {i < steps.length - 1 && (
+                <span className={`mx-2 mb-5 h-0.5 flex-1 rounded-full ${i < current ? "bg-gradient-to-r from-brand-1 to-brand-2" : "bg-muted"}`} />
+              )}
+            </li>
+          );
+        })}
+      </ol>
+      {help && <p className="mt-4 rounded-xl bg-muted/60 px-4 py-2.5 text-center text-sm">{help}</p>}
+    </section>
   );
 }
 

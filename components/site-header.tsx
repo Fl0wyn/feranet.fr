@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, Search, X } from "lucide-react";
-import { GithubIcon, Logo } from "./icons";
+import { Logo, SocialIcon } from "./icons";
+import { SOCIAL_LINKS, SOCIAL_ORDER, externalProps } from "@/lib/site";
 import { ThemeToggle } from "./theme-toggle";
 import { LanguageToggle } from "./language-toggle";
 import { openCommandMenu } from "./command-menu";
@@ -17,8 +18,9 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
 
   const links = [
+    { href: "/#services", label: t.nav.services },
+    { href: "/portfolio", label: t.nav.portfolio },
     { href: "/wiki", label: t.nav.wiki },
-    { href: "/tools", label: t.nav.tools },
     { href: "/tickets", label: t.nav.tickets },
   ];
 
@@ -75,17 +77,28 @@ export function SiteHeader() {
           >
             <Search className="size-4" />
           </button>
-          <a
-            href="https://github.com/Fl0wyn"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex size-9 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-muted hover:text-foreground"
-            aria-label="GitHub"
-          >
-            <GithubIcon className="size-4" />
-          </a>
+          <div className="hidden items-center lg:flex">
+            {SOCIAL_ORDER.map((id) => (
+              <a
+                key={id}
+                href={SOCIAL_LINKS[id]}
+                {...externalProps(SOCIAL_LINKS[id])}
+                className="inline-flex size-9 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-muted hover:text-foreground"
+                aria-label={t.social[id]}
+                title={t.social[id]}
+              >
+                <SocialIcon id={id} className="size-4" />
+              </a>
+            ))}
+          </div>
           <LanguageToggle />
           <ThemeToggle />
+          <Link
+            href="/#contact"
+            className="ml-1 hidden h-9 items-center rounded-lg bg-gradient-to-r from-brand-1 to-brand-2 px-3.5 text-sm font-medium text-white shadow-md shadow-brand-1/25 transition hover:-translate-y-0.5 hover:shadow-lg md:inline-flex"
+          >
+            {t.nav.contact}
+          </Link>
           <button
             type="button"
             onClick={() => setMobileOpen((o) => !o)}
@@ -109,6 +122,24 @@ export function SiteHeader() {
               {l.label}
             </Link>
           ))}
+          <Link
+            href="/#contact"
+            className="mt-2 flex h-10 items-center justify-center rounded-lg bg-gradient-to-r from-brand-1 to-brand-2 text-sm font-medium text-white"
+          >
+            {t.nav.contact}
+          </Link>
+          <div className="mt-3 flex gap-1 border-t pt-3">
+            {SOCIAL_ORDER.map((id) => (
+              <a
+                key={id}
+                href={SOCIAL_LINKS[id]}
+                {...externalProps(SOCIAL_LINKS[id])}
+                className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-muted"
+              >
+                <SocialIcon id={id} className="size-4" /> {t.social[id]}
+              </a>
+            ))}
+          </div>
         </nav>
       )}
     </header>

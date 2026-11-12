@@ -35,7 +35,11 @@ export type WikiPageMeta = {
   href: string;
   description: string;
   headings: string[];
+  /** Temps de lecture estimé, en minutes. */
+  minutes: number;
   sourceUrl: string;
+  /** false quand la traduction demandée n'existe pas (on affiche l'anglais). */
+  translated: boolean;
 };
 
 export type Heading = { id: string; text: string; depth: 2 | 3 };
@@ -85,23 +89,37 @@ function transformContainers(md: string) {
   );
 }
 
-const readSource = cache(async (section: string, slug: string) => {
-  const file = path.join(CONTENT_DIR, section, `${slug}.md`);
+/** Nom du fichier source : `slug.md` (anglais) ou `slug.fr.md` (français). */
+const fileName = (slug: string, locale: Locale) => (locale === "en" ? `${slug}.md` : `${slug}.${locale}.md`);
+
+const readFile = cache(async (section: string, file: string) => {
   try {
     // Normalise les fins de ligne (checkout Windows en CRLF).
-    return (await fs.readFile(file, "utf8")).replace(/\r\n?/g, "\n");
+    return (await fs.readFile(path.join(CONTENT_DIR, section, file), "utf8")).replace(/\r\n?/g, "\n");
   } catch {
     return null;
   }
 });
 
-export const getAllPages = cache(async (): Promise<WikiPageMeta[]> => {
+/** Source dans la langue demandée, avec repli sur l'anglais. */
+async function readSource(section: string, slug: string, locale: Locale = "en") {
+  const localized = locale === "en" ? null : await readFile(section, fileName(slug, locale));
+  if (localized !== null) return { md: localized, file: fileName(slug, locale), translated: true };
+  const md = await readFile(section, `${slug}.md`);
+  return md === null ? null : { md, file: `${slug}.md`, translated: locale === "en" };
+}
+
+export const getAllPages = cache(async (locale: Locale = "en"): Promise<WikiPageMeta[]> => {
   const pages: WikiPageMeta[] = [];
   for (const section of SECTIONS) {
-    const files = (await fs.readdir(path.join(CONTENT_DIR, section.id))).filter((f) => f.endsWith(".md"));
-    for (const file of files) {
-      const slug = file.replace(/\.md$/, "");
-      const md = (await readSource(section.id, slug)) ?? "";
+    // Les fichiers anglais (slug.md) définissent la liste des pages ; les traductions sont slug.<langue>.md.
+    const slugs = (await fs.readdir(path.join(CONTENT_DIR, section.id)))
+      .filter((f) => /^[^.]+\.md$/.test(f))
+      .map((f) => f.replace(/\.md$/, ""));
+    for (const slug of slugs) {
+      const source = await readSource(section.id, slug, locale);
+      if (!source) continue;
+      const { md, file, translated } = source;
       pages.push({
         section: section.id,
         slug,
@@ -109,14 +127,16 @@ export const getAllPages = cache(async (): Promise<WikiPageMeta[]> => {
         href: `/wiki/${section.id}/${slug}`,
         description: extractDescription(md),
         headings: [...md.matchAll(/^##\s+(.+)$/gm)].map((m) => m[1].trim()),
+        minutes: Math.max(1, Math.round(md.split(/\s+/).length / 180)),
         sourceUrl: `${REPO_URL}/edit/main/content/wiki/${section.id}/${file}`,
+        translated,
       });
     }
   }
   return pages.sort(
     (a, b) =>
       SECTIONS.findIndex((s) => s.id === a.section) - SECTIONS.findIndex((s) => s.id === b.section) ||
-      a.title.localeCompare(b.title),
+      a.title.localeCompare(b.title, locale),
   );
 });
 
@@ -127,13 +147,13 @@ export function getSections(locale: Locale = "en") {
 }
 
 export async function getNavigation(locale: Locale = "en") {
-  const pages = await getAllPages();
+  const pages = await getAllPages(locale);
   return getSections(locale).map((s) => ({ ...s, pages: pages.filter((p) => p.section === s.id) }));
 }
 
 /** Index plein texte léger, chargé à la demande par la palette de recherche. */
 export async function getSearchIndex(locale: Locale = "en") {
-  const pages = await getAllPages();
+  const pages = await getAllPages(locale);
   const sections = getSections(locale);
   return Promise.all(
     pages.map(async (p) => ({
@@ -141,7 +161,7 @@ export async function getSearchIndex(locale: Locale = "en") {
       href: p.href,
       section: sections.find((s) => s.id === p.section)!.title,
       headings: p.headings,
-      text: stripMarkdown((await readSource(p.section, p.slug)) ?? "").slice(0, 4000),
+      text: stripMarkdown((await readSource(p.section, p.slug, locale))?.md ?? "").slice(0, 4000),
     })),
   );
 }
@@ -211,16 +231,16 @@ async function renderMarkdown(md: string) {
   return { html: String(file), toc };
 }
 
-export const getPage = cache(async (section: string, slug: string): Promise<WikiPage | null> => {
-  const md = await readSource(section, slug);
-  if (md === null) return null;
+export const getPage = cache(async (section: string, slug: string, locale: Locale = "en"): Promise<WikiPage | null> => {
+  const source = await readSource(section, slug, locale);
+  if (source === null) return null;
 
-  const pages = await getAllPages();
+  const pages = await getAllPages(locale);
   const index = pages.findIndex((p) => p.section === section && p.slug === slug);
   if (index === -1) return null;
 
   // Le titre H1 est rendu par le gabarit de page.
-  const { html, toc } = await renderMarkdown(md.replace(/^#\s+.+$/m, ""));
+  const { html, toc } = await renderMarkdown(source.md.replace(/^#\s+.+$/m, ""));
 
   return {
     ...pages[index],
