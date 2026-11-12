@@ -9,7 +9,8 @@ const nextConfig: NextConfig = {
     return [
       // Anciennes URLs VitePress
       { source: "/archives/:slug", destination: "/wiki/archives/:slug", permanent: true },
-      { source: "/wiki/linux/mongoDB", destination: "/wiki/linux/mongodb", permanent: true },
+      // /wiki/linux/mongoDB → mongodb est géré dans proxy.ts : les redirections de Next.js
+      // ignorent la casse, ici la règle bouclerait sur la nouvelle adresse elle-même.
       // La page Outils a été retirée.
       { source: "/tools", destination: "/", permanent: true },
     ];

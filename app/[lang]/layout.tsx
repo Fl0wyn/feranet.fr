@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL("https://www.feranet.fr"),
     title: { default: t.meta.title, template: "%s · Feranet" },
     description: t.meta.description,
-    icons: { icon: "/logo.svg" },
+    icons: { icon: [{ url: "/icon.svg", type: "image/svg+xml" }] },
     openGraph: {
       title: "Feranet",
       description: t.meta.description,
