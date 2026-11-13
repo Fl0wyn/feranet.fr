@@ -3,7 +3,8 @@
 export const EMAIL = "contact+site@feranet.fr";
 
 export const SOCIAL_LINKS = {
-  email: `mailto:${EMAIL}`,
+  // Toutes les enveloppes du site mènent au formulaire de contact (l'adresse reste visible sur le CV).
+  email: "/#contact",
   linkedin: "https://www.linkedin.com/in/florian-feramus/",
   github: "https://github.com/Fl0wyn",
   portfolio: "/portfolio",
