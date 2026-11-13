@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useI18n } from "./i18n-provider";
 import { format, type Dictionary } from "@/lib/i18n/dictionaries";
-import { SOCIAL_LINKS, SOCIAL_ORDER, type SocialId } from "@/lib/site";
+import { EMAIL, SOCIAL_LINKS, SOCIAL_ORDER, type SocialId } from "@/lib/site";
 import { SocialIcon } from "./icons";
 import { ArrowUpRight, BookOpen, CornerDownLeft, FileText, Search, Ticket } from "lucide-react";
 
@@ -35,7 +35,7 @@ function navLinks(t: Dictionary): Result[] {
     key: `link-${id}`,
     group: "Links" as const,
     title: t.social[id],
-    subtitle: SOCIAL_LINKS[id].replace(/^(https?:\/\/(www\.)?|mailto:)/, ""),
+    subtitle: id === "email" ? EMAIL : SOCIAL_LINKS[id].replace(/^https?:\/\/(www\.)?/, ""),
     href: SOCIAL_LINKS[id],
     external: /^https?:/.test(SOCIAL_LINKS[id]),
     social: id,
@@ -136,7 +136,6 @@ export function CommandMenu() {
     (r: Result) => {
       setOpen(false);
       if (r.external) window.open(r.href, "_blank", "noopener,noreferrer");
-      else if (r.href.startsWith("mailto:")) window.location.href = r.href;
       else router.push(r.href);
     },
     [router],

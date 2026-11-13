@@ -43,7 +43,7 @@ export default async function CvPage() {
           <ul className="space-y-2.5 text-[13px]">
             <li className="flex items-center gap-2.5">
               <Mail className="size-4 shrink-0 text-brand-2" />
-              <a href={SOCIAL_LINKS.email} className="break-all hover:underline">
+              <a href={`mailto:${EMAIL}`} className="break-all hover:underline">
                 {EMAIL}
               </a>
             </li>
